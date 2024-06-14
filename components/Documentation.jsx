@@ -18,13 +18,13 @@ const Codes = () => {
 
     // Renderiza el select y el contenido de una sección
     const renderSection = (title, content) => (
-        <div className="bg-[#8C8C8C] rounded-xl">
-            <div className='bg-[#A6A6A6] flex flex-row justify-between items-center py-4 rounded-t-xl'>
-                <div className='w-2/4'>
-                    <h2 className='text-lg text-[#F2F2F2] px-3'>{title}</h2>
+        <div className="bg-[#3e444f] rounded-xl">
+            <div className='bg-[#505865] flex flex-row justify-between items-center rounded-t-xl'>
+                <div className='w-2/4 py-2 px-3'>
+                    <h2 className='text-lg text-[#F2F2F2]'>{title}</h2>
                 </div>
                 <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#BFBFBF] rounded-md text-[#F2F2F2] p-1' name="select" onChange={handleChange} value={selectedValue}>
+                    <select className='bg-[#2b3039] rounded-md text-[#F2F2F2] p-1' name="select" onChange={handleChange} value={selectedValue}>
                         <option value="">Select a value</option>
                         {/* Itera sobre valueData para crear las opciones del select */}
                         {valueData.map(item => (
@@ -35,7 +35,7 @@ const Codes = () => {
                     </select>
                 </div>
             </div>
-            <div className='px-3 py-5'>
+            <div className='px-3 py-2 text-sm text-[#F2F2F2]'>
                 {content && (Array.isArray(content) ? content.map((item, index) => (
                     <div key={index}>
                         {Object.entries(item).map(([key, value]) => (
@@ -50,7 +50,7 @@ const Codes = () => {
     );
 
     return (
-        <div className='w-auto absolute top-0 left-80 py-20 pl-8 h-screen overflow-y-auto'>
+        <div className='w-auto absolute top-0 left-80 py-20 pl-8 h-screen overflow-y-auto custom-scrollbar'>
             <h1 className='text-6xl py-5 font-bold'>Paywise API</h1>
             <div className='flex flex-row justify-around items-center py-12 border-y-2'>
                 <div className='w-2/5'>
@@ -62,6 +62,10 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='w-2/4'>
+                    <h3 className='text-xl font-semibold'>Just getting started?</h3>
+                    <p className='py-5 text-base'>Check out our development quickstart guide.</p>
+                    <h4 className='text-xl font-semibold'>Not a developer?</h4>
+                    <p className='py-5 text-base'>Use Paywise&apos;s no-code options or apps from our partners to get started with Paywise and to do more with your Paywise account—no code required.</p>
                     {renderSection('Global Section', selectedItem?.global)}
                 </div>
             </div>
@@ -76,6 +80,14 @@ const Codes = () => {
                 </div>
                 <div className='w-2/4'>
                     {renderSection('Request Section', selectedItem?.request)}
+                    <div className='py-5'>
+                        <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4]'>
+                            <h3 className='px-3 py-2 font-semibold'>YOUR API KEY</h3>
+                            <div className='border-solid border-t border-[#d8dee4] bg-[#f5f6f8] px-3 py-2 text-sm'>
+                                <p>A sample test API key is included in all the examples here, so you can test any example right away. Do not submit any personally identifiable information in requests made with this key.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className='flex flex-row justify-around items-center py-12 border-b-2'>
