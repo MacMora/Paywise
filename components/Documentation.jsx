@@ -55,10 +55,10 @@ const Codes = () => {
             <div className='flex flex-row justify-around items-center py-12 border-y-2'>
                 <div className='w-2/5'>
                     <h2 className='text-3xl font-semibold'>API Reference</h2>
-                    <p className='py-5 text-base'>The Stripe API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
-                        <br/><br/>You can use the Stripe API in test mode, which doesn&apos;t affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.
-                        <br/><br/>The Stripe API doesn&apos;t support bulk updates. You can work on only one object per request.
-                        <br/><br/>The Stripe API differs for every account as we release new versions and tailor functionality. Log in to see docs with your test key and data.
+                    <p className='py-5 text-base'>The Paywise API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+                        <br/><br/>You can use the Paywise API in test mode, which doesn&apos;t affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.
+                        <br/><br/>The Paywise API doesn&apos;t support bulk updates. You can work on only one object per request.
+                        <br/><br/>The Paywise API differs for every account as we release new versions and tailor functionality. Log in to see docs with your test key and data.
                     </p>
                 </div>
                 <div className='w-2/4'>
@@ -68,7 +68,7 @@ const Codes = () => {
             <div className='flex flex-row justify-around items-center py-12 border-b-2'>
                 <div className='w-2/5'>
                     <h2 className='text-3xl font-semibold'>Authentication</h2>
-                    <p className='py-5 text-base'>The Stripe API uses API keys to authenticate requests. You can view and manage your API keys in the Stripe Dashboard.
+                    <p className='py-5 text-base'>The Paywise API uses API keys to authenticate requests. You can view and manage your API keys in the Paywise Dashboard.
                         <br/><br/>Test mode secret keys have the prefix sk_test_ and live mode secret keys have the prefix sk_live_. Alternatively, you can use restricted API keys for granular permissions.
                         <br/><br/>Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
                         <br/><br/>All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
@@ -81,7 +81,7 @@ const Codes = () => {
             <div className='flex flex-row justify-around items-center py-12 border-b-2'>
                 <div className='w-2/5'>
                     <h2 className='text-3xl font-semibold'>Connected Accounts</h2>
-                    <p className='py-5 text-base'>To act as connected accounts, clients can issue requests using the Stripe-Account special header. Make sure that this header contains a Stripe account ID, which usually starts with the acct_ prefix.
+                    <p className='py-5 text-base'>To act as connected accounts, clients can issue requests using the Paywise-Account special header. Make sure that this header contains a Paywise account ID, which usually starts with the acct_ prefix.
                     <br/><br/>The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.
                     </p>
                 </div>
