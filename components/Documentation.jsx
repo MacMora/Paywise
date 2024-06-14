@@ -56,8 +56,8 @@ const Codes = () => {
                 <div className='w-2/5'>
                     <h2 className='text-3xl font-semibold'>API Reference</h2>
                     <p className='py-5 text-base'>The Stripe API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
-                        <br/><br/>You can use the Stripe API in test mode, which doesn't affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.
-                        <br/><br/>The Stripe API doesn't support bulk updates. You can work on only one object per request.
+                        <br/><br/>You can use the Stripe API in test mode, which doesn&apos;t affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.
+                        <br/><br/>The Stripe API doesn&apos;t support bulk updates. You can work on only one object per request.
                         <br/><br/>The Stripe API differs for every account as we release new versions and tailor functionality. Log in to see docs with your test key and data.
                     </p>
                 </div>
