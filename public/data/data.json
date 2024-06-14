@@ -1,0 +1,30 @@
+[
+    {
+        "value": "Python",
+        "global": "global key Python",
+        "request": "request code Python",
+        "key": [
+            {
+                "1": "Python Key 1",
+                "2": "Python Key 2" 
+            }
+        ]
+    },
+    {
+        "value": "Java",
+        "global": [
+            {
+                "prueba": "Java Line 1",
+                "test": "Java Line 2"
+            }
+        ],
+        "request": "request code Java",
+        "key": "key Java"
+    },
+    {
+        "value": "Go",
+        "global": "global key Go",
+        "request": "request code Go",
+        "key": "key Go"
+    }
+]
