@@ -10,10 +10,10 @@ const SideBar = () => {
             </div>
             <div className="text-sm sticky top-12 left-0 shadow-2xl h-screen w-1/5 hover:overflow-y-scroll overflow-hidden py-20 custom-scrollbar">
                 <div className="p-5">
-                    <p className="font-semibold">Get Started</p>
+                    <p className="font-semibold"><a href="#api_reference">Get Started</a></p>
                     <ul className="p-3">
-                        <li className="py-1">About Paywise&apos;s API</li>
-                        <li className="py-1">Use Cases</li>
+                        <li className="py-1"><a href="#authentication">About Paywise&apos;s API</a></li>
+                        <li className="py-1"><a href="#connected_accounts">Use Cases</a></li>
                     </ul>
                     <p className="font-semibold">Register</p>
                     <ul className="p-3">
