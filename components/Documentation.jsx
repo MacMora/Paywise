@@ -57,7 +57,7 @@ const Codes = () => {
                         <br/><br/>The Paywise API differs for every account as we release new versions and tailor functionality. Log in to see docs with your test key and data.
                     </p>
                 </div>
-                <div className='lg:w-2/4 w-full'>
+                <div className='lg:w-2/4 w-full sticky top-0'>
                     <h3 className='text-xl font-semibold'>Just getting started?</h3>
                     <p className='py-5 text-base'>Check out our development quickstart guide.</p>
                     <h4 className='text-xl font-semibold'>Not a developer?</h4>
@@ -76,12 +76,12 @@ const Codes = () => {
                         <br/><br/>All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
                     </p>
                 </div>
-                <div className='lg:w-2/4 w-full'>
+                <div className='lg:w-2/4 w-full sticky top-0'>
                     {renderSection('Request Section', selectedItem?.request)}
                     <div className='py-5'>
                         <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4]'>
                             <h3 className='px-3 py-2 font-semibold'>YOUR API KEY</h3>
-                            <div className='border-solid border-t border-[#d8dee4] bg-[#f5f6f8] px-3 py-2 text-sm'>
+                            <div className='bg-[#f5f6f8] border-solid border-t border-[#d8dee4] px-3 py-2 text-sm'>
                                 <p>A sample test API key is included in all the examples here, so you can test any example right away. Do not submit any personally identifiable information in requests made with this key.</p>
                             </div>
                         </div>
@@ -97,12 +97,12 @@ const Codes = () => {
                         <br/><br/>The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.
                     </p>
                 </div>
-                <div className='lg:w-2/4 w-full'>
+                <div className='lg:w-2/4 w-full sticky top-0'>
                     {renderSection('Key Section', selectedItem?.key)}
                 </div>
             </div>
             {/* Errors Section */}
-            <div id="errors" className='flex flex-col lg:flex-row justify-around items-start lg:items-center py-12 border-b-2'>
+            <div id="errors" className='flex flex-col lg:flex-row justify-around items-start py-12 border-b-2'>
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Errors</h2>
                     <p className='py-5 text-base'>
@@ -178,8 +178,152 @@ const Codes = () => {
                         </div>
                     </div>
                 </div>
-                <div className='lg:w-2/4 w-full'>
-                    {renderSection('Global Section', selectedItem?.global)}
+                <div className='lg:w-2/4 w-full sticky top-0'>
+                    <div className='py-5'>
+                        <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4] text-sm'>
+                            <h3 className='px-3 py-2 font-semibold'>HTTP STATUS CODE SUMMARY</h3>
+                            <div className='bg-[#f5f6f8] flex flex-col border-solid border-t border-[#d8dee4]'>
+                                <div className="flex flex-row justify-start border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>200</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>OK</p>
+                                    </div>
+                                    <div className='flex items-center'>
+                                        <p>Everything worked as expected.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>400</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Bad Request</p>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>The request was unacceptable, often due to missing a required parameter.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>401</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Unauthorized</p>
+                                    </div>
+                                    <div className='flex items-center'>
+                                        <p>No valid API key provided.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>402</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Request Failed</p>
+                                    </div>
+                                    <div className='flex items-center'>
+                                        <p>The parameters were valid but the request failed.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>403</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Forbidden</p>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>The API key doesn&apos;t have permissions to perform the request.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>404</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Not Found</p>
+                                    </div>
+                                    <div className='flex items-center'>
+                                        <p>The requested resource doesn&apos;t exist.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>409</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Conflict</p>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>The request conflicts with another request (perhaps due to using the same idempotent key).</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>429</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Too Many<br/>Requests</p>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-24 flex items-center'>
+                                        <h4 className='font-semibold'>500, 502,<br/>503, 504</h4>
+                                    </div>
+                                    <div className='basis-32 flex items-center'>
+                                        <p className=''>Server Errors</p>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>Something went wrong on Paywise&apos;s end. (These are rare.)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='py-5'>
+                        <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4] text-sm'>
+                            <h3 className='px-3 py-2 font-semibold'>ERROR TYPES</h3>
+                            <div className='bg-[#f5f6f8] flex flex-col border-solid border-t border-[#d8dee4]'>
+                                <div className="flex flex-row justify-start border-b py-3 px-3 ">
+                                    <div className='basis-1/3 flex items-center'>
+                                        <Code className='text-xs rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>api_error</Code>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>API errors cover any other type of problem (e.g., a temporary problem with Paywise&apos;s servers), and are extremely uncommon.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start border-b py-3 px-3 ">
+                                    <div className='basis-1/3 flex items-center'>
+                                        <Code className='text-xs rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>card_error</Code>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>Card errors are the most common type of error you should expect to handle. They result when the user enters a card that can&apos;t be charged for some reason.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-1/3 flex items-center'>
+                                        <Code className='text-xs rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>idempotency_error</Code>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>Idempotency errors occur when an <Code className='text-xs rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>idempotency_error</Code> is re-used on a request that does not match the first request&apos;s API endpoint and parameters.</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                    <div className='basis-1/3 flex items-center'>
+                                        <Code className='text-xs rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>invalid_request_error</Code>
+                                    </div>
+                                    <div className='basis-80 flex items-center'>
+                                        <p>Invalid request errors arise when your request has invalid parameters.</p>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
