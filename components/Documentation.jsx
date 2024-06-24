@@ -47,7 +47,7 @@ const Codes = () => {
         <div className='absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
             {/* Paywise API Section */}
             <h1 className='text-3xl lg:text-6xl py-5 font-bold'>Paywise API</h1>
-            <div id="api_reference" className='flex flex-col lg:flex-row justify-around items-start lg:items-center py-12 border-y-2'>
+            <div id="api_reference" className='flex flex-col lg:flex-row justify-around items-start py-12 border-y-2'>
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>API Reference</h2>
                     <p className='py-5 text-base'>
@@ -66,7 +66,7 @@ const Codes = () => {
                 </div>
             </div>
             {/* Authentication Section */}
-            <div id="authentication" className='flex flex-col lg:flex-row justify-around items-start lg:items-center py-12 border-b-2'>
+            <div id="authentication" className='flex flex-col lg:flex-row justify-around items-start py-12 border-b-2'>
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Authentication</h2>
                     <p className='py-5 text-base'>
@@ -89,7 +89,7 @@ const Codes = () => {
                 </div>
             </div>
             {/* Connected Accounts Section */}
-            <div id="connected_accounts" className='flex flex-col lg:flex-row justify-around items-start lg:items-center py-12 border-b-2'>
+            <div id="connected_accounts" className='flex flex-col lg:flex-row justify-around items-start py-12 border-b-2'>
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Connected Accounts</h2>
                     <p className='py-5 text-base'>
