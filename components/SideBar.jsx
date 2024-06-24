@@ -1,14 +1,29 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 const SideBar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <div>
-            <div className="bg-white flex items-center shadow-sm fixed z-10 py-3 px-5 w-full">
+            {/* Seccion Logo */}
+            <div className="bg-white flex items-center shadow-sm fixed z-20 py-3 px-5 w-full">
                 <h1>
-                    <img src='/images/paywise_logo.png' alt="Paywise Logo"/>
+                    <img src='/images/paywise_logo.png' alt="Paywise Logo" />
                 </h1>
+                <button 
+                    className="lg:hidden ml-auto text-gray-700" 
+                    onClick={toggleSidebar}
+                >
+                    {isOpen ? 'Close' : 'Menu'}
+                </button>
             </div>
-            <div className="text-sm sticky top-12 left-0 shadow-2xl h-screen w-1/5 hover:overflow-y-scroll overflow-hidden py-20 custom-scrollbar">
+            {/* SideBar */}
+            <div className={`z-10 text-sm fixed top-12 left-0 shadow-2xl h-screen lg:w-1/5 md:w-1/3 sm:w-2/3 w-full hover:overflow-y-scroll overflow-hidden py-8 custom-scrollbar bg-white transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
                 <div className="p-5">
                     <p className="font-semibold"><a href="#api_reference">Get Started</a></p>
                     <ul className="p-3">
