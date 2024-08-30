@@ -45,6 +45,7 @@ const Codes = () => {
 
     return (
         <div className='absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
+            <img src='/images/paywise_banner.png' alt="Paywise Banner" />
             {/* Paywise API Section */}
             <h1 className='text-3xl lg:text-6xl py-5 font-bold'>Paywise API</h1>
             <div id="api_reference" className='flex flex-col lg:flex-row justify-around items-start py-12 border-y-2'>

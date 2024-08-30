@@ -12,9 +12,16 @@ const SideBar = () => {
         <div>
             {/* Seccion Logo */}
             <div className="bg-white flex items-center shadow-sm fixed z-20 py-3 px-5 w-full">
-                <h1>
-                    <img src='/images/paywise_logo.png' alt="Paywise Logo" />
-                </h1>
+                <div className="flex gap-x-4">
+                    <h1>
+                        <img src='/images/paywise_logo.png' alt="Paywise Logo" />
+                    </h1>
+                    <div>
+                        <button className="bg-[#1E64A7] text-white rounded-3xl py-2 px-2.5">
+                            Documentation
+                        </button>
+                    </div>
+                </div>
                 <button 
                     className="lg:hidden ml-auto text-gray-700" 
                     onClick={toggleSidebar}
