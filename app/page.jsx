@@ -1,5 +1,6 @@
 import Documentation from "@/components/Documentation"
 import SideBar from "@/components/SideBar"
+// import UseCases from "@/components/UseCases"
 
 export default function HomePage() {
     return(
@@ -9,3 +10,12 @@ export default function HomePage() {
         </div>
     )
 }
+
+// export default function UseCases() {
+//     return(
+//         <div className="h-screen overflow-hidden">
+//             <SideBar/>
+//             <UseCases/>
+//         </div>
+//     )
+// }
