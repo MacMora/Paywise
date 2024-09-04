@@ -12,15 +12,28 @@ const SideBar = () => {
         <div>
             {/* Seccion Logo */}
             <div className="bg-white flex items-center shadow-sm fixed z-20 py-3 px-5 w-full">
-                <div className="flex gap-x-4">
+                <div className="flex lg:basis-1/5 gap-x-4">
                     <h1>
                         <img src='/images/paywise_logo.png' alt="Paywise Logo" />
                     </h1>
                     <div>
-                        <div className="bg-[#1E64A7] text-white rounded-3xl py-2 px-2.5">
+                        <div className="bg-[#1E64A7] text-white rounded-3xl py-2 px-2.5" id="Navbar">
                             <small>Documentation</small>
                         </div>
                     </div>
+                </div>
+                {/* Menú central (visible en pantallas grandes) */}
+                <div className="hidden lg:flex basis-2/5 ml-auto gap-x-8">
+                        <a href="https://devportal.pwapp.co/" className="text-gray-700">Home</a>
+                        <a href="#" className="text-gray-700">Docs</a>
+                        <a href="https://devportal.pwapp.co/apis" className="text-gray-700">APIs</a>
+                        <a href="https://devportal.pwapp.co/products" className="text-gray-700">Products</a>
+                        <a href="#" className="text-gray-700">Plugin</a>
+                </div>
+                {/* Menú de inicio de sesión */}
+                <div className="hidden lg:flex basis-1/5 justify-end items-center gap-x-6">
+                    <a href="https://devportal.pwapp.co/signin" className="text-gray-700">Sign in</a>
+                    <a href="https://devportal.pwapp.co/signup" className="text-gray-700">Sign up</a>
                 </div>
                 <button 
                     className="lg:hidden ml-auto text-gray-700" 
@@ -29,10 +42,24 @@ const SideBar = () => {
                     {isOpen ? 'Close' : 'Menu'}
                 </button>
             </div>
-            {/* SideBar */}
+            {/* SideBar y Menú desplegable en pantallas pequeñas */}
             <div className={`z-10 text-sm fixed top-12 left-0 shadow-2xl h-screen lg:w-1/5 md:w-1/3 sm:w-2/3 w-full hover:overflow-y-scroll overflow-hidden py-8 custom-scrollbar bg-white transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
                 <div className="p-5">
-                    <p className="font-semibold pb-2 px-2"><small>Get Started</small></p>
+                    <div className="lg:hidden mb-4 flex flex-col gap-y-6">
+                        <div className="flex flex-col gap-y-4 font-semibold px-2">
+                            <a href="https://devportal.pwapp.co/" className="">Home</a>
+                            <a href="#" className="">Docs</a>
+                            <a href="https://devportal.pwapp.co/apis" className="">APIs</a>
+                            <a href="https://devportal.pwapp.co/products" className="">Products</a>
+                            <a href="#" className="">Plugin</a>
+                        </div>
+                        <div className="flex flex-col gap-y-4 font-semibold px-2 border-solid border-t border-[#d8dee4]">
+                            <a href="https://devportal.pwapp.co/signin" className="pt-2">Sign in</a>
+                            <a href="https://devportal.pwapp.co/signup" className="">Sign up</a>
+                        </div>
+                    </div>
+                    {/* Contenido del Sidebar */}
+                    <p className="font-semibold py-2 px-2 border-solid border-t border-[#d8dee4]"><small>Get Started</small></p>
                     <ul className="">
                         <li className="p-2"><a href="#api_reference">About Paywise&apos;s API</a></li>
                         <li className="p-2"><a href="#use_cases">Use Cases</a></li>
@@ -68,7 +95,6 @@ const SideBar = () => {
                         <li className="p-2"><a href="#authentication">Institution</a></li>
                         <li className="p-2"><a href="#connected_accounts">Merchant</a></li>
                     </ul>
-                   
                 </div>
             </div>
         </div>

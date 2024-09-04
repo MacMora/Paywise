@@ -44,7 +44,7 @@ const Codes = () => {
     );
 
     return (
-        <div className='absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
+        <div className='absolute top-8 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
             {/* Paywise API Section */}
             <div id="use_cases" className='flex flex-col lg:flex-row justify-around items-start py-12 border-b-2'>
                 <div className='lg:w-5/5 w-full'>

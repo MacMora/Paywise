@@ -4,10 +4,10 @@
         "global": "global key Python",
         "request": "request code Python",
         "key": [
-            {
-                "1": "Python Key 1",
-                "2": "Python Key 2" 
-            }
+            
+            "Python Key 1",
+            "Python Key 2" 
+            
         ]
     },
     {
@@ -26,5 +26,219 @@
         "global": "global key Go",
         "request": "request code Go",
         "key": "key Go"
+    },
+    {
+        "value": "XML",
+        "authorization": "Authorization: Bearer your_api_key_here",
+        "content_type": "Content-Type: application/json",
+        "personal_example": {
+            "curl -X POST" : "",
+            "https://pwapp.co/api/setup/personal" : "",
+            "-H 'Authorization: Bearer your_api_key_here'" : "",
+            "-H 'Content-Type: application/json'" : "",
+            "-d '": {
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "email": "john.doe@example.com",
+                    "phone": "+123456789",
+                    "password": "securepassword123"
+                }
+        },
+        "personal_response":{
+            "status": "success",
+            "message": "Personal account created successfully",
+            "account_id": "1234567890"
+        },
+        "business_example": {
+            "curl -X POST": "",
+            "https://pwapp.co/api/setup/business": "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'": "",
+            "-d'": {
+                "business_name": "Acme Corp",
+                "email": "contact@acmecorp.com",
+                "phone": "+987654321",
+                "address": "123 Business St, Suite 100",
+                "password": "securepassword123"
+            }
+        },
+        "business_response":{
+            "status": "success",
+            "message": "Business account created successfully",
+            "account_id": "0987654321"
+        },
+        "institutions_example":{
+            "curl -X POST" : "",
+            "https://pwapp.co/api/setup/institution" : "",
+            "-H 'Authorization: Bearer your_api_key_here'" : "",
+            "-H 'Content-Type: application/json'" : "",
+            "-d '" : {
+                "institution_name": "Bank of Example",
+                "email": "support@bankofexample.com",
+                "phone": "+1122334455",
+                "address": "456 Institution Blvd, Floor 5",
+                "password": "securepassword123"
+            }
+        },
+        "institutions_response":{
+            "status": "success",
+            "message": "Institutional account created successfully",
+            "account_id": "5678901234"
+        },
+        "general_payments_example": {
+            "curl -X GET" : "",
+            "https://pwapp.co/api/payment/general" : "",
+            "-H 'Authorization: Bearer your_api_key_here'" : "",
+            "-H 'Content-Type: application/json'" : "",
+            "-d'": {
+                "transaction_id": "abc123"
+            }
+        },
+        "general_payments_response": {
+            "status": "success",
+            "transaction_details": {
+                "transaction_id": "abc123",
+                "amount": "100.00",
+                "currency": "TTD",
+                "status": "completed"
+            }
+        },
+        "payment_authorization_example":{
+            "curl -X POST" : "",
+            "https://pwapp.co/api/payment/authorize" : "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'": "",
+            "-d'": {
+                "amount": "50.00",
+                "currency": "TTD",
+                "payment_method": "credit_card",
+                "customer_id": "12345"
+            }
+        },
+        "payment_authorization_response":{
+            "status": "success",
+            "authorization_id": "auth123",
+            "message": "Payment authorized successfully"
+        },
+        "payment_status_example":{
+            "curl -X GET" : "",
+            "https://pwapp.co/api/payment/status" : "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'": "",
+            "-d '":{
+                "payment_id": "pay123"
+            }
+        },
+        "payment_status_response": {
+            "status": "success",
+            "payment_status": "completed",
+            "amount": "50.00",
+            "currency": "TTD"
+        },
+        "balance_inquiry_example": {
+            "curl -X GET ": "",
+            "https://pwapp.co/api/payment/balance" : "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'" : "",
+            "-d '": {
+                "account_id": "1234567890"
+            }
+        },
+        "balance_inquiry_response": {
+            "status": "success",
+            "balance": "500.00",
+            "currency": "TTD"          
+        },
+        "agent_transactions_example": {
+            "https://pwapp.co/api/transactions/agent ": "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'": "", 
+            "-d '":{
+                "agent_id": "agent123",
+                "transaction_type": "deposit",
+                "amount": "200.00",
+                "currency": "TTD",
+                "customer_id": "12345"
+            }
+        },
+        "agent_transactions_response":{
+            "status": "success",
+            "transaction_id": "tx123",
+            "message": "Transaction processed successfully"
+        },
+        "third_party_example":{
+            "curl -X POST" : "",
+            "https://pwapp.co/api/transactions/third_party" : "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'" : "",
+            "-d '":{
+                "bank_id": "bank123",
+                "account_number": "987654321",
+                "amount": "300.00",
+                "currency": "TTD",
+                "customer_id": "12345"
+            }
+        },
+        "third_party_response":{
+            "status": "success",
+            "transaction_id": "tx456",
+            "message": "Third-party transaction successful"
+        },
+        "request_payment_example":{
+            "curl -X POST": "",
+            "https://pwapp.co/api/merchant/request_payment": "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'": "",
+            "-d '":{
+                "amount": "150.00",
+                "currency": "TTD",
+                "customer_email": "customer@example.com",
+                "description": "Invoice #12345"
+            }
+        },
+        "request_payment_response":{
+            "status": "success",
+            "payment_link": "https://pwapp.co/pay/abc123",
+            "qr_code_url": "https://pwapp.co/qr/abc123",
+            "message": "Payment request generated successfully"
+        },
+        "credit_card_example":{
+            "curl -X POST": "",
+            "https://pwapp.co/api/merchant/generate_payment_url": "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'": "",
+            "-d '":{
+                "amount": "100.00",
+                "currency": "TTD",
+                "customer_email": "customer@example.com",
+                "description": "Product Purchase"
+            }
+        },
+        "credit_card_response":{
+            "status": "success",
+            "payment_url": "https://pwapp.co/pay/credit/abc123",
+            "message": "Credit card payment URL generated successfully"
+        },
+        "credit_card_transaction_example":{
+            "curl -X GET": "",
+            "https://pwapp.co/api/merchant/check_transaction": "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type: application/json'": "",
+            "-d '":{
+                "transaction_id": "txn789"
+            }
+        },
+        "credit_card_transaction_response":{
+            "status": "success",
+            "transaction_status": "completed",
+            "amount": "100.00",
+            "currency": "TTD"          
+        },
+        "QR_codes_example":{
+            "curl -X POST": "",
+            "https://pwapp.co/api/merchant/generate_qr": "",
+            "-H 'Authorization: Bearer your_api_key_here'": "",
+            "-H 'Content-Type": ""
+        }
     }
 ]

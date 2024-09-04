@@ -12,8 +12,20 @@ const Codes = () => {
 
     const selectedItem = valueData.find(item => item.value === selectedValue);
 
-    const renderSection = (title, content) => (
-        <div className="bg-[#699EC7] rounded-xl my-8 md:mb-4">
+
+    const renderSection = (title, content="") => {
+        
+        console.log(typeof content)
+
+        const formattedJson = JSON.stringify(content, null, 4)
+        .replace(/</g, '&lt;')  // Escapa los caracteres especiales
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, "");;
+        
+        return(
+        
+        <>
+            <div className="bg-[#699EC7] rounded-xl my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t-xl'>
                 <div className='w-2/4 py-2 sm:px-3'>
                     <h2 className='text-lg text-[#F2F2F2]'>{title}</h2>
@@ -29,19 +41,18 @@ const Codes = () => {
                     </select>
                 </div>
             </div>
-            <div className='px-3 py-2 text-sm text-[#F2F2F2]'>
-                {content && (Array.isArray(content) ? content.map((item, index) => (
-                    <div key={index}>
-                        {Object.entries(item).map(([key, value]) => (
-                            <div key={key}>
-                                <strong>{key}:</strong> <Code>{value}</Code>
-                            </div>
-                        ))}
-                    </div>
-                )) : <Code>{content}</Code>)}
+            <div className='px-3 py-2 flex text-sm text-[#F2F2F2]'>
+                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                    <code>
+                        {formattedJson}
+                    </code>
+                </pre>
             </div>
         </div>
-    );
+        </>
+        );
+    };    
+    
 
     return (
         <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
@@ -92,13 +103,12 @@ const Codes = () => {
                     Once your testing account is set up, it's time to test your integration. Here's how you can create a payment request as an example:
                     </p>
                     <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4] mb-5'>
-                        {/* <h3 className='px-3 py-2 font-semibold'>YOUR API KEY</h3> */}
                         <div className='bg-[#f5f6f8] px-3 py-2 text-sm'>
                             <pre>
                             <code>
                             curl -X GET \  <br />
                             https://sandbox.paywise.co/api/v1/me \ <br />
-                            {/* -H 'Authorization: Bearer <API_KEY>:<SECRET_KEY>' \ */}
+                            -H 'Authorization: Bearer &lt;API_KEY&gt;:&lt;SECRET_KEY&gt;'
                             -H 'Content-Type: application/json' \<br />
                             -d '{}'<br />
                             </code>
@@ -191,8 +201,8 @@ const Codes = () => {
                     <p className='py-5 text-base'>Authentication with the Paywise API is handled through the use of a Bearer token, which is passed in the header of each HTTP request. The Bearer token is your API key, and it must be included in every request you send to the API.</p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Authorization Header:', selectedItem?.request)}
-                    {renderSection('Content-Type Header:', selectedItem?.request)}
+                    {renderSection('Authorization Header:', selectedItem?.authorization)}
+                    {renderSection('Content-Type Header:', selectedItem?.content_type)}
                 </div>
             </div>
             {/* Personal Section */}
@@ -210,8 +220,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.personal_example)}
+                    {renderSection('Response:', selectedItem?.personal_response)}
                 </div>
             </div>
             {/* Business Section */}
@@ -229,8 +239,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.business_example)}
+                    {renderSection('Response:', selectedItem?.business_response)}
                 </div>
             </div>
             {/* Institutions Section */}
@@ -248,8 +258,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.institutions_example)}
+                    {renderSection('Response:', selectedItem?.institutions_response)}
                 </div>
             </div>
             {/* General Payments Section */}
@@ -267,8 +277,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.general_payments_example)}
+                    {renderSection('Response:', selectedItem?.general_payments_response)}
                 </div>
             </div>
             {/* Payment Authorization Section */}
@@ -286,8 +296,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.payment_authorization_example)}
+                    {renderSection('Response:', selectedItem?.payment_authorization_response)}
                 </div>
             </div>
             {/* Payment Status Section */}
@@ -305,8 +315,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.payment_status_example)}
+                    {renderSection('Response:', selectedItem?.payment_status_response)}
                 </div>
             </div>
             {/* Balance Inquiry Section */}
@@ -324,8 +334,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.balance_inquiry_example)}
+                    {renderSection('Response:', selectedItem?.balance_inquiry_response)}
                 </div>
             </div>
             {/* Agent Transactions Section */}
@@ -343,8 +353,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.agent_transactions_example)}
+                    {renderSection('Response:', selectedItem?.agent_transactions_response)}
                 </div>
             </div>
             {/* Third Party Transactions Section */}
@@ -365,8 +375,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.third_party_example)}
+                    {renderSection('Response:', selectedItem?.third_party_response)}
                 </div>
             </div>
             {/* Request for Payment Section */}
@@ -387,8 +397,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.request_payment_example)}
+                    {renderSection('Response:', selectedItem?.request_payment_response)}
                 </div>
             </div>
             {/* Generate Credit Card Payment URL Section */}
@@ -409,8 +419,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.credit_card_example)}
+                    {renderSection('Response:', selectedItem?.credit_card_response)}
                 </div>
             </div>
             {/* Check Credit Card Transaction Section */}
@@ -431,8 +441,8 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.credit_card_transaction_example)}
+                    {renderSection('Response:', selectedItem?.credit_card_transaction_response)}
                 </div>
             </div>
             {/* QR Codes Section */}
@@ -453,8 +463,7 @@ const Codes = () => {
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Examplte Request:', selectedItem?.request)}
-                    {renderSection('Response:', selectedItem?.request)}
+                    {renderSection('Example Request:', selectedItem?.QR_codes_example)}
                 </div>
             </div>
 
