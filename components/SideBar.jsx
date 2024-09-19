@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Image from 'next/image'
 
 const SideBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,9 +14,11 @@ const SideBar = () => {
             {/* Seccion Logo */}
             <div className="bg-white flex items-center shadow-sm fixed z-20 py-3 px-5 w-full">
                 <div className="flex lg:basis-1/5 gap-x-4">
-                    <h1>
-                        <img src='/images/paywise_logo.png' alt="Paywise Logo" />
-                    </h1>
+                    <div className="flex items-center">
+                        <h1>
+                            <Image src='/images/paywise_logo.png' alt="Paywise Logo" width={130} height={30} />
+                        </h1>
+                    </div>
                     <div>
                         <div className="bg-[#1E64A7] text-white rounded-3xl py-2 px-2.5" id="Navbar">
                             <small>Documentation</small>
@@ -28,7 +31,7 @@ const SideBar = () => {
                         <a href="#" className="text-gray-700">Docs</a>
                         <a href="https://devportal.pwapp.co/apis" className="text-gray-700">APIs</a>
                         <a href="https://devportal.pwapp.co/products" className="text-gray-700">Products</a>
-                        <a href="#" className="text-gray-700">Plugin</a>
+                        <a href="#" className="text-gray-700">Plugins</a>
                 </div>
                 {/* Menú de inicio de sesión */}
                 <div className="hidden lg:flex basis-1/5 justify-end items-center gap-x-6">
@@ -51,7 +54,7 @@ const SideBar = () => {
                             <a href="#" className="">Docs</a>
                             <a href="https://devportal.pwapp.co/apis" className="">APIs</a>
                             <a href="https://devportal.pwapp.co/products" className="">Products</a>
-                            <a href="#" className="">Plugin</a>
+                            <a href="#" className="">Plugins</a>
                         </div>
                         <div className="flex flex-col gap-y-4 font-semibold px-2 border-solid border-t border-[#d8dee4]">
                             <a href="https://devportal.pwapp.co/signin" className="pt-2">Sign in</a>
@@ -61,7 +64,7 @@ const SideBar = () => {
                     {/* Contenido del Sidebar */}
                     <p className="font-semibold py-2 px-2 border-solid border-t border-[#d8dee4]"><small>Get Started</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#api_reference">About Paywise&apos;s API</a></li>
+                        <li className="p-2"><a href="#api_reference">About PayWise&apos;s API</a></li>
                         <li className="p-2"><a href="#use_cases">Use Cases</a></li>
                         <li className="p-2"><a href="#authentication">Authentication</a></li>
                     </ul>

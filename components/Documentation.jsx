@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import valueData from '@/public/data/data.json'; // Asegúrate de que la ruta sea correcta
 import { Code } from "@nextui-org/code"; 
+import Image from 'next/image'
 
 const Codes = () => {
-    const [selectedValue, setSelectedValue] = useState('');
+    const [selectedValue, setSelectedValue] = useState('XML');
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
@@ -32,7 +33,7 @@ const Codes = () => {
                 </div>
                 <div className='w-2/6 flex justify-center'>
                     <select className='bg-[#699EC7] rounded-md text-[#F2F2F2] p-1' name="select" onChange={handleChange} value={selectedValue}>
-                        <option value="">Select a value</option>
+                        {/*<option value="">Select a value</option>*/}
                         {valueData.map(item => (
                             <option key={item.value} value={item.value}>
                                 {item.value}
@@ -56,62 +57,62 @@ const Codes = () => {
 
     return (
         <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
-            <img src='/images/paywise_banner.png' alt="Paywise Banner" />
+            <Image src='/images/paywise_banner.png' alt="PayWise Banner" width={1275}  height={354}/>
             {/* Paywise API Section */}
             <div id="api_reference" className='doc-section flex flex-col lg:flex-row justify-around items-start pb-12 border-b-2'>
                 <div className='lg:w-5/5 w-full'>
-                    <h1 className='text-3xl lg:text-6xl py-5 font-bold'>About Paywise's API</h1>
+                    <h1 className='text-3xl lg:text-6xl py-5 font-bold'>About PayWise&rsquo;s API</h1>
                     <p className='pt-0 pb-5 text-base'>
-                    Welcome to the Paywise API documentation. Paywise is a fintech company that allows users and businesses to create digital bank accounts to manage their money—whether it’s sending, receiving, paying bills, lending, saving, or withdrawing money. Our API facilitates these operations through simple HTTP requests and returns data in JSON format, making it easy to integrate with your applications.
+                    PayWise is a leading fintech platform empowering users and businesses to manage their finances effortlessly. With PayWise, you can create digital accounts to send, receive, save, and withdraw money, or handle bill payments—all within a seamless digital experience. Our APIs provide easy integration through straightforward HTTP requests and JSON responses, ensuring you can securely embed these functionalities into your applications. Dive in to discover how PayWise APIs can enhance your financial operations and user experience.
                     </p>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Quick Start</h2>
                     <p className='py-5 text-base'>
-                    To begin integrating Paywise into your application, you'll need to use API keys for authentication. We provide two environments to help developers get started: a Testing environment for initial setup and a Live environment for real transactions. When you create a Paywise account, you'll receive two sets of API keys—one for testing and one for live transactions. Each set is unique to its environment.
+                    Getting started with PayWise is simple. First, you&rsquo;ll need to authenticate your application using our API keys. Upon creating a PayWise account, you&rsquo;ll receive two sets of unique API keys: the first, for the Developer environment, which allows you to experiment without using real transactions, will be available immediately. The second, for the Live environment, for processing actual payments will be available on-demand. In addition to API integration, we offer plugins for popular platforms like WooCommerce, with more coming soon. You can also access our media resources directly from this site.
                     </p>
 
                     <div className='flex flex-col lg:flex-row justify-around items-start'>
                         <div className="lg:w-3/6 w-full p-4">
-                            <h4 className="mb-2">Testing Environment</h4>
+                            <h4 className="mb-2">Developer Environment</h4>
                             <p className='mb-2'>
-                                <small>URL: https://sandbox.paywise.co/api</small>
+                                <small>URL: https://devapi.pwapp.co/</small>
                             </p>
                             <p>
-                                <small>The Testing environment is designed for developers to test their integrations with Paywise's services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
+                                <small>The Developer environment is designed for developers to test their integrations with PayWise&rsquo;s services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
                             </p>
                         </div>
                         <div className="lg:w-3/6 w-full p-4">
-                            <h4 className="mb-2">Testing Environment</h4>
+                            <h4 className="mb-2">Developer Environment</h4>
                             <p className='mb-2'>
-                                <small>URL: https://sandbox.paywise.co/api</small>
+                                <small>URL: https://devapi.pwapp.co/</small>
                             </p>
                             <p>
-                                <small>The Testing environment is designed for developers to test their integrations with Paywise's services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
+                                <small>The Developer environment is designed for developers to test their integrations with PayWise&rsquo;s services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
                             </p>
                         </div>
                     </div>
 
-                    <h2 className='text-2xl lg:text-3xl font-semibold'>Step 1. Create a Testing Account</h2>
+                    <h2 className='text-2xl lg:text-3xl font-semibold'>Step 1. Register for free to access the portal APIs </h2>
                     <p className='py-5 text-base'>
-                    Start by creating a free testing account with Paywise. This account gives you access to our Testing environment, where you can explore and test the features of our API safely.
+                    Start by creating a free testing account with PayWise. This account gives you access to our Developer environment, where you can explore and test the features of our API safely.
                     </p>
                     <div className="alert alert-info">
-                        <small>If you want to create a testing account, please go to this link: www.paywise.co</small>
+                        <small>If you want to create a testing account, please go to this link: <a href='https://devportal.pwapp.co' target='_blank'>https://devportal.pwapp.co</a></small>
                     </div>
 
-                    <h2 className='text-2xl lg:text-3xl font-semibold'>Step 2. Try the Testing Environment</h2>
+                    <h2 className='text-2xl lg:text-3xl font-semibold'>Step 2. Try the Developer Environment</h2>
                     <p className='py-5 text-base'>
                     Once your testing account is set up, it's time to test your integration. Here's how you can create a payment request as an example:
                     </p>
-                    <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4] mb-5'>
+                    <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4] mb-5 overflow-x-auto'>
                         <div className='bg-[#f5f6f8] px-3 py-2 text-sm'>
-                            <pre>
-                            <code>
-                            curl -X GET \  <br />
-                            https://sandbox.paywise.co/api/v1/me \ <br />
-                            -H 'Authorization: Bearer &lt;API_KEY&gt;:&lt;SECRET_KEY&gt;'
-                            -H 'Content-Type: application/json' \<br />
-                            -d '{}'<br />
-                            </code>
+                            <pre className='whitespace-pre-wrap break-words'>
+                                <code className='block'>
+                                    curl -X GET \ <br />
+                                    https://sandbox.paywise.co/api/v1/me \ <br />
+                                    -H 'Authorization: Bearer &lt;API_KEY&gt;:&lt;SECRET_KEY&gt;' <br />
+                                    -H 'Content-Type: application/json' \<br />
+                                    -d '{}' <br />
+                                </code>
                             </pre>
                         </div>
                     </div>
@@ -155,7 +156,7 @@ const Codes = () => {
                 <div className='lg:w-5/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold pb-5'>Key Features and Use Cases of the API</h2>
                     <p className='pt-0 pb-5 text-base'>
-                    The Paywise API empowers businesses and developers to seamlessly integrate financial services into their applications. With robust features such as account setup, transaction processing, and real-time money transfers, our API enables a wide range of use cases—from managing digital bank accounts to executing secure payments with third-party institutions. Whether you're looking to automate financial operations or enhance your payment processing capabilities, the Paywise API offers the tools you need to build efficient and reliable solutions.
+                    The PayWise API empowers businesses and developers to seamlessly integrate financial services into their applications. With robust features such as account setup, transaction processing, and real-time money transfers, our API enables a wide range of use cases—from managing digital wallet accounts to executing secure payments with third-party institutions. Whether you're looking to automate financial operations or enhance your payment processing capabilities, the PayWise API offers the tools you need to build efficient and reliable solutions.
                     </p>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>1. Account Setup</h2>
                     <ul>
@@ -166,15 +167,15 @@ const Codes = () => {
                     </ul>
                     <h2 className='text-2xl lg:text-3xl font-semibold pt-5'>2. Credit Transactions</h2>
                     <ul>
-                        <li>Handle and manage credit transactions within the Paywise ecosystem.</li>
+                        <li>Handle and manage credit transactions within the PayWise ecosystem.</li>
                     </ul>
                     
                     <h2 className='text-2xl lg:text-3xl font-semibold pt-5'>3. Debit Transactions</h2>
                     <ul>
-                        <li>Facilitate debit transactions for Paywise account holders.</li>
+                        <li>Facilitate debit transactions for PayWise account holders.</li>
                     </ul>
                     
-                    <h2 className='text-2xl lg:text-3xl font-semibold pt-5'>Paywise offers two main APIs:</h2>
+                    <h2 className='text-2xl lg:text-3xl font-semibold pt-5'>PayWise offers two main APIs:</h2>
                     <ul>
                         <li>Merchant API</li>
                         <li>Financial Connection Product API: Enables communication with other financial institutions to move money from one account to another.</li>
@@ -194,11 +195,11 @@ const Codes = () => {
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Authentication</h2>
                     <p className='py-5 text-base'>
-                    To ensure secure and authorized access to Paywise's API, we use API keys for authentication. These keys allow you to authenticate requests and interact with our API securely. You will receive two sets of API keys: one for the Testing environment and one for the Live environment.
+                    To ensure secure and authorized access to PayWise's API, we use API keys for authentication. These keys allow you to authenticate requests and interact with our API securely. You will receive two sets of API keys: one for the Developer environment and one for the Live environment.
                     </p>
 
                     <h3 className='text-xl font-semibold'>How Authentication Works</h3>
-                    <p className='py-5 text-base'>Authentication with the Paywise API is handled through the use of a Bearer token, which is passed in the header of each HTTP request. The Bearer token is your API key, and it must be included in every request you send to the API.</p>
+                    <p className='py-5 text-base'>Authentication with the PayWise API is handled through the use of a Bearer token, which is passed in the header of each HTTP request. The Bearer token is your API key, and it must be included in every request you send to the API.</p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
                     {renderSection('Authorization Header:', selectedItem?.authorization)}
@@ -210,13 +211,13 @@ const Codes = () => {
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Personal</h2>
                     <p className='my-5 text-base'>
-                    Set up a personal account for individual users. This endpoint allows you to create and manage personal accounts on the Paywise platform.
+                    Set up a personal account for individual users. This endpoint allows you to create and manage personal accounts on the PayWise platform.
                     </p>
                     <p className='my-5 text-base'>
-                    The personal setup process allows individual users to create their own Paywise accounts, providing access to a range of financial services directly from the platform. 
+                    The personal setup process allows individual users to create their own PayWise accounts, providing access to a range of financial services directly from the platform. 
                     </p>
                     <p className='my-5 text-base'>
-                    This API endpoint is designed to facilitate a seamless onboarding experience by collecting essential user information such as name, email, and phone number, ensuring a secure and user-friendly registration process. By creating a personal account, users can manage their transactions, track payments, and monitor their balance, all within the Paywise ecosystem. This setup is ideal for users who want to harness the power of Paywise for their personal financial management needs.
+                    This API endpoint is designed to facilitate a seamless onboarding experience by collecting essential user information such as name, email, and phone number, ensuring a secure and user-friendly registration process. By creating a personal account, users can manage their transactions, track payments, and monitor their balance, all within the PayWise ecosystem. This setup is ideal for users who want to harness the power of PayWise for their personal financial management needs.
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
@@ -229,13 +230,13 @@ const Codes = () => {
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Business</h2>
                     <p className='my-5 text-base'>
-                    Set up a business account to allow organizations to manage their financial transactions through Paywise.
+                    Set up a business account to allow organizations to manage their financial transactions through PayWise.
                     </p>
                     <p className='my-5 text-base'>
-                    Setting up a business account with Paywise is crucial for organizations that require robust financial management tools tailored to their operational needs. 
+                    Setting up a business account with PayWise is crucial for organizations that require robust financial management tools tailored to their operational needs. 
                     </p>
                     <p className='my-5 text-base'>
-                    This API endpoint enables businesses to register on the Paywise platform, allowing them to manage payments, invoicing, and transactions at a larger scale. By providing key details such as the business name, contact information, and address, businesses can unlock features like bulk payment processing, multi-user access, and enhanced security protocols. This setup is particularly beneficial for companies that handle high volumes of transactions and require a reliable, scalable financial solution.
+                    This API endpoint enables businesses to register on the PayWise platform, allowing them to manage payments, invoicing, and transactions at a larger scale. By providing key details such as the business name, contact information, and address, businesses can unlock features like bulk payment processing, multi-user access, and enhanced security protocols. This setup is particularly beneficial for companies that handle high volumes of transactions and require a reliable, scalable financial solution.
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
@@ -248,13 +249,13 @@ const Codes = () => {
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Institutions</h2>
                     <p className='my-5 text-base'>
-                    Establish an institutional account for financial institutions looking to connect with Paywise’s API for broader financial operations.
+                    Establish an institutional account for financial institutions looking to connect with PayWise&rsquo;s API for broader financial operations.
                     </p>
                     <p className='my-5 text-base'>
-                    Institutional accounts on the Paywise platform are designed for large-scale financial entities, such as banks, credit unions, or government bodies, that need to integrate with Paywise’s API for extensive financial operations. 
+                    Institutional accounts on the PayWise platform are designed for large-scale financial entities, such as banks, credit unions, or government bodies, that need to integrate with PayWise&rsquo;s API for extensive financial operations. 
                     </p>
                     <p className='my-5 text-base'>
-                    This setup process involves registering the institution’s details, enabling it to interact with Paywise’s ecosystem to manage funds, conduct transactions, and access a wide range of financial services. By creating an institutional account, these entities can streamline their operations, ensuring efficient and secure handling of large-scale financial activities. This setup is ideal for institutions looking to expand their service offerings through Paywise’s robust and secure API infrastructure.
+                    This setup process involves registering the institution&rsquo;s details, enabling it to interact with PayWise&rsquo;s ecosystem to manage funds, conduct transactions, and access a wide range of financial services. By creating an institutional account, these entities can streamline their operations, ensuring efficient and secure handling of large-scale financial activities. This setup is ideal for institutions looking to expand their service offerings through PayWise&rsquo;s robust and secure API infrastructure.
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
@@ -270,7 +271,7 @@ const Codes = () => {
                     General inquiries related to payments, such as retrieving transaction details or account balance.
                     </p>
                     <p className='my-5 text-base'>
-                    The general payment inquiry endpoint is your go-to resource for retrieving comprehensive information about any transaction processed through the Paywise platform. 
+                    The general payment inquiry endpoint is your go-to resource for retrieving comprehensive information about any transaction processed through the PayWise platform. 
                     </p>
                     <p className='my-5 text-base'>
                     Whether you need to check the status of a payment, review the details of a completed transaction, or verify account balances, this endpoint offers a flexible solution for all your inquiry needs. By utilizing this API, users can ensure transparency and accuracy in their financial records, making it an essential tool for both personal and business account holders who need to stay on top of their financial activities.
@@ -292,7 +293,7 @@ const Codes = () => {
                     Payment authorization is a critical step in the transaction process, ensuring that funds are available and reserved for a specific payment before it is fully processed.  
                     </p>
                     <p className='my-5 text-base'>
-                    This API endpoint allows you to authorize payments by validating and holding the necessary amount on the customer’s account, providing an added layer of security and trust for both the merchant and the customer. By using payment authorization, businesses can minimize the risk of declined transactions and ensure that the funds are ready to be captured when the final payment is due. This process is particularly useful for businesses that operate on pre-orders, subscriptions, or any scenario where payment needs to be secured in advance.
+                    This API endpoint allows you to authorize payments by validating and holding the necessary amount on the customer&rsquo;s account, providing an added layer of security and trust for both the merchant and the customer. By using payment authorization, businesses can minimize the risk of declined transactions and ensure that the funds are ready to be captured when the final payment is due. This process is particularly useful for businesses that operate on pre-orders, subscriptions, or any scenario where payment needs to be secured in advance.
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
@@ -308,7 +309,7 @@ const Codes = () => {
                     Check the status of a previously initiated payment to see if it has been completed, pending, or failed.
                     </p>
                     <p className='my-5 text-base'>
-                    Tracking the status of a payment is vital for maintaining transparency and ensuring that transactions are completed as expected. The payment status endpoint provides real-time updates on the state of a payment, whether it’s pending, completed, or failed.  
+                    Tracking the status of a payment is vital for maintaining transparency and ensuring that transactions are completed as expected. The payment status endpoint provides real-time updates on the state of a payment, whether it&rsquo;s pending, completed, or failed.  
                     </p>
                     <p className='my-5 text-base'>
                     This functionality is essential for both merchants and customers, as it allows them to monitor the progress of a transaction and address any issues that may arise promptly. By integrating this API into your system, you can offer your users a reliable way to check on their payments, thereby improving user experience and trust in your financial operations.
@@ -327,10 +328,10 @@ const Codes = () => {
                     Retrieve the current balance of an account to verify available funds before initiating a transaction.
                     </p>
                     <p className='my-5 text-base'>
-                    Balance inquiry is a fundamental feature for users who need to monitor their available funds within the Paywise ecosystem. This API endpoint allows users to quickly retrieve their current account balance, ensuring they have sufficient funds before initiating any transactions.   
+                    Balance inquiry is a fundamental feature for users who need to monitor their available funds within the PayWise ecosystem. This API endpoint allows users to quickly retrieve their current account balance, ensuring they have sufficient funds before initiating any transactions.   
                     </p>
                     <p className='my-5 text-base'>
-                    Regular balance checks help users manage their finances more effectively, preventing overdrafts and ensuring that payments can be processed without issues. Whether you’re an individual user or a business, the balance inquiry endpoint is an indispensable tool for maintaining financial control and making informed decisions about your spending.
+                    Regular balance checks help users manage their finances more effectively, preventing overdrafts and ensuring that payments can be processed without issues. Whether you&rsquo;re an individual user or a business, the balance inquiry endpoint is an indispensable tool for maintaining financial control and making informed decisions about your spending.
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
@@ -343,13 +344,13 @@ const Codes = () => {
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Agent Transactions</h2>
                     <p className='my-5 text-base'>
-                    Facilitate transactions through Paywise agents, such as cash deposits or withdrawals.
+                    Facilitate transactions through PayWise agents, such as cash deposits or withdrawals.
                     </p>
                     <p className='my-5 text-base'>
-                    Agent transactions are designed for users who need to interact with Paywise agents to conduct cash-based operations, such as deposits and withdrawals.  
+                    Agent transactions are designed for users who need to interact with PayWise agents to conduct cash-based operations, such as deposits and withdrawals.  
                     </p>
                     <p className='my-5 text-base'>
-                    This API endpoint allows you to facilitate these transactions by providing the necessary details like agent ID, transaction type, and amount. By leveraging agent transactions, users can convert physical cash into digital currency within the Paywise system or vice versa, making it easier to manage their funds in both the digital and physical realms. This feature is particularly useful in regions where digital banking is still developing, providing a bridge between traditional and modern financial services.
+                    This API endpoint allows you to facilitate these transactions by providing the necessary details like agent ID, transaction type, and amount. By leveraging agent transactions, users can convert physical cash into digital currency within the PayWise system or vice versa, making it easier to manage their funds in both the digital and physical realms. This feature is particularly useful in regions where digital banking is still developing, providing a bridge between traditional and modern financial services.
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
@@ -365,13 +366,13 @@ const Codes = () => {
                     Execute transactions with third-party financial institutions, including payments and transfers.
                     </p>
                     <p className='my-5 text-base'>
-                    Third-party transactions enable seamless financial interactions between Paywise and external financial institutions, such as banks and other payment processors.   
+                    Third-party transactions enable seamless financial interactions between PayWise and external financial institutions, such as banks and other payment processors.   
                     </p>
                     <p className='my-5 text-base'>
-                    This API endpoint allows users to initiate payments or transfers to accounts outside the Paywise platform, expanding the reach and utility of Paywise’s services. 
+                    This API endpoint allows users to initiate payments or transfers to accounts outside the PayWise platform, expanding the reach and utility of PayWise&rsquo;s services. 
                     </p>
                     <p className='my-5 text-base'>
-                    Whether you’re sending money to a bank account, paying a bill, or transferring funds to another service provider, third-party transactions provide the flexibility needed to manage your finances across multiple platforms. This feature is ideal for businesses and individuals who need to conduct transactions beyond the Paywise ecosystem, ensuring that they can handle all their financial needs from a single, integrated interface. 
+                    Whether you&rsquo;re sending money to a bank account, paying a bill, or transferring funds to another service provider, third-party transactions provide the flexibility needed to manage your finances across multiple platforms. This feature is ideal for businesses and individuals who need to conduct transactions beyond the PayWise ecosystem, ensuring that they can handle all their financial needs from a single, integrated interface. 
                     </p>
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
@@ -456,7 +457,7 @@ const Codes = () => {
                     QR codes are a versatile and increasingly popular method for facilitating contactless payments.  
                     </p>
                     <p className='my-5 text-base'>
-                    This API endpoint allows merchants to generate QR codes that customers can scan with their mobile devices to make payments directly from their Paywise accounts. QR codes simplify the payment process, especially in physical retail environments, by eliminating the need for cash or cards at the point of sale.
+                    This API endpoint allows merchants to generate QR codes that customers can scan with their mobile devices to make payments directly from their PayWise accounts. QR codes simplify the payment process, especially in physical retail environments, by eliminating the need for cash or cards at the point of sale.
                     </p>
                     <p className='my-5 text-base'>
                     This feature is particularly useful for businesses looking to enhance their checkout experience with fast, secure, and convenient payment options. By incorporating QR codes into your payment strategy, you can cater to a growing number of customers who prefer mobile and contactless payment methods.
@@ -472,10 +473,10 @@ const Codes = () => {
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Errors</h2>
                     <p className='py-5 text-base'>
-                    Paywise uses conventional HTTP response codes to indicate the success or failure of an API request. In general: 
+                    PayWise uses conventional HTTP response codes to indicate the success or failure of an API request. In general: 
                     Codes in the <Code className='rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>2xx</Code> range indicate success. Codes in the <Code className='rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>4xx</Code> 
                     range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a 
-                    charge failed, etc.). Codes in the <Code className='rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>5xx</Code> range indicate an error with Paywise&apos;s servers (these are rare).
+                    charge failed, etc.). Codes in the <Code className='rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>5xx</Code> range indicate an error with PayWise&apos;s servers (these are rare).
                     </p>
                     <p className='py-5 text-base'>
                     Some <Code className='rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>4xx</Code> 
@@ -645,7 +646,7 @@ const Codes = () => {
                                         <p className=''>Server Errors</p>
                                     </div>
                                     <div className='basis-80 flex items-center'>
-                                        <p>Something went wrong on Paywise&apos;s end. (These are rare.)</p>
+                                        <p>Something went wrong on PayWise&apos;s end. (These are rare.)</p>
                                     </div>
                                 </div>
                             </div>
@@ -660,7 +661,7 @@ const Codes = () => {
                                         <Code className='text-xs rounded-md shadow-sm border-solid border-t border-[#d8dee4] bg-[#f5f6f8] p-1'>api_error</Code>
                                     </div>
                                     <div className='basis-80 flex items-center'>
-                                        <p>API errors cover any other type of problem (e.g., a temporary problem with Paywise&apos;s servers), and are extremely uncommon.</p>
+                                        <p>API errors cover any other type of problem (e.g., a temporary problem with PayWise&apos;s servers), and are extremely uncommon.</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-row justify-start border-b py-3 px-3 ">

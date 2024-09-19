@@ -1,3 +1,4 @@
+"use client"; // This is a client component
 import "./globals.css";
 
 export default function RootLayout({ children }){
