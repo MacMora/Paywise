@@ -72,7 +72,7 @@ const Codes = () => {
 
                     <div className='flex flex-col lg:flex-row justify-around items-start'>
                         <div className="lg:w-3/6 w-full p-4">
-                            <h4 className="mb-2">Developer Environment</h4>
+                            <h4 className="mb-2 text-[#1E64A7] font-semibold">Developer Environment</h4>
                             <p className='mb-2'>
                                 <small>URL: <a href="https://devapi.pwapp.co/" target="_blank" rel="noopener noreferrer">https://devapi.pwapp.co/</a></small>
                             </p>
@@ -81,7 +81,7 @@ const Codes = () => {
                             </p>
                         </div>
                         <div className="lg:w-3/6 w-full p-4">
-                            <h4 className="mb-2">Live Environment</h4>
+                            <h4 className="mb-2 text-[#1E64A7] font-semibold">Live Environment</h4>
                             <p className='mb-2'>
                                 <small>URL: <a href='https://pwapp.co/api/' target='_blank' rel="noopener noreferrer">https://pwapp.co/api/</a></small>
                             </p>
@@ -95,7 +95,8 @@ const Codes = () => {
                     <p className='py-5 text-base'>
                     Start by creating a free testing account with PayWise. This account gives you access to our Developer environment, where you can explore and test the features of our API safely.
                     </p>
-                    <div className="alert alert-info">
+                    <div className="alert alert-info flex items-center gap-4">
+                        <img src="/images/Info.svg" alt="info" />
                         <small>If you want to create a testing account, please sign up for free at: <a href='https://devportal.pwapp.co/signup' target='_blank'>https://devportal.pwapp.co/signup</a></small>
                     </div>
 
