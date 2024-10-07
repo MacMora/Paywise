@@ -84,19 +84,19 @@ const SideBar = () => {
                     <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Transactions</small></p>
                     <ul className="">
                         <li className="p-2"><a href="#agent_transactions">Agent Transactions</a></li>
-                        <li className="p-2"><a href="#third_party_transactions">Third Party transactions</a></li>
+                        <li className="p-2"><a href="#third_party_transactions">Third Party Transactions</a></li>
                     </ul>
                     <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Merchant</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#request_payment">Request for payment</a></li>
-                        <li className="p-2"><a href="#generate_cc_payment_url">Generate credit card payment URL</a></li>
-                        <li className="p-2"><a href="#check_cc_transaction">Check credit card transaction</a></li>
+                        <li className="p-2"><a href="#request_payment">Request for Payment</a></li>
+                        <li className="p-2"><a href="#generate_cc_payment_url">Generate Credit Card Payment URL</a></li>
+                        <li className="p-2"><a href="#check_cc_transaction">Check Credit Card Transaction</a></li>
                         <li className="p-2"><a href="#qr_codes">QR Codes</a></li>
                     </ul>
                     <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Products</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#authentication">Institution</a></li>
-                        <li className="p-2"><a href="#connected_accounts">Merchant</a></li>
+                        <li className="p-2"><a href="https://devportal.pwapp.co/api-details#api=66a06819a8aecc7dd68da65b" target="_blank" rel="noopener noreferrer">Institution</a></li>
+                        <li className="p-2"><a href="https://devportal.pwapp.co/api-details#api=66a06721f6563de21054271d" target="_blank" rel="noopener noreferrer">Merchant</a></li>
                     </ul>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import { Code } from "@nextui-org/code";
 import Image from 'next/image'
 
 const Codes = () => {
-    const [selectedValue, setSelectedValue] = useState('XML');
+    const [selectedValue, setSelectedValue] = useState('application/json');
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
@@ -28,8 +28,8 @@ const Codes = () => {
         <>
             <div className="bg-[#699EC7] rounded-xl my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t-xl'>
-                <div className='w-2/4 py-2 sm:px-3'>
-                    <h2 className='text-lg text-[#F2F2F2]'>{title}</h2>
+                <div className='w-2/4 py-2 sm:px-4'>
+                    <h2 className='text-base text-[#F2F2F2]'>{title}</h2>
                 </div>
                 <div className='w-2/6 flex justify-center'>
                     <select className='bg-[#699EC7] rounded-md text-[#F2F2F2] p-1' name="select" onChange={handleChange} value={selectedValue}>
@@ -74,19 +74,19 @@ const Codes = () => {
                         <div className="lg:w-3/6 w-full p-4">
                             <h4 className="mb-2">Developer Environment</h4>
                             <p className='mb-2'>
-                                <small>URL: https://devapi.pwapp.co/</small>
+                                <small>URL: <a href="https://devapi.pwapp.co/" target="_blank" rel="noopener noreferrer">https://devapi.pwapp.co/</a></small>
                             </p>
                             <p>
                                 <small>The Developer environment is designed for developers to test their integrations with PayWise&rsquo;s services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
                             </p>
                         </div>
                         <div className="lg:w-3/6 w-full p-4">
-                            <h4 className="mb-2">Developer Environment</h4>
+                            <h4 className="mb-2">Live Environment</h4>
                             <p className='mb-2'>
-                                <small>URL: https://devapi.pwapp.co/</small>
+                                <small>URL: <a href='https://pwapp.co/api/' target='_blank' rel="noopener noreferrer">https://pwapp.co/api/</a></small>
                             </p>
                             <p>
-                                <small>The Developer environment is designed for developers to test their integrations with PayWise&rsquo;s services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
+                                <small>The Live environment is where real transactions take place. After thoroughly testing your integration, you can switch to this environment to start processing actual payments and managing live customer transactions.</small>
                             </p>
                         </div>
                     </div>
@@ -96,7 +96,7 @@ const Codes = () => {
                     Start by creating a free testing account with PayWise. This account gives you access to our Developer environment, where you can explore and test the features of our API safely.
                     </p>
                     <div className="alert alert-info">
-                        <small>If you want to create a testing account, please go to this link: <a href='https://devportal.pwapp.co' target='_blank'>https://devportal.pwapp.co</a></small>
+                        <small>If you want to create a testing account, please sign up for free at: <a href='https://devportal.pwapp.co/signup' target='_blank'>https://devportal.pwapp.co/signup</a></small>
                     </div>
 
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Step 2. Try the Developer Environment</h2>
@@ -109,9 +109,9 @@ const Codes = () => {
                                 <code className='block'>
                                     curl -X GET \ <br />
                                     https://sandbox.paywise.co/api/v1/me \ <br />
-                                    -H 'Authorization: Bearer &lt;API_KEY&gt;:&lt;SECRET_KEY&gt;' <br />
-                                    -H 'Content-Type: application/json' \<br />
-                                    -d '{}' <br />
+                                    -H <span className='text-[#5CA032]'>'Authorization: Bearer &lt;API_KEY&gt;:&lt;SECRET_KEY&gt;'\</span> <br />
+                                    -H <span className='text-[#5CA032]'>'Content-Type: application/json' </span>\<br />
+                                    -d <span className='text-[#5CA032]'>'{"{}"}' </span><br />
                                 </code>
                             </pre>
                         </div>
@@ -138,15 +138,25 @@ const Codes = () => {
                         </ul>
                     </div>
 
+                    <h2 className='text-2xl lg:text-3xl font-semibold'>Step 3. Create a Live Account</h2>
+                    <p className='py-5 text-base'>
+                    When you're ready to go live, create a Paywise live account. This will give you access to the Live environment where you can start processing real transactions.
+                    </p>
+                    <div className="alert alert-info flex items-center gap-4">
+                        <img src="/images/Info.svg" alt="info" />
+                        <small>If you want to Create your live account, please go to this link: <a href="https://pwapp.co/home" target="_blank" rel="noopener noreferrer">www.paywise.co</a></small>
+                    </div>
 
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Step 4. Get Ready to Accept Live Payments</h2>
                     <p className='py-5 text-base'>
                     To begin accepting payments with your live account, you'll need to configure your settings. Please note that settings from your test account do not carry over, so you'll need to set up your payment methods and preferences in your live account dashboard.
                     </p>
-                    <div className="alert alert-warning">
+                    <div className="alert alert-warning flex items-center gap-4">
+                        <img src="/images/Bulb.svg" alt="bulb" />
                         <small>Settings from your test account do not automatically transfer to your live account.</small>
                     </div>
-                    <div className="alert alert-info">
+                    <div className="alert alert-info flex items-center gap-4">
+                        <img src="/images/Info.svg" alt="info" />
                         <small>Ensure you configure your accepted payment methods on your live account dashboard, as default settings will apply until they are updated.</small>
                     </div>
                 </div>
@@ -175,9 +185,10 @@ const Codes = () => {
                         <li>Facilitate debit transactions for PayWise account holders.</li>
                     </ul>
                     
-                    <h2 className='text-2xl lg:text-3xl font-semibold pt-5'>PayWise offers two main APIs:</h2>
+                    <h2 className='text-2xl lg:text-3xl font-semibold pt-5'>PayWise offers three main APIs:</h2>
                     <ul>
                         <li>Merchant API</li>
+                        <li>Institution API</li>
                         <li>Financial Connection Product API: Enables communication with other financial institutions to move money from one account to another.</li>
                     </ul>
                     
@@ -195,15 +206,51 @@ const Codes = () => {
                 <div className='lg:w-2/5 w-full'>
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Authentication</h2>
                     <p className='py-5 text-base'>
-                    To ensure secure and authorized access to PayWise's API, we use API keys for authentication. These keys allow you to authenticate requests and interact with our API securely. You will receive two sets of API keys: one for the Developer environment and one for the Live environment.
+                    To access and interact with the Paywise API, developers must authenticate their requests. Paywise uses Azure API Management (APIM) for developer authentication and subscription management. This process ensures secure access to Paywise's services and allows us to manage API usage effectively.
                     </p>
 
-                    <h3 className='text-xl font-semibold'>How Authentication Works</h3>
-                    <p className='py-5 text-base'>Authentication with the PayWise API is handled through the use of a Bearer token, which is passed in the header of each HTTP request. The Bearer token is your API key, and it must be included in every request you send to the API.</p>
+                    <h3 className='text-2xl font-semibold'>Subscription Keys</h3>
+                    <p className='py-5 text-base'>Upon signing up as a Paywise developer, you'll need to enroll for a subscription via our developer portal. Once you complete the enrollment process, you'll be assigned a subscription key. This subscription key is required for authenticating API requests and must be included in the headers of every call made to the Paywise API.</p>
+
+                    <h3 className='text-2xl font-semibold'>Additional Token Authentication</h3>
+                    <p className='py-5 text-base'>Some APIs may require additional security tokens to be passed along with the subscription key. In such cases, you will need to include an OAuth 2.0 Bearer Token in the request headers, which provides an additional layer of authentication and ensures that sensitive operations like payments are protected.</p>
+
+                    <h3 className='text-2xl font-semibold'>Handling Authentication Errors</h3>
+                    <p className='py-5 text-base'>If your API request lacks the proper subscription key or bearer token (where applicable), Paywise will return an authentication error. Make sure both the Ocp-Apim-Subscription-Key and the Authorization token are included correctly in the header when required.</p>
+
                 </div>
                 <div className='lg:w-2/4 w-full sticky top-0'>
-                    {renderSection('Authorization Header:', selectedItem?.authorization)}
-                    {renderSection('Content-Type Header:', selectedItem?.content_type)}
+                    {renderSection('Required Header for Subscription Key:', selectedItem?.header_subscription)}
+                    <small>This key identifies your application and tracks the usage of our APIs. Requests that do not include the correct subscription key will be rejected with an authentication error.</small>
+                    {renderSection('Required Header for Bearer Token', selectedItem?.header_token)}
+                    {renderSection('Example of an API Request with Both Headers', selectedItem?.example_request)}
+                    <div className='bg-[#ebeef1] rounded-md shadow-sm border-solid border border-[#d8dee4] text-sm'>
+                        <h3 className='px-3 py-2 font-semibold'>Common Error Codes</h3>
+                        <div className='bg-[#f5f6f8] flex flex-col border-solid border-t border-[#d8dee4]'>
+                            <div className="flex flex-row justify-start border-b py-3 px-3 ">
+                                <div className='basis-24 flex items-center'>
+                                    <h4 className='font-semibold'>401</h4>
+                                </div>
+                                <div className='basis-32 flex items-center'>
+                                    <p className=''>Unauthorized</p>
+                                </div>
+                                <div className='flex items-center'>
+                                    <p>Invalid our missing subscription key or bearer token.</p>
+                                </div>
+                            </div>
+                            <div className="flex flex-row justify-start content-center border-b py-3 px-3 ">
+                                <div className='basis-24 flex items-center'>
+                                    <h4 className='font-semibold'>403</h4>
+                                </div>
+                                <div className='basis-32 flex items-center'>
+                                    <p className=''>Forbidden</p>
+                                </div>
+                                <div className='basis-80 flex items-center'>
+                                    <p>The request is authenticated but lacks the necessary permissions for the operation.</p>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
                 </div>
             </div>
             {/* Personal Section */}

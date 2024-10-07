@@ -1,39 +1,18 @@
 [
     {
-        "value": "Python",
-        "global": "global key Python",
-        "request": "request code Python",
-        "key": [
-            
-            "Python Key 1",
-            "Python Key 2" 
-            
-        ]
-    },
-    {
-        "value": "Java",
-        "global": [
-            {
-                "prueba": "Java Line 1",
-                "test": "Java Line 2"
-            }
-        ],
-        "request": "request code Java",
-        "key": "key Java"
-    },
-    {
-        "value": "Go",
-        "global": "global key Go",
-        "request": "request code Go",
-        "key": "key Go"
-    },
-    {
-        "value": "XML",
-        "authorization": "Authorization: Bearer your_api_key_here",
-        "content_type": "Content-Type: application/json",
+        "value": "application/json",
+        "header_subscription": "Ocp-Apim-Subscription-Key: your_subscription_key_here",
+        "header_token": "Authorization: Bearer your_oauth_token_here",
+        "example_request": {
+            "curl -X POST https://pwapp.co/api/third_party_transactions" : "",
+            "-H 'Ocp-Apim-Subscription-Key: your_subscription_key_here'" : "",
+            "-H 'Authorization: Bearer your_oauth_token_here'": "",
+            "-H 'Content-Type: application/json'": "",
+            "-d '{ 'amount': '100.00', 'currency'": "'TTD'"
+        },
         "personal_example": {
             "curl -X POST" : "",
-            "https://pwapp.co/api/setup/personal" : "",
+            "https://dev-api.pwapp.co/api/setup/personal" : "",
             "-H 'Authorization: Bearer your_api_key_here'" : "",
             "-H 'Content-Type: application/json'" : "",
             "-d '": {
@@ -51,7 +30,7 @@
         },
         "business_example": {
             "curl -X POST": "",
-            "https://pwapp.co/api/setup/business": "",
+            "https://dev-api.pwapp.co/api/setup/business": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d'": {
@@ -69,7 +48,7 @@
         },
         "institutions_example":{
             "curl -X POST" : "",
-            "https://pwapp.co/api/setup/institution" : "",
+            "https://dev-api.pwapp.co/api/setup/institution" : "",
             "-H 'Authorization: Bearer your_api_key_here'" : "",
             "-H 'Content-Type: application/json'" : "",
             "-d '" : {
@@ -87,7 +66,7 @@
         },
         "general_payments_example": {
             "curl -X GET" : "",
-            "https://pwapp.co/api/payment/general" : "",
+            "https://dev-api.pwapp.co/api/payment/general" : "",
             "-H 'Authorization: Bearer your_api_key_here'" : "",
             "-H 'Content-Type: application/json'" : "",
             "-d'": {
@@ -105,7 +84,7 @@
         },
         "payment_authorization_example":{
             "curl -X POST" : "",
-            "https://pwapp.co/api/payment/authorize" : "",
+            "https://dev-api.pwapp.co/api/payment/authorize" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d'": {
@@ -122,7 +101,7 @@
         },
         "payment_status_example":{
             "curl -X GET" : "",
-            "https://pwapp.co/api/payment/status" : "",
+            "https://dev-api.pwapp.co/api/payment/status" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -137,7 +116,7 @@
         },
         "balance_inquiry_example": {
             "curl -X GET ": "",
-            "https://pwapp.co/api/payment/balance" : "",
+            "https://dev-api.pwapp.co/api/payment/balance" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'" : "",
             "-d '": {
@@ -150,7 +129,7 @@
             "currency": "TTD"          
         },
         "agent_transactions_example": {
-            "https://pwapp.co/api/transactions/agent ": "",
+            "https://dev-api.pwapp.co/api/transactions/agent ": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "", 
             "-d '":{
@@ -168,7 +147,7 @@
         },
         "third_party_example":{
             "curl -X POST" : "",
-            "https://pwapp.co/api/transactions/third_party" : "",
+            "https://dev-api.pwapp.co/api/transactions/third_party" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'" : "",
             "-d '":{
@@ -186,7 +165,7 @@
         },
         "request_payment_example":{
             "curl -X POST": "",
-            "https://pwapp.co/api/merchant/request_payment": "",
+            "https://dev-api.pwapp.co/api/merchant/request_payment": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -198,13 +177,13 @@
         },
         "request_payment_response":{
             "status": "success",
-            "payment_link": "https://pwapp.co/pay/abc123",
-            "qr_code_url": "https://pwapp.co/qr/abc123",
+            "payment_link": "https://dev-api.pwapp.co/pay/abc123",
+            "qr_code_url": "https://dev-api.pwapp.co/qr/abc123",
             "message": "Payment request generated successfully"
         },
         "credit_card_example":{
             "curl -X POST": "",
-            "https://pwapp.co/api/merchant/generate_payment_url": "",
+            "https://dev-api.pwapp.co/api/merchant/generate_payment_url": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -216,12 +195,12 @@
         },
         "credit_card_response":{
             "status": "success",
-            "payment_url": "https://pwapp.co/pay/credit/abc123",
+            "payment_url": "https://dev-api.pwapp.co/pay/credit/abc123",
             "message": "Credit card payment URL generated successfully"
         },
         "credit_card_transaction_example":{
             "curl -X GET": "",
-            "https://pwapp.co/api/merchant/check_transaction": "",
+            "https://dev-api.pwapp.co/api/merchant/check_transaction": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -236,7 +215,7 @@
         },
         "QR_codes_example":{
             "curl -X POST": "",
-            "https://pwapp.co/api/merchant/generate_qr": "",
+            "https://dev-api.pwapp.co/api/merchant/generate_qr": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type": ""
         }
