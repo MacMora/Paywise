@@ -26,13 +26,13 @@ const Codes = () => {
         return(
         
         <>
-            <div className="bg-[#699EC7] rounded-xl my-8 md:mb-4">
-            <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t-xl'>
-                <div className='w-2/4 py-2 sm:px-4'>
+            <div className="bg-[#699EC7] rounded my-8 md:mb-4">
+            <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
+                <div className='w-2/4 py-2 sm:px-2'>
                     <h2 className='text-base text-[#F2F2F2]'>{title}</h2>
                 </div>
                 <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#699EC7] rounded-md text-[#F2F2F2] p-1' name="select" onChange={handleChange} value={selectedValue}>
+                    <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' name="select" onChange={handleChange} value={selectedValue}>
                         {/*<option value="">Select a value</option>*/}
                         {valueData.map(item => (
                             <option key={item.value} value={item.value}>
@@ -42,7 +42,7 @@ const Codes = () => {
                     </select>
                 </div>
             </div>
-            <div className='px-3 py-2 flex text-sm text-[#F2F2F2]'>
+            <div className='px-2 py-2 flex text-sm text-[#F2F2F2]'>
                 <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
                     <code>
                         {formattedJson}
@@ -70,8 +70,8 @@ const Codes = () => {
                     Getting started with PayWise is simple. First, you&rsquo;ll need to authenticate your application using our API keys. Upon creating a PayWise account, you&rsquo;ll receive two sets of unique API keys: the first, for the Developer environment, which allows you to experiment without using real transactions, will be available immediately. The second, for the Live environment, for processing actual payments will be available on-demand. In addition to API integration, we offer plugins for popular platforms like WooCommerce, with more coming soon. You can also access our media resources directly from this site.
                     </p>
 
-                    <div className='flex flex-col lg:flex-row justify-around items-start'>
-                        <div className="lg:w-3/6 w-full p-4">
+                    <div className='flex flex-col lg:flex-row justify-start items-start gap-14 py-8'>
+                        <div className="lg:w-3/6 basis-2/5 p-8 bg-[#F9F9F9]">
                             <h4 className="mb-2 text-[#1E64A7] font-semibold">Developer Environment</h4>
                             <p className='mb-2'>
                                 <small>URL: <a href="https://devapi.pwapp.co/" target="_blank" rel="noopener noreferrer">https://devapi.pwapp.co/</a></small>
@@ -80,10 +80,10 @@ const Codes = () => {
                                 <small>The Developer environment is designed for developers to test their integrations with PayWise&rsquo;s services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
                             </p>
                         </div>
-                        <div className="lg:w-3/6 w-full p-4">
+                        <div className="lg:w-3/6 basis-2/5 p-8 bg-[#F9F9F9]">
                             <h4 className="mb-2 text-[#1E64A7] font-semibold">Live Environment</h4>
                             <p className='mb-2'>
-                                <small>URL: <a href='https://pwapp.co/api/' target='_blank' rel="noopener noreferrer">https://pwapp.co/api/</a></small>
+                                <small>URL: <a href='https://api.pwapp.co/' target='_blank' rel="noopener noreferrer">https://api.pwapp.co/</a></small>
                             </p>
                             <p>
                                 <small>The Live environment is where real transactions take place. After thoroughly testing your integration, you can switch to this environment to start processing actual payments and managing live customer transactions.</small>
@@ -97,7 +97,7 @@ const Codes = () => {
                     </p>
                     <div className="alert alert-info flex items-center gap-4">
                         <img src="/images/Info.svg" alt="info" />
-                        <small>If you want to create a testing account, please sign up for free at: <a href='https://devportal.pwapp.co/signup' target='_blank'>https://devportal.pwapp.co/signup</a></small>
+                        <small>If you want to create a testing account, please sign up for free at: <a className='font-bold' href='https://devportal.pwapp.co/signup' target='_blank'>https://devportal.pwapp.co/signup</a></small>
                     </div>
 
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Step 2. Try the Developer Environment</h2>
@@ -145,7 +145,7 @@ const Codes = () => {
                     </p>
                     <div className="alert alert-info flex items-center gap-4">
                         <img src="/images/Info.svg" alt="info" />
-                        <small>If you want to Create your live account, please go to this link: <a href="https://pwapp.co/home" target="_blank" rel="noopener noreferrer">www.paywise.co</a></small>
+                        <small>If you want to Create your live account, please go to this link: <a className='font-bold' href='https://devportal.pwapp.co/signup' target='_blank'>https://devportal.pwapp.co/signup</a></small>
                     </div>
 
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Step 4. Get Ready to Accept Live Payments</h2>
