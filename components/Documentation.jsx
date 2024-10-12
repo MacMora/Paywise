@@ -74,7 +74,7 @@ const Codes = () => {
                         <div className="lg:w-3/6 basis-2/5 p-8 bg-[#F9F9F9]">
                             <h4 className="mb-2 text-[#1E64A7] font-semibold">Developer Environment</h4>
                             <p className='mb-2'>
-                                <small>URL: <a href="https://devapi.pwapp.co/" target="_blank" rel="noopener noreferrer">https://devapi.pwapp.co/</a></small>
+                                <small>URL: <a href="https://devapi.paywise.co/" target="_blank" rel="noopener noreferrer">https://devapi.paywise.co/</a></small>
                             </p>
                             <p>
                                 <small>The Developer environment is designed for developers to test their integrations with PayWise&rsquo;s services without the risk of processing real money. Here, you can simulate transactions and verify that your code works as expected in a controlled setting.</small>
@@ -83,7 +83,7 @@ const Codes = () => {
                         <div className="lg:w-3/6 basis-2/5 p-8 bg-[#F9F9F9]">
                             <h4 className="mb-2 text-[#1E64A7] font-semibold">Live Environment</h4>
                             <p className='mb-2'>
-                                <small>URL: <a href='https://api.pwapp.co/' target='_blank' rel="noopener noreferrer">https://api.pwapp.co/</a></small>
+                                <small>URL: <a href='https://api.paywise.co/' target='_blank' rel="noopener noreferrer">https://api.paywise.co/</a></small>
                             </p>
                             <p>
                                 <small>The Live environment is where real transactions take place. After thoroughly testing your integration, you can switch to this environment to start processing actual payments and managing live customer transactions.</small>
@@ -97,7 +97,7 @@ const Codes = () => {
                     </p>
                     <div className="alert alert-info flex items-center gap-4">
                         <img src="/images/Info.svg" alt="info" />
-                        <small>If you want to create a testing account, please sign up for free at: <a className='font-bold' href='https://devportal.pwapp.co/signup' target='_blank'>https://devportal.pwapp.co/signup</a></small>
+                        <small>If you want to create a testing account, please sign up for free at: <a className='font-bold' href='https://devportal.paywise.co/signup' target='_blank'>https://devportal.paywise.co/signup</a></small>
                     </div>
 
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Step 2. Try the Developer Environment</h2>
@@ -145,7 +145,7 @@ const Codes = () => {
                     </p>
                     <div className="alert alert-info flex items-center gap-4">
                         <img src="/images/Info.svg" alt="info" />
-                        <small>If you want to Create your live account, please go to this link: <a className='font-bold' href='https://devportal.pwapp.co/signup' target='_blank'>https://devportal.pwapp.co/signup</a></small>
+                        <small>If you want to Create your live account, please go to this link: <a className='font-bold' href='https://devportal.paywise.co/signup' target='_blank'>https://devportal.paywise.co/signup</a></small>
                     </div>
 
                     <h2 className='text-2xl lg:text-3xl font-semibold'>Step 4. Get Ready to Accept Live Payments</h2>

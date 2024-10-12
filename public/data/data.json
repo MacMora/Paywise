@@ -4,7 +4,7 @@
         "header_subscription": "Ocp-Apim-Subscription-Key: your_subscription_key_here",
         "header_token": "Authorization: Bearer your_oauth_token_here",
         "example_request": {
-            "curl -X POST https://devapi.pwapp.co/api/third_party_transactions":"",
+            "curl -X POST https://devapi.paywise.co/api/third_party_transactions":"",
             "-H 'Ocp-Apim-Subscription-Key: your_subscription_key_here'":"",
             "-H 'Authorization: Bearer your_oauth_token_here'": "",
             "-H 'Content-Type: application/json'": "",
@@ -12,7 +12,7 @@
         },
         "personal_example": {
             "curl -X POST" : "",
-            "https://devapi.pwapp.co/api/setup/personal" : "",
+            "https://devapi.paywise.co/api/setup/personal" : "",
             "-H 'Authorization: Bearer your_api_key_here'" : "",
             "-H 'Content-Type: application/json'" : "",
             "-d '": {
@@ -30,7 +30,7 @@
         },
         "business_example": {
             "curl -X POST": "",
-            "https://devapi.pwapp.co/api/setup/business": "",
+            "https://devapi.paywise.co/api/setup/business": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d'": {
@@ -48,7 +48,7 @@
         },
         "institutions_example":{
             "curl -X POST" : "",
-            "https://devapi.pwapp.co/api/setup/institution" : "",
+            "https://devapi.paywise.co/api/setup/institution" : "",
             "-H 'Authorization: Bearer your_api_key_here'" : "",
             "-H 'Content-Type: application/json'" : "",
             "-d '" : {
@@ -66,7 +66,7 @@
         },
         "general_payments_example": {
             "curl -X GET" : "",
-            "https://devapi.pwapp.co/api/payment/general" : "",
+            "https://devapi.paywise.co/api/payment/general" : "",
             "-H 'Authorization: Bearer your_api_key_here'" : "",
             "-H 'Content-Type: application/json'" : "",
             "-d'": {
@@ -84,7 +84,7 @@
         },
         "payment_authorization_example":{
             "curl -X POST" : "",
-            "https://devapi.pwapp.co/api/payment/authorize" : "",
+            "https://devapi.paywise.co/api/payment/authorize" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d'": {
@@ -101,7 +101,7 @@
         },
         "payment_status_example":{
             "curl -X GET" : "",
-            "https://devapi.pwapp.co/api/payment/status" : "",
+            "https://devapi.paywise.co/api/payment/status" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -116,7 +116,7 @@
         },
         "balance_inquiry_example": {
             "curl -X GET ": "",
-            "https://devapi.pwapp.co/api/payment/balance" : "",
+            "https://devapi.paywise.co/api/payment/balance" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'" : "",
             "-d '": {
@@ -129,7 +129,7 @@
             "currency": "TTD"          
         },
         "agent_transactions_example": {
-            "https://devapi.pwapp.co/api/transactions/agent ": "",
+            "https://devapi.paywise.co/api/transactions/agent ": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "", 
             "-d '":{
@@ -147,7 +147,7 @@
         },
         "third_party_example":{
             "curl -X POST" : "",
-            "https://devapi.pwapp.co/api/transactions/third_party" : "",
+            "https://devapi.paywise.co/api/transactions/third_party" : "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'" : "",
             "-d '":{
@@ -165,7 +165,7 @@
         },
         "request_payment_example":{
             "curl -X POST": "",
-            "https://devapi.pwapp.co/api/merchant/request_payment": "",
+            "https://devapi.paywise.co/api/merchant/request_payment": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -177,13 +177,13 @@
         },
         "request_payment_response":{
             "status": "success",
-            "payment_link": "https://devapi.pwapp.co/pay/abc123",
-            "qr_code_url": "https://devapi.pwapp.co/qr/abc123",
+            "payment_link": "https://devapi.paywise.co/pay/abc123",
+            "qr_code_url": "https://devapi.paywise.co/qr/abc123",
             "message": "Payment request generated successfully"
         },
         "credit_card_example":{
             "curl -X POST": "",
-            "https://devapi.pwapp.co/api/merchant/generate_payment_url": "",
+            "https://devapi.paywise.co/api/merchant/generate_payment_url": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -195,12 +195,12 @@
         },
         "credit_card_response":{
             "status": "success",
-            "payment_url": "https://devapi.pwapp.co/pay/credit/abc123",
+            "payment_url": "https://devapi.paywise.co/pay/credit/abc123",
             "message": "Credit card payment URL generated successfully"
         },
         "credit_card_transaction_example":{
             "curl -X GET": "",
-            "https://devapi.pwapp.co/api/merchant/check_transaction": "",
+            "https://devapi.paywise.co/api/merchant/check_transaction": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type: application/json'": "",
             "-d '":{
@@ -215,7 +215,7 @@
         },
         "QR_codes_example":{
             "curl -X POST": "",
-            "https://devapi.pwapp.co/api/merchant/generate_qr": "",
+            "https://devapi.paywise.co/api/merchant/generate_qr": "",
             "-H 'Authorization: Bearer your_api_key_here'": "",
             "-H 'Content-Type": ""
         }
