@@ -117,7 +117,13 @@ const Codes = () => {
                             </pre>
                         </div>
                     </div>
-
+                    <div className='pb-5'>
+                        <a href="https://docs.paywise.co/apk/sandbox_app-release.apk" target="_blank" rel="noopener">
+                                <button className="text-xs text-white font-semibold px-3.5 py-2 flex flex-row items-center gap-2 rounded-lg bg-[#1E64A7]">
+                                    <img className="w-3" src="/images/download.svg"/> Try it out
+                                </button>
+                        </a>
+                    </div>
                     <div className="mb-5">
                         <h3 className='font-semibold'>Testing Card:</h3>
                         <p>To simulate a payment, use the following test card details:</p>
