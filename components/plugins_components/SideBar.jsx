@@ -39,17 +39,17 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs
             </div>
           </div>
           {/* Contenido del Sidebar */}
-          <p className="font-semibold p-2 text-[#8D9298] border-solid border-t border-[#d8dee4]">
+          <p className="font-semibold px-2 py-3 text-[#8D9298] border-solid border-t border-[#d8dee4]">
             <small>About PayWise's API</small>
           </p>
-          <p className="font-bold p-2 cursor-pointer" onClick={() => { showDocumentation(); toggleSidebar(); }}>
+          <p className="font-bold px-2 pb-3 cursor-pointer" onClick={() => { showDocumentation(); toggleSidebar(); }}>
             Back to API Documentation
           </p>
           <p className="font-semibold p-2 text-[#8D9298] border-solid border-t border-[#d8dee4]">
             <small>Plugins</small>
           </p>
           <p className="font-semibold p-2">
-            <a href="#install_plugin" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
+            <a href="#woocommerce" onClick={() => { showPluginDocs(); toggleSidebar(); }}>
               Woocommerce
             </a>
           </p>
