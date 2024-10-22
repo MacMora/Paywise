@@ -25,7 +25,7 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs
               <a href="https://devportal.paywise.co/products" className="">
                 Products
               </a>
-              <a href="/plugins" className="" onClick={() => { showPluginDocs(); toggleSidebar(); }}>
+              <a href="#" className="" onClick={() => { showPluginDocs(); toggleSidebar(); }}>
                 Plugins
               </a>
             </div>

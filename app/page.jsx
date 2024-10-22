@@ -60,7 +60,7 @@ export default function HomePage() {
           <a href="https://devportal.paywise.co/products" className="text-gray-700">
             Products
           </a>
-          <a id="btn_plugins" href="#" className="text-gray-700" onClick={showPluginDocs}>
+          <a href="#" className="text-gray-700" onClick={showPluginDocs}>
             Plugins
           </a>
         </div>
