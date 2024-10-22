@@ -57,7 +57,7 @@ const Codes = () => {
 
     return (
         <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
-            <Image src='/images/paywise_banner.png' alt="PayWise Banner" width={1275}  height={354}/>
+            <Image id='api_reference' src='/images/paywise_banner.png' alt="PayWise Banner" width={1275}  height={354}/>
             {/* Paywise API Section */}
             <div id="api_reference" className='doc-section flex flex-col lg:flex-row justify-around items-start pb-12 border-b-2'>
                 <div className='lg:w-5/5 w-full'>
@@ -200,13 +200,6 @@ const Codes = () => {
                     </ul>
                     
                 </div>
-                {/* <div className='lg:w-2/4 w-full sticky top-0'>
-                    <h3 className='text-xl font-semibold'>Just getting started?</h3>
-                    <p className='py-5 text-base'>Check out our development quickstart guide.</p>
-                    <h4 className='text-xl font-semibold'>Not a developer?</h4>
-                    <p className='py-5 text-base'>Use Paywise&apos;s no-code options or apps from our partners to get started with Paywise and to do more with your Paywise account—no code required.</p>
-                    {renderSection('Global Section', selectedItem?.global)}
-                </div> */}
             </div>
             {/* Authentication Section */}
             <div id="authentication" className='doc-section flex flex-col lg:flex-row justify-around items-start py-12 border-b-2'>

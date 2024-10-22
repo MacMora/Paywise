@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-const SideBar_Plugin = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
+const SideBar_Plugin = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs, showDocumentation }) => {
   return (
     <div>
       {/* SideBar y Menú desplegable en pantallas pequeñas */}
@@ -16,7 +16,7 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
               <a href="https://devportal.paywise.co/" className="">
                 Home
               </a>
-              <a href="#" className="" onClick={() => { togglePluginsSidebar(); toggleSidebar(); }} >
+              <a href="#" className="" onClick={() => { showDocumentation(); toggleSidebar(); }} >
                 Docs
               </a>
               <a href="https://devportal.paywise.co/apis" className="">
@@ -25,7 +25,7 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
               <a href="https://devportal.paywise.co/products" className="">
                 Products
               </a>
-              <a href="/plugins" className="" onClick={() => { togglePluginsSidebar(); toggleSidebar(); }}>
+              <a href="/plugins" className="" onClick={() => { showPluginDocs(); toggleSidebar(); }}>
                 Plugins
               </a>
             </div>
@@ -39,28 +39,37 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
             </div>
           </div>
           {/* Contenido del Sidebar */}
-          <p className="font-semibold px-2 py-3 text-[#8D9298] border-solid border-t border-[#d8dee4]">
+          <p className="font-semibold p-2 text-[#8D9298] border-solid border-t border-[#d8dee4]">
+            <small>About PayWise's API</small>
+          </p>
+          <p className="font-bold p-2 cursor-pointer" onClick={() => { showDocumentation(); toggleSidebar(); }}>
+            Back to API Documentation
+          </p>
+          <p className="font-semibold p-2 text-[#8D9298] border-solid border-t border-[#d8dee4]">
             <small>Plugins</small>
           </p>
           <p className="font-semibold p-2">
-            <a href="#woocommerce" onClick={toggleSidebar}>
+            <a href="#install_plugin" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
               Woocommerce
             </a>
           </p>
           <ul className="">
-            <li className="p-2">
-              <a href="#install_plugin" onClick={toggleSidebar}>
-                &gt; Install Plugin
+            <li className="p-2 flex flex-row gap-2">
+            <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"}/>
+              <a href="#install_plugin" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
+                Install Plugin
               </a>
             </li>
-            <li className="p-2">
-              <a href="#configure_plugin" onClick={toggleSidebar}>
-                &gt; Configure Plugin
+            <li className="p-2 flex flex-row gap-2">
+              <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"}/>
+              <a href="#configure_plugin" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
+                Configure Plugin
               </a>
             </li>
-            <li className="p-2">
-              <a href="#get_api_key" onClick={toggleSidebar}>
-                &gt; Get API Key
+            <li className="p-2 flex flex-row gap-2">
+              <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"}/>
+              <a href="#get_api_key" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
+                Get API Key
               </a>
             </li>
           </ul>

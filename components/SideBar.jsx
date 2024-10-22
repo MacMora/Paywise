@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 
-
-const SideBar_Doc = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
+const SideBar_Doc = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs, showDocumentation }) => {
 
     return (
         <div>
@@ -12,10 +11,10 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
                     <div className="lg:hidden mb-4 flex flex-col gap-y-6">
                         <div className="flex flex-col gap-y-4 font-semibold px-2">
                             <a href="https://devportal.paywise.co/" className="">Home</a>
-                            <a href="#" className="" onClick={() => { togglePluginsSidebar(); toggleSidebar(); }}>Docs</a>
+                            <a href="#" className="" onClick={() => { showDocumentation(); toggleSidebar(); }}>Docs</a>
                             <a href="https://devportal.paywise.co/apis" className="">APIs</a>
                             <a href="https://devportal.paywise.co/products" className="">Products</a>
-                            <a href="#" className="" onClick={() => { togglePluginsSidebar(); toggleSidebar(); }}>Plugins</a>
+                            <a href="#" className="" onClick={() => { showPluginDocs(); toggleSidebar(); }}>Plugins</a>
                         </div>
                         <div className="flex flex-col gap-y-4 font-semibold px-2 border-solid border-t border-[#d8dee4]">
                             <a href="https://devportal.paywise.co/signin" className="pt-2">Sign in</a>
@@ -25,7 +24,7 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
                     {/* Contenido del Sidebar */}
                     <p className="font-semibold py-2 px-2 border-solid border-t border-[#d8dee4]"><small>Get Started</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#api_reference" onClick={toggleSidebar}>About PayWise&apos;s API</a></li>
+                        <li className="p-2"><a href="#api_reference" onClick={toggleSidebar}>About PayWise's API</a></li>
                         <li className="p-2"><a href="#use_cases" onClick={toggleSidebar}>Use Cases</a></li>
                         <li className="p-2"><a href="#authentication" onClick={toggleSidebar}>Authentication</a></li>
                     </ul>
@@ -58,6 +57,10 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, togglePluginsSidebar }) => {
                     <ul className="">
                         <li className="p-2"><a href="https://devportal.paywise.co/api-details#api=66a06819a8aecc7dd68da65b" target="_blank" rel="noopener noreferrer">Institution</a></li>
                         <li className="p-2"><a href="https://devportal.paywise.co/api-details#api=66a06721f6563de21054271d" target="_blank" rel="noopener noreferrer">Merchant</a></li>
+                    </ul>
+                    <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Plugins</small></p>
+                    <ul className="">
+                        <li className="p-2"><a href="#" onClick={showWooCommerce}>Woocommerce</a></li>
                     </ul>
                 </div>
             </div>

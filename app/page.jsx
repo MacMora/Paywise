@@ -1,21 +1,35 @@
-"use client"; // This is a client component
+"use client";
 import Documentation from "@/components/Documentation";
-import Woocommerce from "@/components/plugins_components/plugin_docs";
+import Plugin_Docs from "@/components/plugins_components/plugin_docs";
 import SideBar_Doc from "@/components/SideBar";
 import Sidebar_Plugin from "@/components/plugins_components/SideBar";
+import WooCommerce from "@/components/plugins_components/woocommerce/woocommerce"; // Import WooCommerce component
 import React, { useState } from "react";
 import Image from "next/image";
 
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false); // Controla el sidebar principal
   const [showPluginsSidebar, setShowPluginsSidebar] = useState(false); // Controla la vista del sidebar de plugins
+  const [activeComponent, setActiveComponent] = useState(''); // Track the active component
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen); // Alterna el sidebar
   };
 
-  const togglePluginsSidebar = () => {
-    setShowPluginsSidebar(!showPluginsSidebar); // Alterna entre sidebar de Plugins y Docs
+  const showWooCommerce = () => {
+    setActiveComponent('WooCommerce'); // Set WooCommerce as the active component
+    setShowPluginsSidebar(true); // Ensure the plugins sidebar is shown
+    setIsOpen(false); // Optionally close the sidebar after clicking
+  };
+
+  const showPluginDocs = () => {
+    setActiveComponent('Plugin_Docs'); // Set Plugin_Docs as the active component
+    setShowPluginsSidebar(true); // Ensure the plugins sidebar is shown
+  };
+
+  const showDocumentation = () => {
+    setActiveComponent('Documentation'); // Set Documentation as the active component
+    setShowPluginsSidebar(false); // Ensure the plugins sidebar is hidden
   };
 
   return (
@@ -33,12 +47,11 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        {/* Menú central (visible en pantallas grandes) */}
         <div className="hidden lg:flex basis-2/5 ml-auto gap-x-8">
           <a href="https://devportal.paywise.co/" className="text-gray-700">
             Home
           </a>
-          <a href="#" className="text-gray-700" onClick={togglePluginsSidebar}>
+          <a href="#" className="text-gray-700" onClick={showDocumentation}>
             Docs
           </a>
           <a href="https://devportal.paywise.co/apis" className="text-gray-700">
@@ -47,11 +60,10 @@ export default function HomePage() {
           <a href="https://devportal.paywise.co/products" className="text-gray-700">
             Products
           </a>
-          <a id="btn_plugins" href="#" className="text-gray-700" onClick={togglePluginsSidebar}>
+          <a id="btn_plugins" href="#" className="text-gray-700" onClick={showPluginDocs}>
             Plugins
           </a>
         </div>
-        {/* Menú de inicio de sesión */}
         <div className="hidden lg:flex basis-1/5 justify-end items-center gap-x-6">
           <a href="https://devportal.paywise.co/signin" className="text-gray-700">
             Sign in
@@ -88,14 +100,15 @@ export default function HomePage() {
           )}
         </button>
       </div>
+      {/* Conditionally Render Components */}
       {showPluginsSidebar ? (
         <div>
-          <Sidebar_Plugin isOpen={isOpen} toggleSidebar={toggleSidebar} togglePluginsSidebar={togglePluginsSidebar}/>
-          <Woocommerce />
+          <Sidebar_Plugin isOpen={isOpen} toggleSidebar={toggleSidebar} showWooCommerce={showWooCommerce} showPluginDocs={showPluginDocs} showDocumentation={showDocumentation}/>
+          {activeComponent === 'WooCommerce' ? <WooCommerce /> : <Plugin_Docs showWooCommerce={showWooCommerce} />}
         </div>
       ) : (
         <div>
-          <SideBar_Doc isOpen={isOpen} toggleSidebar={toggleSidebar} togglePluginsSidebar={togglePluginsSidebar}/>
+          <SideBar_Doc isOpen={isOpen} toggleSidebar={toggleSidebar} showWooCommerce={showWooCommerce} showPluginDocs={showPluginDocs} showDocumentation={showDocumentation}/>
           <Documentation />
         </div>
       )}
