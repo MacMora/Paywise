@@ -14,7 +14,7 @@ export default function Plugin_Docs({ showWooCommerce }){
                     <img className='object-cover lg:absolute end-0 z-0' src="/images/woocommerce/3d-shapes.png" />
                 </div>
             </div>
-            <div id="woocommerce" className='flex flex-col my-8 lg:flex-row justify-around items-center py-8 shadow-lg'>
+            <div id="woocommerce" className='flex flex-col my-8 lg:flex-row justify-around items-center max-lg:p-5 py-8 shadow-lg'>
                 <div className='lg:w-1/2 w-full lg:p-10'>
                     <span className="text-sm font-semibold">WOOCOMMERCE</span>
                     <p className="text-xl font-bold my-2">Offer all payment methods in your online store. Download the WooCommerce plugin and follow the installation guide to get started.</p>
@@ -33,7 +33,7 @@ export default function Plugin_Docs({ showWooCommerce }){
                     <img src="/images/woocommerce/woocommerce.png" />
                 </div>
             </div>
-            <div className='flex flex-col lg:flex-row justify-start items-center py-8 my-8 lg:p-10'>
+            <div className='flex flex-col lg:flex-row justify-start items-center py-8 my-8 lg:p-10 px-5'>
                 <div className='lg:w-[450px] w-full'>
                     <h2 className="text-3xl font-semibold">Download PayWise Stickers</h2>
                     <p className="my-2">Add PayWise logos and accepted payment icons to your website. Perfect for your footer or product pages to show your customers how they can pay.</p>
