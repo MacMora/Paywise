@@ -22,45 +22,35 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs, s
                         </div>
                     </div>
                     {/* Contenido del Sidebar */}
-                    <p className="font-semibold py-2 px-2 border-solid border-t border-[#d8dee4]"><small>Get Started</small></p>
+                    <p className="text-[#8D9298] font-semibold py-2 px-2 border-solid border-t border-[#d8dee4]"><small>About PayWise's API</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#api_reference" onClick={toggleSidebar}>About PayWise's API</a></li>
-                        <li className="p-2"><a href="#use_cases" onClick={toggleSidebar}>Use Cases</a></li>
-                        <li className="p-2"><a href="#authentication" onClick={toggleSidebar}>Authentication</a></li>
+                        <li className="p-2"><a href="#quick_start" onClick={toggleSidebar}>Quick Start</a></li>
+                        <li className="p-2"><a href="#environments" onClick={toggleSidebar}>Environments</a></li>
+                        <li className="p-2"><a href="#integrations" onClick={toggleSidebar}>Integrations</a></li>
                     </ul>
-                    <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Setup</small></p>
+                    <p className="text-[#8D9298] font-semibold p-2 border-solid border-t border-[#d8dee4]"><a href="#developers_portal"><small>Developers Portal</small></a></p>
                     <ul className="">
-                        <li className="p-2"><a href="#personal" onClick={toggleSidebar}>Personal</a></li>
-                        <li className="p-2"><a href="#business" onClick={toggleSidebar}>Business</a></li>
-                        <li className="p-2"><a href="#institutions" onClick={toggleSidebar}>Institution</a></li>
+                        <li className="p-2"><a href="#installation" onClick={toggleSidebar}>Installation</a></li>
+                        <li className="p-2"><a href="#registration" onClick={toggleSidebar}>Registration</a></li>
+                        <li className="p-2"><a href="#api_product" onClick={toggleSidebar}>API Products</a></li>
                     </ul>
-                    <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Payment & Inquiry</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#general_payments" onClick={toggleSidebar}>General</a></li>
-                        <li className="p-2"><a href="#payment_authorization" onClick={toggleSidebar}>Payment Authorization</a></li>
-                        <li className="p-2"><a href="#payment_status" onClick={toggleSidebar}>Payment Status</a></li>
-                        <li className="p-2"><a href="#balance_inquiry" onClick={toggleSidebar}>Balance Inquiry</a></li>
+                        <li className="py-2 px-4"><a href="#general_payments" onClick={toggleSidebar}>Headers</a></li>
+                        <li className="py-2 px-4"><a href="#payment_authorization" onClick={toggleSidebar}>Errors</a></li>
+                        <li className="py-2 px-4"><a href="#payment_status" onClick={toggleSidebar}>Account API</a></li>
+                        <li className="py-2 px-4"><a href="#balance_inquiry" onClick={toggleSidebar}>Institution API</a></li>
                     </ul>
-                    <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Transactions</small></p>
+                    <p className="text-[#8D9298] font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Production Portal</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#agent_transactions" onClick={toggleSidebar}>Agent Transactions</a></li>
-                        <li className="p-2"><a href="#third_party_transactions" onClick={toggleSidebar}>Third Party Transactions</a></li>
+                        <li className="p-2"><a href="#agent_transactions" onClick={toggleSidebar}>Installation</a></li>
+                        <li className="p-2"><a href="#third_party_transactions" onClick={toggleSidebar}>Registration</a></li>
+                        <li className="p-2"><a href="#" onClick={toggleSidebar}>API Products</a></li>
                     </ul>
-                    <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Merchant</small></p>
                     <ul className="">
-                        <li className="p-2"><a href="#request_payment" onClick={toggleSidebar}>Request for Payment</a></li>
-                        <li className="p-2"><a href="#generate_cc_payment_url" onClick={toggleSidebar}>Generate Credit Card Payment URL</a></li>
-                        <li className="p-2"><a href="#check_cc_transaction" onClick={toggleSidebar}>Check Credit Card Transaction</a></li>
-                        <li className="p-2"><a href="#qr_codes" onClick={toggleSidebar}>QR Codes</a></li>
-                    </ul>
-                    <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Products</small></p>
-                    <ul className="">
-                        <li className="p-2"><a href="https://devportal.paywise.co/api-details#api=66a06819a8aecc7dd68da65b" target="_blank" rel="noopener noreferrer">Institution</a></li>
-                        <li className="p-2"><a href="https://devportal.paywise.co/api-details#api=66a06721f6563de21054271d" target="_blank" rel="noopener noreferrer">Merchant</a></li>
-                    </ul>
-                    <p className="font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Plugins</small></p>
-                    <ul className="">
-                        <li className="p-2"><a href="#" onClick={showWooCommerce}>Woocommerce</a></li>
+                    <li className="py-2 px-4"><a href="#general_payments" onClick={toggleSidebar}>Headers</a></li>
+                        <li className="py-2 px-4"><a href="#payment_authorization" onClick={toggleSidebar}>Errors</a></li>
+                        <li className="py-2 px-4"><a href="#account_api" onClick={toggleSidebar}>Account API</a></li>
+                        <li className="py-2 px-4"><a href="#balance_inquiry" onClick={toggleSidebar}>Institution API</a></li>
                     </ul>
                 </div>
             </div>

@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import valueData from '@/public/data/data.json'; // Asegúrate de que la ruta sea correcta
 import { Code } from "@nextui-org/code"; 
-import Image from 'next/image'
+import Image from 'next/image';
+
 
 const Codes = () => {
-    const [selectedValue, setSelectedValue] = useState('application/json');
+    const [selectedValue, setSelectedValue] = useState('bash');
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
@@ -52,12 +53,24 @@ const Codes = () => {
         </div>
         </>
         );
-    };    
+    };
+    
+      // Estado para controlar la visibilidad del div que contiene el <p>
+      const [openSections, setOpenSections] = useState({});
+
+      // Función para alternar la visibilidad de una sección específica
+      const toggleVisibility = (id) => {
+        setOpenSections((prev) => ({
+          ...prev,
+          [id]: !prev[id], // Alterna el estado de la sección específica
+        }));
+      };
     
 
     return (
         <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
-            <div className='bg-[#F6F9FC] my-8 rounded-3xl overflow-hidden flex flex-col lg:flex-row justify-between items-center'>
+            
+            <div id='quick_start' className='bg-[#F6F9FC] my-8 rounded-3xl overflow-hidden flex flex-col lg:flex-row justify-between items-center'>
                 <div className='lg:relative flex flex-row max-lg:flex-wrap w-full items-center lg:min-h-[350px]'>
                     <div className="lg:relative flex flex-col gap-8 lg:z-10 p-5 lg:p-10 lg:w-[600px]">
                         <h1 className='text-2xl lg:text-[42px] leading-[48px] font-bold'>Welcome to the PayWise API documentation</h1>
@@ -66,8 +79,9 @@ const Codes = () => {
                     <img className='object-cover lg:absolute end-0 z-0' src="/images/woocommerce/3d-shapes.png" />
                 </div>
             </div>
+
             {/* Paywise API Section */}
-            <div id="api_reference" className='doc-section flex flex-col lg:flex-row justify-around items-start pb-12 border-b-2'>
+            <div className='doc-section flex flex-col lg:flex-row justify-around items-start pb-12 border-b-2'>
                 <div className='lg:w-5/5 w-full'>
                     <h2 className='text-3xl py-5 font-bold'>About</h2>
                     <p className='pt-0 pb-5 text-sm'>
@@ -128,7 +142,7 @@ const Codes = () => {
                         </ol>
                     </div>
                         
-                    <div className='py-8'>
+                    <div id='environments' className='py-8'>
                         <h2 className='text-3xl py-5 font-bold'>Environments</h2>
                         <div className='flex flex-col lg:flex-row justify-start items-start gap-14'>
                             <div className="lg:w-3/6 basis-2/5 p-8 bg-[#F9F9F9]">
@@ -147,7 +161,8 @@ const Codes = () => {
                             </div>
                         </div>
                     </div>
-                    <div>
+
+                    <div id='integrations'>
                         <h2 className='text-5xl py-5 font-bold'>Integrations</h2>
                         <p>Offer all payment methods in your online store. Use one of our integrations</p>
                         <div className='py-4'>
@@ -158,7 +173,7 @@ const Codes = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div id='developers_portal'>
                         <h2 className='text-5xl py-5 font-bold'>Developers Portal</h2>
                         <p className='text-sm'>The Developers&rsquo; Portal is where developers can register, explore API documentation, generate API keys, create test personal and business accounts, top up (bless) those test accounts, and test their integrations. It provides full access to sandbox environments and detailed logs of API activity. Our intuitive design ensures that developers of all experience levels can get started quickly.</p>
                         <div className='py-4'>
@@ -169,7 +184,7 @@ const Codes = () => {
                         </div>
                     </div>
                 
-                    <div>
+                    <div id='installation'>
                         <h2 className='text-2xl lg:text-3xl font-bold'>Use Our Sandbox APK</h2>
                         <div className="alert alert-info flex items-center gap-4 my-5">
                             <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -247,7 +262,7 @@ const Codes = () => {
                         </div>
                     </div>
 
-                    <div className='py-10 border-b border-[#E4E4E4]'>
+                    <div id='registration' className='py-10 border-b border-[#E4E4E4]'>
                         <h2 className='text-2xl lg:text-3xl font-semibold'>Registration</h2>
                         <div className='text-sm py-5'>
                             <p>To access the Developers&rsquo; Portal, you will need to:</p>
@@ -259,7 +274,7 @@ const Codes = () => {
                         </div>
                     </div>
                     
-                    <div className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
+                    <div id='api_product' className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
                         <div className='lg:w-2/5 w-full'>
                             <h2 className='text-2xl lg:text-3xl font-semibold py-3'>API Product</h2>
                             <h3 className='text-2xl font-semibold'>Developers&rsquo; URL</h3>
@@ -274,6 +289,213 @@ const Codes = () => {
                             <div className='bg-[#2E3F51] rounded py-6 px-4'>
                                 <a className='text-[#6FA43A]' href='https://devapi.paywise.co/' target="_blank">https://devapi.paywise.co/</a>
                             </div>
+                        </div>
+                    </div>
+
+                    <div id='account_api' className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
+                        <div className='lg:w-2/5 w-full'>
+                            <h2 className='text-2xl lg:text-3xl font-semibold py-3'>Account API</h2>
+                            <p className='py-5 text-base'>
+                            Manage user accounts, register personal and business accounts, and top-up (bless) accounts.
+                            </p>
+                            <span className='py-5 text-base font-semibold'>register_account:</span>
+                            <p className='py-5 text-base'>
+                            The <span className='text-[#6FA43A]'>register_account</span> endpoint allows the calling institution to request and manage authorization or rejection from the PayWise account holder to establish a connection with the institution. Adequate transparency is provided to the user, ensuring they are aware of the data being shared through this connection. This step is crucial in integrating the institution with the user's PayWise account, maintaining security and consent throughout the process.
+                            </p>
+
+                            <div className='border-b border-[#6FA43A] py-4'>
+                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Request Parameters:</h3>
+                                <div className='font-code text-sm italic text-[#495059] py-2'>
+                                    <div onClick={() => toggleVisibility("version")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <p><span className='font-semibold'>version</span> string</p>
+                                    </div>
+                                    {openSections["version"] && (
+                                    <div className='py-3'>
+                                        <p className='py-2'><span className='font-semibold not-italic'>Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
+                                        <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                        <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 10</p>
+                                    </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className='border-b border-[#6FA43A] py-4'>
+                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Body Parameters:</h3>
+                                <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("mobile_number")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>mobile_number</span> string</p>
+                                        </div>
+                                        {openSections["mobile_number"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Full mobile number of account holder. Example: "+18681234567"</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 12</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("institution_name")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>institution_name</span> string</p>
+                                        </div>
+                                        {openSections["institution_name"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Name of party who request this api.</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 255</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("callback_url")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>callback_url</span> string</p>
+                                        </div>
+                                        {openSections["callback_url"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Url to return the respone to request</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 200</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("first_name")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>first_name</span> string</p>
+                                        </div>
+                                        {openSections["first_name"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> First name of the account holder as registered with PayWise. This should be the complete name as per the KYC document provided during the registration process.</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Optional</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 1 - 50</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("last_name")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>last_name</span> string</p>
+                                        </div>
+                                        {openSections["last_name"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Last name of the account holder as registered with PayWise. This should be the complete name as per the KYC document provided during the registration process.</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Optional</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 1 - 75</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("session_token")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>session_token</span> string</p>
+                                        </div>
+                                        {openSections["session_token"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Encrypted session_token. Institution encrypts the session_token sent using shared key.</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 20 - 40</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "pt-4">
+                                        <div onClick={() => toggleVisibility("authorisation_token")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>authorisation_token</span> string</p>
+                                        </div>
+                                        {openSections["authorisation_token"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Unencrypted token shared by institution for callback POST method. PW will encrypt using shared key.</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 10 - 20</p>
+                                        </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='border-b border-[#6FA43A] py-4'>
+                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Response Parameters:</h3>
+                                <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("status")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>status</span> string</p>
+                                        </div>
+                                        {openSections["status"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 10</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "border-b-2 py-4">
+                                        <div onClick={() => toggleVisibility("code")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>code</span> integer</p>
+                                        </div>
+                                        {openSections["code"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> HTTP return code.</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 3</p>
+                                        </div>
+                                        )}
+                                    </div>
+
+                                    <div className= "pt-4">
+                                        <div onClick={() => toggleVisibility("message")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p><span className='font-semibold'>message</span> string</p>
+                                        </div>
+                                        {openSections["message"] && (
+                                        <div className='py-3'>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Registration request sent"</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
+                                            <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 255</p>
+                                        </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className='lg:w-2/4 w-full sticky top-0'>
+                            {renderSection('Request example:', selectedItem?.request_example)}
+                            {renderSection('Response example:', selectedItem?.response_example)}
                         </div>
                     </div>
                     

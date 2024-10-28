@@ -2,7 +2,7 @@
 import Documentation from "@/components/Documentation";
 import Plugin_Docs from "@/components/plugins_components/plugin_docs";
 import SideBar_Doc from "@/components/SideBar";
-import Sidebar_Plugin from "@/components/plugins_components/SideBar";
+import Sidebar_Plugin from "@/components/plugins_components/SideBar_Plugin";
 import WooCommerce from "@/components/plugins_components/woocommerce/woocommerce"; // Import WooCommerce component
 import React, { useState } from "react";
 import Image from "next/image";
