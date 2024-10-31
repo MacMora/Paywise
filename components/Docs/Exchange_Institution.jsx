@@ -7,10 +7,10 @@ import { useLanguage } from '../LenguageContext';
 const languageData = {
     Bash: {
         description: `
-curl -X GET "https://devapi.paywise.co/institution/exchange_rate_usd?currency_pair=USD&rate_type=selling&request_date=2024-10-23&version=2023-10-23" \
--H "Content-Type: application/json" \
--H "PW-subscription-key: your_subscription_key" \
--H "PW-origin-country: TT" \
+curl -X GET "https://devapi.paywise.co/institution/exchange_rate_usd?currency_pair=USD&rate_type=selling&request_date=2024-10-23&version=2023-10-23" 
+-H "Content-Type: application/json" 
+-H "PW-subscription-key: your_subscription_key"
+-H "PW-origin-country: TT"
 -H "PW-request-date: 2024-10-23 12:34:56"
     `
       },

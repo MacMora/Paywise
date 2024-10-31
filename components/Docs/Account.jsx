@@ -7,10 +7,10 @@ import { useLanguage } from '../LenguageContext';
 const languageData = {
     Bash: {
         description: `
-curl -X POST "https://devapi.paywise.co/account?version=2024-10-20" \
--H "PW-subscription-key: eed0d85c530c4b26a91d09b783d8fab3" \
--H "PW-origin-country: TT" \
--H "PW-request-date: 2024-10-20 15:30:00" \
+curl -X POST "https://devapi.paywise.co/account?version=2024-10-20"
+-H "PW-subscription-key: eed0d85c530c4b26a91d09b783d8fab3"
+-H "PW-origin-country: TT"
+-H "PW-request-date: 2024-10-20 15:30:00"
 -d '{
     "account_mobile_number": "+18681234567",
     "institution_name": "PayWise Institution",
