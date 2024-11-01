@@ -4,19 +4,31 @@ import App from '@/components/App';
 
 
 
-const Codes = () => {
+const Codes = ({ showWooCommerce }) => {
     
-      // Estado para controlar la visibilidad del div que contiene el <p>
-      const [openSections, setOpenSections] = useState({});
+    // Estado para controlar la visibilidad del div que contiene el <p>
+    const [openSections, setOpenSections] = useState({});
+    const [rotations, setRotations] = useState({});
 
-      // Función para alternar la visibilidad de una sección específica
-      const toggleVisibility = (id) => {
+    // Función para alternar la visibilidad de una sección específica
+    const toggleVisibility = (id) => {
         setOpenSections((prev) => ({
           ...prev,
           [id]: !prev[id], // Alterna el estado de la sección específica
         }));
-      };
+    };
     
+    const toggleRotation = (key) => {
+        setRotations(prevState => ({
+        ...prevState,
+        [key]: prevState[key] ? '' : 'rotate-90'
+        }));
+    };
+
+    const handleClick = (key) => {
+        toggleRotation(key);
+        toggleVisibility(key);
+    };
 
     return (
         <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
@@ -119,7 +131,7 @@ const Codes = () => {
                         <h2 className='text-5xl py-5 font-bold'>Integrations</h2>
                         <p>Offer all payment methods in your online store. Use one of our integrations</p>
                         <div className='py-4'>
-                            <div className='flex flex-col justify-center items-center rounded-xl shadow-lg w-[125px] h-[125px]'>
+                            <div onClick={showWooCommerce} className='cursor-pointer flex flex-col justify-center items-center rounded-xl shadow-lg w-[125px] h-[125px]'>
                                 <img src="/images/woo-logo.png" />
                                 <p className='text-xs'>Woocommerce</p>
                             </div>
@@ -259,8 +271,8 @@ const Codes = () => {
 
                             <div className='border-b py-4'>
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
-                                    <div onClick={() => toggleVisibility("pw-subscription-key")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("pw-subscription-key")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                        <svg className={`transition-transform duration-150 ${rotations["pw-subscription-key"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                         <p><span className='font-semibold'>PW-subscription-key</span> string</p>
@@ -277,8 +289,8 @@ const Codes = () => {
 
                             <div className='border-b py-4'>
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
-                                    <div onClick={() => toggleVisibility("pw-origin-country")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("pw-origin-country")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                        <svg className={`transition-transform duration-150 ${rotations["pw-origin-country"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                         <p><span className='font-semibold'>PW-origin-country</span> string</p>
@@ -295,8 +307,8 @@ const Codes = () => {
 
                             <div className='pt-4'>
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
-                                    <div onClick={() => toggleVisibility("pw-request-date")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("pw-request-date")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                        <svg className={`transition-transform duration-150 ${rotations["pw-request-date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                         <p><span className='font-semibold'>PW-request-date</span> string</p>
@@ -464,10 +476,10 @@ const Codes = () => {
     );
 };
 
-export default function Documentation() {
+export default function Documentation({showWooCommerce}) {
     return (
         <div className='h-screen overflow-hidden'>
-            <Codes/>
+            <Codes showWooCommerce={showWooCommerce}/>
         </div>
     );
 }

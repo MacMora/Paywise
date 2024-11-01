@@ -24,7 +24,7 @@ export default function Plugin_Docs({ showWooCommerce }){
                                 <img className="w-3" src="/images/download.svg"/> Download Plugin
                             </button>
                         </a>
-                        <button className="text-xs text-[#1E64A7] font-semibold px-3.5 py-1.5  flex flex-row gap-2 items-center rounded-lg border-2 border-[#1E64A7]" onClick={showWooCommerce}>
+                        <button onClick={showWooCommerce} className="text-xs text-[#1E64A7] font-semibold px-3.5 py-1.5  flex flex-row gap-2 items-center rounded-lg border-2 border-[#1E64A7]">
                             <img className="w-4" src="/images/Info.svg"/> Read Installation Guide
                         </button>
                     </div>

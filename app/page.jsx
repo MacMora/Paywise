@@ -109,7 +109,7 @@ export default function HomePage() {
       ) : (
         <div>
           <SideBar_Doc isOpen={isOpen} toggleSidebar={toggleSidebar} showWooCommerce={showWooCommerce} showPluginDocs={showPluginDocs} showDocumentation={showDocumentation}/>
-          <Documentation />
+          <Documentation showWooCommerce={showWooCommerce} />
         </div>
       )}
     </div>

@@ -5,6 +5,7 @@ import React, { useState } from "react";
 const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation }) => {
 
     const [openSections, setOpenSections] = useState({});
+    const [rotations, setRotations] = useState({});
 
     // Función para alternar la visibilidad de una sección específica
     const toggleVisibility = (id) => {
@@ -12,6 +13,18 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
       ...prev,
         [id]: !prev[id], // Alterna el estado de la sección específica
         }));
+    };
+
+    const toggleRotation = (key) => {
+        setRotations(prevState => ({
+        ...prevState,
+        [key]: prevState[key] ? '' : 'rotate-[270deg]'
+        }));
+    };
+
+    const handleClick = (key) => {
+        toggleRotation(key);
+        toggleVisibility(key);
     };
 
     return (
@@ -43,7 +56,10 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                     <ul className="">
                         <li className="p-2"><a href="#installation" onClick={toggleSidebar}>Installation</a></li>
                         <li className="p-2"><a href="#registration" onClick={toggleSidebar}>Registration</a></li>
-                        <li className="p-2" onClick={() => toggleVisibility("developers_portal")}>API Products</li>
+                        <div className="p-2 flex flex-row justify-between gap-6 items-center">
+                            <a href="#api_product">API Products</a>
+                            <img onClick={() => handleClick("developers_portal")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["developers_portal"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
+                        </div>
                         {openSections["developers_portal"] && (
                             <ul className="">
                                 <li className="py-2 px-4"><a href="#headers" onClick={toggleSidebar}>Headers</a></li>
@@ -57,7 +73,10 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                     <ul className="">
                         <li className="p-2"><a href="#a" onClick={toggleSidebar}>Installation</a></li>
                         <li className="p-2"><a href="#" onClick={toggleSidebar}>Registration</a></li>
-                        <li className="p-2" onClick={() => toggleVisibility("production_portal")}>API Products</li>
+                        <div className="p-2 flex flex-row justify-between gap-6 items-center">
+                            <a href="#api_product">API Products</a>
+                            <img onClick={() => handleClick("production_portal")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["production_portal"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
+                        </div>
                         {openSections["production_portal"] && (
                         <ul className="">
                             <li className="py-2 px-4"><a href="#" onClick={toggleSidebar}>Headers</a></li>
