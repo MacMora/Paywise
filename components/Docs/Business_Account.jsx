@@ -400,7 +400,7 @@ const Reques_Example = () => {
         <div className="bg-[#699EC7] rounded my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
                 <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-base text-[#F2F2F2]'>Request example:</h2>
+                    <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
                 </div>
                 <div className='w-2/6 flex justify-center'>
                     <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
@@ -419,7 +419,7 @@ const Reques_Example = () => {
         <div className="bg-[#699EC7] rounded my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
                 <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-base text-[#F2F2F2]'>Response example::</h2>
+                    <h2 className='text-sm text-[#F2F2F2]'>Response example::</h2>
                 </div>
                 <div className='w-2/6 flex justify-center'>
                     <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
@@ -466,15 +466,15 @@ const Business_Account = () => {
     };
     
     return(
-        <div className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
+        <div id="business_account" className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
             <div className='lg:w-2/5 w-full'>
-                            <span className='py-5 text-base font-semibold'>business_account:</span>
-                            <p className='py-5 text-base'>
+                            <span className='py-5 font-semibold'>business_account:</span>
+                            <p className='py-5 text-sm'>
                             The <span className='text-[#6FA43A]'>business_account</span> endpoint enables the creation of a business account for testing on the Developer Portal. Like personal accounts, this allows developers to safely test and simulate account creation for businesses within a sandbox environment, helping to ensure seamless integration for real-world applications. N.B. This endpoint is not available in the production environment.
                             </p>
 
                             <div className='border-b border-[#6FA43A] py-4'>
-                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Request Parameters:</h3>
+                                <h3 className='text-[#1E64A7] font-semibold py-3'>Request Parameters:</h3>
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
                                     <div onClick={() => toggleVisibility("business_version")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
                                         <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -493,7 +493,7 @@ const Business_Account = () => {
                             </div>
 
                             <div className='border-b border-[#6FA43A] py-4'>
-                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Body Parameters:</h3>
+                                <h3 className='text-[#1E64A7] font-semibold py-3'>Body Parameters:</h3>
                                 <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
                                     <div className= "border-b-2 py-4">
                                         <div onClick={() => toggleVisibility("business_name")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
@@ -1223,7 +1223,7 @@ const Business_Account = () => {
                             </div>
 
                             <div className='border-b border-[#6FA43A] py-4'>
-                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Response Parameters:</h3>
+                                <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
                                 <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
                                     <div className= "border-b-2 py-4">
                                         <div onClick={() => toggleVisibility("acc_status")} className='flex flex-row gap-0.5 items-center cursor-pointer'>

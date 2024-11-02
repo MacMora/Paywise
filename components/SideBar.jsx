@@ -65,24 +65,31 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                                 <li className="py-2 px-4"><a href="#headers" onClick={toggleSidebar}>Headers</a></li>
                                 <li className="py-2 px-4"><a href="#errors" onClick={toggleSidebar}>Errors</a></li>
                                 <li className="py-2 px-4"><a href="#account_api" onClick={toggleSidebar}>Account API</a></li>
+                                    {openSections["account_api"] && (
+                                        <ul className="">
+                                            <li className="py-2 px-4"><a href="#headers" onClick={toggleSidebar}>Headers</a></li>
+                                            <li className="py-2 px-4"><a href="#errors" onClick={toggleSidebar}>Errors</a></li>
+                                            <li className="py-2 px-4"><a href="#account_api" onClick={toggleSidebar}>Account API</a></li>
+                                            <li className="py-2 px-4"><a href="#institution_api" onClick={toggleSidebar}>Institution API</a></li>
+                                        </ul>
+                                    )}
                                 <li className="py-2 px-4"><a href="#institution_api" onClick={toggleSidebar}>Institution API</a></li>
                             </ul>
                         )}
                     </ul>
-                    <p className="text-[#8D9298] font-semibold p-2 border-solid border-t border-[#d8dee4]"><small>Production Portal</small></p>
+                    <p className="text-[#8D9298] font-semibold p-2 border-solid border-t border-[#d8dee4]"><a href="#production_portal"><small>Production Portal</small></a></p>
                     <ul className="">
-                        <li className="p-2"><a href="#a" onClick={toggleSidebar}>Installation</a></li>
-                        <li className="p-2"><a href="#" onClick={toggleSidebar}>Registration</a></li>
+                        <li className="p-2"><a href="#production_portal" onClick={toggleSidebar}>Installation</a></li>
+                        <li className="p-2"><a href="#production_registration" onClick={toggleSidebar}>Registration</a></li>
                         <div className="p-2 flex flex-row justify-between gap-6 items-center">
-                            <a href="#api_product">API Products</a>
+                            <a href="#production_api_products">API Products</a>
                             <img onClick={() => handleClick("production_portal")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["production_portal"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
                         </div>
                         {openSections["production_portal"] && (
                         <ul className="">
-                            <li className="py-2 px-4"><a href="#" onClick={toggleSidebar}>Headers</a></li>
-                            <li className="py-2 px-4"><a href="#" onClick={toggleSidebar}>Errors</a></li>
-                            <li className="py-2 px-4"><a href="#" onClick={toggleSidebar}>Account API</a></li>
-                            <li className="py-2 px-4"><a href="#" onClick={toggleSidebar}>Institution API</a></li>
+                            <li className="py-2 px-4"><a href="#production_url" onClick={toggleSidebar}>Production URL</a></li>
+                            <li className="py-2 px-4"><a href="#production_account_api" onClick={toggleSidebar}>Account API</a></li>
+                            <li className="py-2 px-4"><a href="#production_institution_api" onClick={toggleSidebar}>Institution API</a></li>
                         </ul> 
                         )}
                     </ul>

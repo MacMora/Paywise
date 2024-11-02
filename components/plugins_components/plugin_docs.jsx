@@ -7,7 +7,7 @@ export default function Plugin_Docs({ showWooCommerce }){
                 <div className='lg:relative flex flex-row max-lg:flex-wrap w-full items-center lg:min-h-[350px]'>
                     <div className="lg:relative lg:z-10 p-5 lg:p-10 lg:w-[600px]">
                         <h2 className='text-2xl lg:text-5xl font-bold'>Plugins & Platforms</h2>
-                        <p className='my-5 text-base'>
+                        <p className='my-5 text-sm'>
                         Install our checkout on your website and customize the payment experience your way. You can also accept payments with PayWise using our ready-to-use e-commerce solutions for various platforms, including WordPress.
                         </p>
                     </div>

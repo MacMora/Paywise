@@ -41,7 +41,7 @@ const Reques_Example = () => {
         <div className="bg-[#699EC7] rounded my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
                 <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-base text-[#F2F2F2]'>Request example:</h2>
+                    <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
                 </div>
                 <div className='w-2/6 flex justify-center'>
                     <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
@@ -60,7 +60,7 @@ const Reques_Example = () => {
         <div className="bg-[#699EC7] rounded my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
                 <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-base text-[#F2F2F2]'>Response example::</h2>
+                    <h2 className='text-sm text-[#F2F2F2]'>Response example::</h2>
                 </div>
                 <div className='w-2/6 flex justify-center'>
                     <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
@@ -100,12 +100,12 @@ const Quote_Id_Institutions = () => {
         <div id='quote_get' className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
             <div className='lg:w-2/5 w-full'>
                             
-                            <span className='py-5 text-base font-semibold'>quote/{`{quote_id}`}:</span>
-                            <p className='py-5 text-base'>
+                            <span className='py-5 font-semibold'>quote/{`{quote_id}`}:</span>
+                            <p className='py-5 text-sm'>
                             The <span className='text-[#6FA43A]'>quote/{`{quote_id}`} </span> endpoint retrieves the details of a previously generated quote. This allows institutions to check the terms of the quote, such as the conversion rate and the expiry period, ensuring that they have the necessary information before proceeding with the transaction.
                             </p>
                             <div className='border-b border-[#6FA43A] py-4'>
-                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Request Parameters:</h3>
+                                <h3 className='text-[#1E64A7] font-semibold py-3'>Request Parameters:</h3>
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
                                     
                                     <div className="border-b-2 py-4">
@@ -141,13 +141,13 @@ const Quote_Id_Institutions = () => {
                                 </div>
                             </div>
                             <div className='border-b border-[#6FA43A] py-4'>
-                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Body Parameters:</h3>
+                                <h3 className='text-[#1E64A7] font-semibold py-3'>Body Parameters:</h3>
                                 <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
                                     
                                 </div>
                             </div>
                             <div className='border-b border-[#6FA43A] py-4'>
-                                <h3 className='text-[#1E64A7] text-xl lg:text-2xl font-semibold py-3'>Response Parameters:</h3>
+                                <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
                                 <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
                                     <div className= "border-b-2 py-4">
                                         <div onClick={() => toggleVisibility("status_quote_get")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
