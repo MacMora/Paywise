@@ -103,7 +103,7 @@ const Transaction_Institutions = () => {
                             <p className='py-5 text-sm'>
                             Perform transactions, retrieve exchange rates, and generate quotes between PayWise accounts and external financial institutions.
                             </p>
-                            <span className='py-5 font-semibold'>transaction:</span>
+                            <span id='institution_transaction' className='py-5 font-semibold'>transaction:</span>
                             <p className='py-5 text-sm'>
                             This endpoint is used to post a transaction, either crediting or debiting a PayWise account. It allows third-party institutions to initiate transactions within the PayWise ecosystem, whether for remittances, payments, or other financial interactions. The <span className='text-[#6FA43A]'>transaction </span> endpoint ensures that funds are securely moved between accounts with detailed tracking of the transaction.
                             </p>

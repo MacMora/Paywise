@@ -64,16 +64,31 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                             <ul className="">
                                 <li className="py-2 px-4"><a href="#headers" onClick={toggleSidebar}>Headers</a></li>
                                 <li className="py-2 px-4"><a href="#errors" onClick={toggleSidebar}>Errors</a></li>
-                                <li className="py-2 px-4"><a href="#account_api" onClick={toggleSidebar}>Account API</a></li>
+                                <div className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
+                                    <a href="#account_api">Account API</a>
+                                    <img onClick={() => handleClick("account_api")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["account_api"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
+                                </div>
                                     {openSections["account_api"] && (
                                         <ul className="">
-                                            <li className="py-2 px-4"><a href="#headers" onClick={toggleSidebar}>Headers</a></li>
-                                            <li className="py-2 px-4"><a href="#errors" onClick={toggleSidebar}>Errors</a></li>
-                                            <li className="py-2 px-4"><a href="#account_api" onClick={toggleSidebar}>Account API</a></li>
-                                            <li className="py-2 px-4"><a href="#institution_api" onClick={toggleSidebar}>Institution API</a></li>
+                                            <li className="py-2 px-6"><a href="#register_account" onClick={toggleSidebar}>register_account</a></li>
+                                            <li className="py-2 px-6"><a href="#personal_account" onClick={toggleSidebar}>personal_account</a></li>
+                                            <li className="py-2 px-6"><a href="#business_account" onClick={toggleSidebar}>business_account</a></li>
+                                            <li className="py-2 px-6"><a href="#bless_account" onClick={toggleSidebar}>bless_account</a></li>
                                         </ul>
                                     )}
-                                <li className="py-2 px-4"><a href="#institution_api" onClick={toggleSidebar}>Institution API</a></li>
+                                <div className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
+                                    <a href="#institution_api">Institution API</a>
+                                    <img onClick={() => handleClick("institution_api")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["institution_api"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
+                                </div>
+                                    {openSections["institution_api"] && (
+                                        <ul className="">
+                                            <li className="py-2 px-6"><a href="#institution_transaction" onClick={toggleSidebar}>transaction</a></li>
+                                            <li className="py-2 px-6"><a href="#transaction_get" onClick={toggleSidebar}>transaction/{`{transaction_id}`}</a></li>
+                                            <li className="py-2 px-6"><a href="#exchange_rate_usd" onClick={toggleSidebar}>exchange_rate_usd</a></li>
+                                            <li className="py-2 px-6"><a href="#quote_post" onClick={toggleSidebar}>quote</a></li>
+                                            <li className="py-2 px-6"><a href="#quote_get" onClick={toggleSidebar}>quote/{`{quote_id}`}</a></li>
+                                        </ul>
+                                    )}
                             </ul>
                         )}
                     </ul>

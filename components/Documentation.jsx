@@ -582,7 +582,7 @@ const Codes = ({ showWooCommerce }) => {
                             <p className='py-5 text-sm'>
                             The Institution API facilitates remittances, currency exchange rate inquiries, and allows you to generate and reserve exchange rate quotations, as well as post credit and debit transactions to your customers through PayWise. To explore endpoint details, test functionalities, and see code examples, visit the Developer Portal, where you can fully test and prepare for production deployment.
                             </p>
-                            <a href="https://devportal.paywise.co/product#product=institution" target="_blank" className="btn btn-primary">Test Account API</a>
+                            <a href="https://devportal.paywise.co/product#product=institution" target="_blank" className="btn btn-primary">Test Institution API</a>
                         </div>
                         <div className='lg:w-2/4 w-full'>
                            <img src="/images/paywise-institution.jpg" alt="" />
