@@ -2,7 +2,7 @@
 
 export default function WooCommerce(){
     return(
-        <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
+        <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-8 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
             <div id="install_plugin" className='flex flex-col lg:flex-row justify-start items-center py-8'>
                 <div className='w-full'>
                     <h2 className="text-3xl font-semibold">Install and Setup the PayWise WordPress Plugin</h2>

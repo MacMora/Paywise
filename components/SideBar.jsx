@@ -57,7 +57,7 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                         <li className="p-2"><a href="#installation" onClick={toggleSidebar}>Installation</a></li>
                         <li className="p-2"><a href="#registration" onClick={toggleSidebar}>Registration</a></li>
                         <div className="p-2 flex flex-row justify-between gap-6 items-center">
-                            <a href="#api_product">API Products</a>
+                            <a onClick={toggleSidebar} href="#api_product">API Products</a>
                             <img onClick={() => handleClick("developers_portal")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["developers_portal"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
                         </div>
                         {openSections["developers_portal"] && (
@@ -65,7 +65,7 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                                 <li className="py-2 px-4"><a href="#headers" onClick={toggleSidebar}>Headers</a></li>
                                 <li className="py-2 px-4"><a href="#errors" onClick={toggleSidebar}>Errors</a></li>
                                 <div className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
-                                    <a href="#account_api">Account API</a>
+                                    <a onClick={toggleSidebar} href="#account_api">Account API</a>
                                     <img onClick={() => handleClick("account_api")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["account_api"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
                                 </div>
                                     {openSections["account_api"] && (
@@ -77,7 +77,7 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                                         </ul>
                                     )}
                                 <div className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
-                                    <a href="#institution_api">Institution API</a>
+                                    <a onClick={toggleSidebar} href="#institution_api">Institution API</a>
                                     <img onClick={() => handleClick("institution_api")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["institution_api"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
                                 </div>
                                     {openSections["institution_api"] && (
@@ -97,7 +97,7 @@ const SideBar_Doc = ({ isOpen, toggleSidebar, showPluginDocs, showDocumentation 
                         <li className="p-2"><a href="#production_portal" onClick={toggleSidebar}>Installation</a></li>
                         <li className="p-2"><a href="#production_registration" onClick={toggleSidebar}>Registration</a></li>
                         <div className="p-2 flex flex-row justify-between gap-6 items-center">
-                            <a href="#production_api_products">API Products</a>
+                            <a onClick={toggleSidebar} href="#production_api_products">API Products</a>
                             <img onClick={() => handleClick("production_portal")} className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["production_portal"]}`} width={"8px"} height={"8px"} src="/images/woocommerce/chevron.svg"/>
                         </div>
                         {openSections["production_portal"] && (

@@ -121,7 +121,7 @@ const Reques_Example = () => {
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
+                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
                     {languageData[selectedLanguage]?.description}
                 </pre>
             </div>
@@ -140,7 +140,7 @@ const Reques_Example = () => {
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
+                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
         {`{
     "status": "success",
     "code": 200,
@@ -165,13 +165,26 @@ const Exchange_Institutions = () => {
     
     // Estado para controlar la visibilidad del div que contiene el <p>
     const [openSections, setOpenSections] = useState({});
+    const [rotations, setRotations] = useState({});
 
     // Función para alternar la visibilidad de una sección específica
     const toggleVisibility = (id) => {
-      setOpenSections((prev) => ({
-        ...prev,
-        [id]: !prev[id], // Alterna el estado de la sección específica
-      }));
+        setOpenSections((prev) => ({
+          ...prev,
+          [id]: !prev[id], // Alterna el estado de la sección específica
+        }));
+    };
+    
+    const toggleRotation = (key) => {
+        setRotations(prevState => ({
+        ...prevState,
+        [key]: prevState[key] ? '' : 'rotate-90'
+        }));
+    };
+
+    const handleClick = (key) => {
+        toggleRotation(key);
+        toggleVisibility(key);
     };
     
     return(
@@ -187,9 +200,9 @@ const Exchange_Institutions = () => {
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
                                     
                                     <div className="border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("currency_pair")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("currency_pair")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_pair"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>currency_pair</span> string</p>
                                         </div>
@@ -202,9 +215,9 @@ const Exchange_Institutions = () => {
                                         )}
                                     </div>
                                     <div className="border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("rate_type")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("rate_type")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["rate_type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>rate_type</span> string</p>
                                         </div>
@@ -217,9 +230,9 @@ const Exchange_Institutions = () => {
                                         )}
                                     </div>
                                     <div className="border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("request_date")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("request_date")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>request_date</span> string</p>
                                         </div>
@@ -232,8 +245,8 @@ const Exchange_Institutions = () => {
                                         )}
                                     </div>
                                     <div className="pt-4">
-                                        <div onClick={() => toggleVisibility("version_exchange_rate")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <div onClick={() => handleClick("version_exchange_rate")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["version_exchange_rate"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className="font-semibold">version</span> string</p>
@@ -258,9 +271,9 @@ const Exchange_Institutions = () => {
                                 <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
                                 <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
                                     <div className= "border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("status")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("status")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>status</span> string</p>
                                         </div>
@@ -273,9 +286,9 @@ const Exchange_Institutions = () => {
                                         )}
                                     </div>
                                     <div className= "border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("code_exchange")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("code_exchange")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["code_exchange"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>code</span> integer</p>
                                         </div>
@@ -288,9 +301,9 @@ const Exchange_Institutions = () => {
                                         )}
                                     </div>
                                     <div className= "border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("rate_exchange")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("rate_exchange")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["rate_exchange"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>rate</span> string</p>
                                         </div>
@@ -303,9 +316,9 @@ const Exchange_Institutions = () => {
                                         )}
                                     </div>
                                     <div className= "pt-4">
-                                        <div onClick={() => toggleVisibility("request_date_exchange")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("request_date_exchange")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_date_exchange"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>request_date</span> string</p>
                                         </div>

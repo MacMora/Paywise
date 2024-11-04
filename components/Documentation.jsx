@@ -31,7 +31,7 @@ const Codes = ({ showWooCommerce }) => {
     };
 
     return (
-        <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
+        <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-4 px-4 lg:px-8 overflow-auto custom-scrollbar'>
             <div id='paywise_api' className='py-4'>
                 <div className='bg-[#F6F9FC] my-8 rounded-3xl overflow-hidden flex flex-col lg:flex-row justify-between items-center'>
                     <div className='lg:relative flex flex-row max-lg:flex-wrap w-full items-center lg:min-h-[350px]'>
@@ -54,7 +54,7 @@ const Codes = ({ showWooCommerce }) => {
 
                     <div>
                         <h3 className='text-2xl font-semibold'>What you can do</h3>
-                        <div className='flex flex-row gap-6 py-5 gap-2'>
+                        <div className='flex flex-row flex-wrap gap-6 py-5 gap-2'>
                             <div className='flex flex-col justify-center items-center gap-1.5 rounded-xl shadow-lg w-[113px] h-[113px]'>
                                 <img src="/images/exit.svg" />
                                 <p className='text-xs'>Send Money</p>
@@ -177,9 +177,9 @@ const Codes = ({ showWooCommerce }) => {
                                 <p className='text-sm'>Since the APK is not installed from the Google Play Store, you need to adjust your security settings to allow installations from unknown sources. The steps may vary depending on your Android version:</p>
                                 
 
-                                <div onClick={() => toggleVisibility("android_8_oreo")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                    <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                <div onClick={() => handleClick("android_8_oreo")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["android_8_oreo"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                     <p className='text-sm font-semibold py-4'>For Android 8.0 (Oreo) and later:</p>
                                 </div>
@@ -194,9 +194,9 @@ const Codes = ({ showWooCommerce }) => {
                                 )}
                                 
 
-                                <div onClick={() => toggleVisibility("android_7_earlier")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                    <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                <div onClick={() => handleClick("android_7_earlier")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["android_7_earlier"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                     <p className='text-sm font-semibold py-4'>For Android 7.0 (Nougat) and earlier:</p>
                                 </div>
@@ -280,7 +280,7 @@ const Codes = ({ showWooCommerce }) => {
 
                     {/* Headers */}
                     <div id="headers" className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
-                        <div className='lg:w-2/5 w-full'>
+                        <div className='lg:w-2/5 w-full max-lg:py-6'>
                             <div className='py-4'>
                                 <h3 className='text-2xl font-semibold'>Headers</h3>
                                 <p className='py-5 text-sm'>
@@ -293,7 +293,7 @@ const Codes = ({ showWooCommerce }) => {
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
                                     <div onClick={() => handleClick("pw-subscription-key")} className='flex flex-row gap-2 items-center cursor-pointer'>
                                         <svg className={`transition-transform duration-150 ${rotations["pw-subscription-key"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                         <p><span className='font-semibold'>PW-subscription-key</span> string</p>
                                     </div>
@@ -311,7 +311,7 @@ const Codes = ({ showWooCommerce }) => {
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
                                     <div onClick={() => handleClick("pw-origin-country")} className='flex flex-row gap-2 items-center cursor-pointer'>
                                         <svg className={`transition-transform duration-150 ${rotations["pw-origin-country"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                         <p><span className='font-semibold'>PW-origin-country</span> string</p>
                                     </div>
@@ -329,7 +329,7 @@ const Codes = ({ showWooCommerce }) => {
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
                                     <div onClick={() => handleClick("pw-request-date")} className='flex flex-row gap-2 items-center cursor-pointer'>
                                         <svg className={`transition-transform duration-150 ${rotations["pw-request-date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                         <p><span className='font-semibold'>PW-request-date</span> string</p>
                                     </div>
@@ -348,7 +348,7 @@ const Codes = ({ showWooCommerce }) => {
                         </div>
                         <div className='lg:w-2/4 w-full sticky top-0'>
                             <div className='bg-[#F5F6F8] overflow-hidden font-code rounded'>
-                                <div className='bg-[#EBEEF1] p-4 flex flex-row border'>
+                                <div className='bg-[#EBEEF1] p-4 flex flex-row border items-center'>
                                     <div className='basis-2/5'>
                                         <p className='font-bold text-xs'>Key</p>
                                     </div>
@@ -356,7 +356,7 @@ const Codes = ({ showWooCommerce }) => {
                                         <p className='font-bold text-xs'>Example</p>
                                     </div>
                                 </div>
-                                <div className='p-4 flex flex-row border'>
+                                <div className='p-4 flex flex-row border items-center'>
                                     <div className='basis-2/5'>
                                         <p className='text-xs'>PW-subscription-key</p>
                                     </div>
@@ -364,7 +364,7 @@ const Codes = ({ showWooCommerce }) => {
                                         <p className='text-xs'>eed0d85c530c4b26a91d09b783d8fab3</p>
                                     </div>
                                 </div>
-                                <div className='p-4 flex flex-row border'>
+                                <div className='p-4 flex flex-row border items-center'>
                                     <div className='basis-2/5'>
                                         <p className='text-xs'>PW-origin-country</p>
                                     </div>
@@ -372,7 +372,7 @@ const Codes = ({ showWooCommerce }) => {
                                         <p className='text-xs'>TT</p>
                                     </div>
                                 </div>
-                                <div className='p-4 flex flex-row border'>
+                                <div className='p-4 flex flex-row border items-center'>
                                     <div className='basis-2/5'>
                                         <p className='text-xs'>PW-request-date</p>
                                     </div>
@@ -556,11 +556,11 @@ const Codes = ({ showWooCommerce }) => {
                         </div>
                     </div>
 
-                    <div id='production_account_api' className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
-                        <div className='lg:w-2/5 w-full'>
+                    <div id='production_account_api' className='flex flex-col lg:flex-row justify-between items-center py-8 border-b-2'>
+                        <div className='lg:w-2/5 w-full max-lg:py-6'>
                             <h2 className='text-2xl lg:text-3xl font-semibold py-3'>Account API</h2>
                             <p className='py-5 text-sm'>
-                            The Account API handles user registration and performs fraud checks on your customer’s account status in the live environment. For testing these endpoints, along with detailed parameter explanations, example codes, and usage scenarios, please refer to the Developer Portal. There, you can experiment with all Account API functionalities before moving to production.
+                            The Account API handles user registration and performs fraud checks on your customer&rsquo;s account status in the live environment. For testing these endpoints, along with detailed parameter explanations, example codes, and usage scenarios, please refer to the Developer Portal. There, you can experiment with all Account API functionalities before moving to production.
                             </p>
                             <a href="https://devportal.paywise.co/product#product=account" target="_blank" className="btn btn-primary">Test Account API</a>
                             <div className='py-4'>
@@ -569,15 +569,14 @@ const Codes = ({ showWooCommerce }) => {
                                     <small>You will not be able to use these APIs to create or top up accounts in this environment.</small>
                                 </div>
                             </div>
-                            
                         </div>
                         <div className='lg:w-2/4 w-full'>
                            <img src="/images/account-api.jpg" alt="" />
                         </div>
                     </div>
 
-                    <div id='production_institution_api' className='flex flex-col lg:flex-row justify-between items-start py-12 '>
-                        <div className='lg:w-2/5 w-full'>
+                    <div id='production_institution_api' className='flex flex-col lg:flex-row justify-between items-center py-8 '>
+                        <div className='lg:w-2/5 w-full max-lg:py-6'>
                             <h2 className='text-2xl lg:text-3xl font-semibold py-3'>Institution API</h2>
                             <p className='py-5 text-sm'>
                             The Institution API facilitates remittances, currency exchange rate inquiries, and allows you to generate and reserve exchange rate quotations, as well as post credit and debit transactions to your customers through PayWise. To explore endpoint details, test functionalities, and see code examples, visit the Developer Portal, where you can fully test and prepare for production deployment.

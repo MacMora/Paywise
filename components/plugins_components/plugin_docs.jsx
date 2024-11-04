@@ -2,7 +2,7 @@
 
 export default function Plugin_Docs({ showWooCommerce }){
     return(
-        <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-20 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
+        <div className='main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 px-4 lg:px-8 overflow-y-auto custom-scrollbar'>
             <div className='bg-[#F6F9FC] my-8 rounded-3xl overflow-hidden flex flex-col lg:flex-row justify-between items-center'>
                 <div className='lg:relative flex flex-row max-lg:flex-wrap w-full items-center lg:min-h-[350px]'>
                     <div className="lg:relative lg:z-10 p-5 lg:p-10 lg:w-[600px]">

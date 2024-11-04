@@ -342,7 +342,7 @@ const Reques_Example = () => {
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
+                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
                     {languageData[selectedLanguage]?.description}
                 </pre>
             </div>
@@ -361,7 +361,7 @@ const Reques_Example = () => {
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
+                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
         {`{
     "status": "success",
     "code": 201,
@@ -386,13 +386,26 @@ const Personal_Account = () => {
     
     // Estado para controlar la visibilidad del div que contiene el <p>
     const [openSections, setOpenSections] = useState({});
+    const [rotations, setRotations] = useState({});
 
     // Función para alternar la visibilidad de una sección específica
     const toggleVisibility = (id) => {
-      setOpenSections((prev) => ({
-        ...prev,
-        [id]: !prev[id], // Alterna el estado de la sección específica
-      }));
+        setOpenSections((prev) => ({
+          ...prev,
+          [id]: !prev[id], // Alterna el estado de la sección específica
+        }));
+    };
+    
+    const toggleRotation = (key) => {
+        setRotations(prevState => ({
+        ...prevState,
+        [key]: prevState[key] ? '' : 'rotate-90'
+        }));
+    };
+
+    const handleClick = (key) => {
+        toggleRotation(key);
+        toggleVisibility(key);
     };
     
     return(
@@ -406,9 +419,9 @@ const Personal_Account = () => {
                             <div className='border-b border-[#6FA43A] py-4'>
                                 <h3 className='text-[#1E64A7] font-semibold py-3'>Request Parameters:</h3>
                                 <div className='font-code text-sm italic text-[#495059] py-2'>
-                                    <div onClick={() => toggleVisibility("personal_version")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <div onClick={() => handleClick("personal_version")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["personal_version"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                         <p><span className='font-semibold'>version</span> string</p>
                                     </div>
@@ -426,8 +439,8 @@ const Personal_Account = () => {
                                 <h3 className='text-[#1E64A7] font-semibold py-3'>Body Parameters:</h3>
                                 <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("first_name")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("first_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["first_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">first_name</span> string</p>
@@ -442,8 +455,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("last_name")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("last_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["last_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">last_name</span> string</p>
@@ -458,8 +471,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("email")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("email")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["email"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">email</span> string</p>
@@ -473,8 +486,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("mobile_number")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("mobile_number")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">mobile_number</span> string</p>
@@ -489,8 +502,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("address")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("address")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">address</span> object</p>
@@ -504,8 +517,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("address_line1")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("address_line1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">address_line1</span> string</p>
@@ -520,8 +533,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("address_line2")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("address_line2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">address_line2</span> string</p>
@@ -536,8 +549,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("address_line3")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("address_line3")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line3"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">address_line3</span> string</p>
@@ -552,8 +565,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("city")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("city")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["city"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">city</span> string</p>
@@ -568,8 +581,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("state_province")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("state_province")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["state_province"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">state_province</span> string</p>
@@ -584,8 +597,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("postal_code")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("postal_code")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["postal_code"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">postal_code</span> string</p>
@@ -600,8 +613,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("country")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("country")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">country</span> string</p>
@@ -616,8 +629,8 @@ const Personal_Account = () => {
                                 </div>
 
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("dob")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("dob")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["dob"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">dob</span> string</p>
@@ -633,8 +646,8 @@ const Personal_Account = () => {
 
                                 {/* ids */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("ids")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("ids")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["ids"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">ids</span> object</p>
@@ -649,8 +662,8 @@ const Personal_Account = () => {
 
                                 {/* id_document1 */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("id_document1")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("id_document1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_document1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">id_document1</span> object</p>
@@ -665,8 +678,8 @@ const Personal_Account = () => {
 
                                 {/* id_type (within id_document1) */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("id_type_1")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("id_type_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_type_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">id_type</span> string</p>
@@ -682,8 +695,8 @@ const Personal_Account = () => {
 
                                 {/* id_number (within id_document1) */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("id_number_1")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("id_number_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_number_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">id_number</span> string</p>
@@ -699,8 +712,8 @@ const Personal_Account = () => {
 
                                 {/* issue_date (within id_document1) */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("issue_date_1")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("issue_date_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issue_date_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">issue_date</span> string</p>
@@ -716,8 +729,8 @@ const Personal_Account = () => {
 
                                 {/* expiry_date (within id_document1) */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("expiry_date_1")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("expiry_date_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expiry_date_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">expiry_date</span> string</p>
@@ -733,8 +746,8 @@ const Personal_Account = () => {
 
                                 {/* issued_country (within id_document1) */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("issued_country_1")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("issued_country_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issued_country_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">issued_country</span> string</p>
@@ -750,8 +763,8 @@ const Personal_Account = () => {
 
                                 {/* name */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("name")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">name</span> string</p>
@@ -766,8 +779,8 @@ const Personal_Account = () => {
 
                                 {/* address */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("address")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("address")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">address</span> string</p>
@@ -782,8 +795,8 @@ const Personal_Account = () => {
 
                                 {/* file */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("file")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("file")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["file"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">file</span> file</p>
@@ -798,8 +811,8 @@ const Personal_Account = () => {
 
                                 {/* poa */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("poa")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("poa")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">poa</span> object</p>
@@ -814,8 +827,8 @@ const Personal_Account = () => {
 
                                 {/* poa_type */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("poa_type")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("poa_type")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">poa_type</span> string</p>
@@ -830,8 +843,8 @@ const Personal_Account = () => {
 
                                 {/* poa_bill_date */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("poa_bill_date")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("poa_bill_date")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_bill_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">poa_bill_date</span> string</p>
@@ -847,8 +860,8 @@ const Personal_Account = () => {
 
                                 {/* poa_name */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("poa_name")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("poa_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">poa_name</span> string</p>
@@ -863,8 +876,8 @@ const Personal_Account = () => {
 
                                 {/* poa_address */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("poa_address")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("poa_address")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_address"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">poa_address</span> string</p>
@@ -879,8 +892,8 @@ const Personal_Account = () => {
 
                                 {/* poa_file */}
                                 <div className="border-b-2 py-4">
-                                    <div onClick={() => toggleVisibility("poa_file")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("poa_file")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_file"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">poa_file</span> file</p>
@@ -895,8 +908,8 @@ const Personal_Account = () => {
 
                                 {/* selfie */}
                                 <div className="pt-4">
-                                    <div onClick={() => toggleVisibility("selfie")} className="flex flex-row gap-0.5 items-center cursor-pointer">
-                                        <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <div onClick={() => handleClick("selfie")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["selfie"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         <p><span className="font-semibold">selfie</span> file</p>
@@ -917,9 +930,9 @@ const Personal_Account = () => {
                                 <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
                                 <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
                                     <div className= "border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("personal_status")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("personal_status")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["personal_status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>status</span> string</p>
                                         </div>
@@ -933,9 +946,9 @@ const Personal_Account = () => {
                                     </div>
 
                                     <div className= "border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("personal_code")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("personal_code")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["personal_code"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>code</span> integer</p>
                                         </div>
@@ -949,9 +962,9 @@ const Personal_Account = () => {
                                     </div>
 
                                     <div className= "border-b-2 py-4">
-                                        <div onClick={() => toggleVisibility("personal_message")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("personal_message")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["personal_message"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>message</span> string</p>
                                         </div>
@@ -965,9 +978,9 @@ const Personal_Account = () => {
                                     </div>
                                     
                                     <div className= "pt-4">
-                                        <div onClick={() => toggleVisibility("personal_pin")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
-                                            <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <div onClick={() => handleClick("personal_pin")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["personal_pin"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <p><span className='font-semibold'>pin</span> string</p>
                                         </div>
