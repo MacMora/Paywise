@@ -71,3 +71,28 @@
 .doc-section ul li {
   list-style: disc;
 }
+
+.main-content a {
+  color: #1e64a7;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.main-content a:hover {
+  color: #7db8f1;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.main-content a.green-link {
+  color: #6FA43A;
+}
+.main-content a.green-link:hover {
+  color: #b9f082;
+}
+
+/* Apply this to the body or main container of the documentation */
+body {
+  background: radial-gradient(circle at center, rgba(19, 106, 183, 0.3) 20%, rgba(255, 255, 255, 1) 80%);
+  background-attachment: fixed;
+  background-size: 300px 300px; /* Set a smaller size for the gradient circle */
+  background-repeat: no-repeat; /* Prevents tiling */
+}

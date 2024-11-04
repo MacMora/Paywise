@@ -37,7 +37,6 @@ const Codes = ({ showWooCommerce }) => {
                     <div className='lg:relative flex flex-row max-lg:flex-wrap w-full items-center lg:min-h-[350px]'>
                         <div className="lg:relative flex flex-col gap-8 lg:z-10 p-5 lg:p-10 lg:w-[600px]">
                             <h1 className='text-2xl lg:text-[42px] leading-[48px] font-bold'>Welcome to the PayWise API documentation</h1>
-                            <p className='text-[#495059] text-sm'>Getting Started {"->"}</p>
                         </div>
                         <img className='object-cover lg:absolute end-0 z-0' src="/images/woocommerce/3d-shapes.png" />
                     </div>
@@ -98,12 +97,12 @@ const Codes = ({ showWooCommerce }) => {
                     </div>
 
                     <div id='quick_start' className='py-8'>
-                        <h3 className='text-2xl font-semibold'>Quick Start</h3>
+                        <h2 className='text-3xl py-5 font-bold'>Quick Start</h2>
                         <p className='text-sm py-3'>No time to waste, here&rsquo;s where to go:</p>
                         <ol className='text-sm'>
-                            <li>1. <a href='#'>Register</a> on the developer portal to get your API key automatically sent to you.</li>
-                            <li>2. Are you representing an institution and you are not a PayWise account holder, but you want to enable transactions for your customers to and from PayWise? Then go <a href='#'>here.</a></li>
-                            <li>3. If you want to create PayWise accounts to simulate transactions, then go <a href='#'>here.</a></li>
+                            <li>1. <a href='#registration'>Register</a> on the developer portal to get your API key automatically sent to you.</li>
+                            <li>2. Are you representing an institution and you are not a PayWise account holder, but you want to enable transactions for your customers to and from PayWise? Then go <a href='#institution_api'>here.</a></li>
+                            <li>3. If you want to create PayWise accounts to simulate transactions, then go <a href='#account_api'>here.</a></li>
                         </ol>
                     </div>
                         
@@ -111,28 +110,28 @@ const Codes = ({ showWooCommerce }) => {
                         <h2 className='text-3xl py-5 font-bold'>Environments</h2>
                         <div className='flex flex-col lg:flex-row justify-start items-start gap-14'>
                             <div className="lg:w-3/6 basis-2/5 p-8 bg-[#F9F9F9]">
-                                <h4 className="mb-2 font-semibold"><a href='#'>Developers Portal</a></h4>
+                                <h4 className="mb-2 font-semibold"><a href='#developers_portal'>Developers Portal</a></h4>
                                 <p className='mb-2'>
                                     <small>where developers can register, explore API documentation, generate API keys, create test personal and business accounts, top up (bless) those test accounts, and test their integrations</small>
                                 </p>
-                                <span className='text-[#1E64A7] text-sm font-semibold'>Read more</span>
+                                <a href="#developers_portal" className='text-[#1E64A7] text-sm font-semibold'>Read more</a>
                             </div>
                             <div className="lg:w-3/6 basis-2/5 p-8 bg-[#F9F9F9]">
-                                <h4 className="mb-2 font-semibold"><a href='#'>Production Portal</a></h4>
+                                <h4 className="mb-2 font-semibold"><a href='#production_portal'>Production Portal</a></h4>
                                 <p className='mb-2'>
                                     <small>where live transactions occur. Once you've completed integration and testing in the Developers&rsquo; environment, you can transition to production.</small>
                                 </p>
-                                <span className='text-[#1E64A7] text-sm font-semibold'>Read more</span>
+                                <a href="#production_portal" className='text-[#1E64A7] text-sm font-semibold'>Read more</a>
                             </div>
                         </div>
                     </div>
 
                     <div id='integrations' className='py-8'>
-                        <h2 className='text-5xl py-5 font-bold'>Integrations</h2>
+                        <h2 className='text-3xl py-5 font-bold'>Integrations</h2>
                         <p>Offer all payment methods in your online store. Use one of our integrations</p>
                         <div className='py-4'>
                             <div onClick={showWooCommerce} className='cursor-pointer flex flex-col justify-center items-center rounded-xl shadow-lg w-[125px] h-[125px]'>
-                                <img src="/images/woo-logo.png" />
+                                <img src="/images/woo-logo.svg" width="76px" height="76px" />
                                 <p className='text-xs'>Woocommerce</p>
                             </div>
                         </div>
@@ -140,11 +139,11 @@ const Codes = ({ showWooCommerce }) => {
 
                     <div id='developers_portal' className='py-8'>
                         <h2 className='text-5xl py-5 font-bold'>Developers Portal</h2>
-                        <p className='text-sm'><a href='#'>The Developers&rsquo; Portal</a> is where developers can register, explore API documentation, generate API keys, create test personal and business accounts, top up (bless) those test accounts, and test their integrations. It provides full access to sandbox environments and detailed logs of API activity. Our intuitive design ensures that developers of all experience levels can get started quickly.</p>
+                        <p className='text-sm'>The Developers&rsquo; Portal is where developers can register, explore API documentation, generate API keys, create test personal and business accounts, top up (bless) those test accounts, and test their integrations. It provides full access to sandbox environments and detailed logs of API activity. Our intuitive design ensures that developers of all experience levels can get started quickly.</p>
                         <div className='py-4'>
                             <div className="alert alert-warning flex items-center gap-4">
                                 <img src="/images/Bulb.svg" alt="bulb" />
-                                <small>Use the following links to try our <a href='#' className='font-semibold underline'>Android app</a> and our <a href='#' className='font-semibold underline'>WebApp</a> in the Developers&rsquo; environment. <span className='font-semibold'>You will need to create a <a href='#' className='underline'>personal</a> or <a href='#' className='underline'>business</a> PayWise account to log into those apps.</span></small>
+                                <small>Use the following links to try our <a href='https://play.google.com/store/apps/details?id=com.paywiseapp' target="_blank" className='font-semibold underline'>Android app</a>, <a href='https://apps.apple.com/us/app/paywise-mobile-wallet-app/id6444257738' target="_blank" className='font-semibold underline'>IOS app</a> and our <a href='https://pwapp.co/user/login' target="_blank" className='font-semibold underline'>WebApp</a> in the Developers&rsquo; environment. <span className='font-semibold'>You will need to create a <a href='#personal_account' className='underline'>personal</a> or <a href='#business_account' className='underline'>business</a> PayWise account to log into those apps.</span></small>
                             </div>
                         </div>
                     </div>
@@ -176,7 +175,15 @@ const Codes = ({ showWooCommerce }) => {
                             <h3 className='text-xl font-semibold'>2. Enable Installation from Unknown Sources</h3>
                             <div className='py-5'>
                                 <p className='text-sm'>Since the APK is not installed from the Google Play Store, you need to adjust your security settings to allow installations from unknown sources. The steps may vary depending on your Android version:</p>
-                                <p className='text-sm font-semibold py-4'>For Android 8.0 (Oreo) and later:</p>
+                                
+
+                                <div onClick={() => toggleVisibility("android_8_oreo")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                    <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <p className='text-sm font-semibold py-4'>For Android 8.0 (Oreo) and later:</p>
+                                </div>
+                                {openSections["android_8_oreo"] && (
                                 <ol className='text-sm px-4'>
                                     <li className='py-1'>1. Open your device&rsquo;s Settings</li>
                                     <li className='py-1'>2. Go to “Apps & notifications” (or “Apps” in some versions).</li>
@@ -184,7 +191,16 @@ const Codes = ({ showWooCommerce }) => {
                                     <li className='py-1'>4. Scroll down and tap on Install unknown apps.</li>
                                     <li className='py-1'>5. Toggle Allow from this source to enable APK installation.</li>
                                 </ol>
-                                <p className='text-sm font-semibold py-4'>For Android 7.0 (Nougat) and earlier:</p>
+                                )}
+                                
+
+                                <div onClick={() => toggleVisibility("android_7_earlier")} className='flex flex-row gap-0.5 items-center cursor-pointer'>
+                                    <svg width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 24L168 168L24 312" stroke="#536374" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <p className='text-sm font-semibold py-4'>For Android 7.0 (Nougat) and earlier:</p>
+                                </div>
+                                {openSections["android_7_earlier"] && (
                                 <ol className='text-sm px-4'>
                                     <li className='py-1'>1. Open your device&rsquo;s Settings</li>
                                     <li className='py-1'>2. Go to Security or Lock screen and security.</li>
@@ -192,6 +208,7 @@ const Codes = ({ showWooCommerce }) => {
                                     <li className='py-1'>4. Toggle the switch to enable installation from unknown sources.</li>
                                     <li className='py-1'>5. You may see a warning about the risks associated with unknown sources. Confirm to proceed.</li>
                                 </ol>
+                                )}
                             </div>
                         </div>
                         <div className='pb-5'>
@@ -223,8 +240,11 @@ const Codes = ({ showWooCommerce }) => {
                         <h2 className='text-2xl lg:text-3xl font-semibold'>WebApp URL:</h2>
                         <div className="alert alert-info flex items-center gap-4 my-5">
                             <img src="/images/Info.svg" alt="info" />
-                            <small>Once you have a <a href='#' className='font-semibold underline'>personal</a> or <a href='#' className='font-semibold underline'>business</a> PayWise account, you can log into their environment to view transactions <a className='font-bold' href='https://sandbox.paywise.co/user/login' target='_blank'>https://sandbox.paywise.co/user/login</a>
-                            <br/>The OTP used in this environment is <span className='font-code'>123456</span></small>
+                            <small>addition to using the mobile app, once you’ve created a <a href='#personal_account' className='font-semibold underline'>personal</a> or <a href='#business_account' className='font-semibold underline'>business</a> <b>PayWise</b> account (which differs from a developer account), you can log in <a className='font-bold' href='https://sandbox.paywise.co/user/login' target='_blank'>here</a> to access and review transactions associated with these accounts within this environment.</small>
+                        </div>
+                        <div className="alert alert-info flex items-center gap-4 my-5">
+                            <img src="/images/Info.svg" alt="info" />
+                            <small>The OTP used in this environment is <b className='font-code'>123456</b></small>
                         </div>
                     </div>
 
@@ -244,8 +264,8 @@ const Codes = ({ showWooCommerce }) => {
                         <div className='lg:w-2/5 w-full'>
                             <h2 className='text-2xl lg:text-3xl font-semibold py-3'>API Product</h2>
                             <h3 className='text-2xl font-semibold'>Developers&rsquo; URL</h3>
-                            <p className='py-5 text-base'>
-                            The Developers&rsquo; URL is used for all testing and integration efforts in the developer environment. It allows developers to simulate PayWise's services and workflows before going live. Be sure to use your Developer subscription key and include the required headers and parameters for each API request. This environment mirrors production functionality, but with test data to ensure safe development and debugging.
+                            <p className='py-5 text-sm'>
+                            The Developers&rsquo; URL is used for all testing and integration efforts in the developer environment. It allows developers to simulate PayWise's services and workflows before going live. Be sure to use your <b>Developer subscription key</b> and include the required <a href='#headers'>headers</a> and parameters for each API request. This environment mirrors production functionality, but with test data to ensure safe development and debugging.
                             </p>
                         </div>
                         <div className='lg:w-2/4 w-full sticky top-0'>
@@ -253,7 +273,7 @@ const Codes = ({ showWooCommerce }) => {
                                 The developer endpoints are hosted at the following base URL:
                             </p>
                             <div className='bg-[#2E3F51] rounded py-6 px-4'>
-                                <a className='text-[#6FA43A]' href='https://devapi.paywise.co/' target="_blank">https://devapi.paywise.co/</a>
+                                <a className='green-link' href='https://devapi.paywise.co/' target="_blank">https://devapi.paywise.co/</a>
                             </div>
                         </div>
                     </div>
@@ -263,7 +283,7 @@ const Codes = ({ showWooCommerce }) => {
                         <div className='lg:w-2/5 w-full'>
                             <div className='py-4'>
                                 <h3 className='text-2xl font-semibold'>Headers</h3>
-                                <p className='py-5 text-base'>
+                                <p className='py-5 text-sm'>
                                 All requests to the PayWise API require certain mandatory headers for authentication, logging, and ensuring compliance. These headers help to secure and trace API calls, ensuring that only authorized systems access PayWise resources. It is crucial that each header is provided in every API request to avoid unauthorized or malformed transactions.
                                 </p>
                                 <span className='text-[#495059] font-semibold'>Attributes:</span>
@@ -279,7 +299,7 @@ const Codes = ({ showWooCommerce }) => {
                                     </div>
                                     {openSections["pw-subscription-key"] && (
                                     <div className='py-3'>
-                                        <p className='py-2'><span className='font-semibold not-italic'>Description:</span> This key is provided upon registration in the Developers’ Portal. It is used to authenticate the caller and ensure they have access to the API. A production key will be shared after the necessary verification and approval process.</p>
+                                        <p className='py-2'><span className='font-semibold not-italic'>Description:</span> This key is provided upon registration in the <a href="#developers_portal">Developers’ Portal</a>. It is used to authenticate the caller and ensure they have access to the API. A production key will be shared after the necessary verification and approval process.</p>
                                         <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
                                         <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 32</p>
                                     </div>
@@ -369,7 +389,7 @@ const Codes = ({ showWooCommerce }) => {
                         <div className='lg:w-2/5 w-full'>
                             <div className='py-4'>
                                 <h3 className='text-2xl font-semibold'>Errors</h3>
-                                <p className='py-5 text-base'>
+                                <p className='py-5 text-sm'>
                                 Below is a list of possible error codes and their meanings that might be returned in the code field of the API response:
                                 </p>
                             </div>
@@ -470,6 +490,107 @@ const Codes = ({ showWooCommerce }) => {
 
                     {/* Account_API - Institutions API */}
                     <App/>
+
+
+
+                    <div id='production_portal' className='py-8'>
+                        <h2 className='text-5xl py-5 font-bold'>Production Portal</h2>
+                        <p className='text-sm'>The Production Portal is where live transactions occur. Once you've completed integration and testing in the Developers’ environment, you can transition to production. The Production Portal offers access to real-time transaction data, logs, and API usage for your live environment.</p>
+                       
+                        <div>
+                            <h3 className='text-2xl font-semibold mt-5'>Downlaod the PayWise App</h3>
+                            <div className='flex flex-row gap-6 py-5 gap-2'>
+                                <a href='app-store-badge.pnghttps://play.google.com/store/apps/details?id=com.paywiseapp' target='_blank' className='flex flex-col justify-center items-center gap-1.5'>
+                                    <img src="/images/google-play-store.webp" width={202} />
+                                </a>
+                                <a href='https://apps.apple.com/us/app/paywise-mobile-wallet-app/id6444257738' target='_blank' className='flex flex-col justify-center items-center gap-1.5'>
+                                    <img src="/images/app-store-badge.png" width={202} />
+                                </a>
+                            </div>
+                        </div>
+                        
+                         <div className='py-4'>
+                            <div className="alert alert-warning flex items-center gap-4">
+                                <img src="/images/Bulb.svg" alt="bulb" />
+                                <small>You can also use the following links to try our <a href='https://play.google.com/store/apps/details?id=com.paywiseapp' target="_blank" className='font-semibold underline'>Android app</a>, <a href='https://apps.apple.com/us/app/paywise-mobile-wallet-app/id6444257738' target="_blank" className='font-semibold underline'>IOS app</a> and our <a href='https://pwapp.co/user/login' target="_blank" className='font-semibold underline'>WebApp</a> in the Production environment.</small>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div id='production_registration' className='py-10 border-b border-[#E4E4E4]'>
+                        <h2 className='text-2xl lg:text-3xl font-semibold'>Registration Request</h2>
+                        <div className='text-sm py-5'>
+                            <p>Before you can go live with the <a href="#production_portal">Production Portal</a>, you need to request access to production API keys:</p>
+                            <ol className='p-4'>
+                                <li className='py-1'>1. Navigate to the <a href="#production_portal">Production Portal</a> and register.</li>
+                                <li className='py-1'>2. Once the necessary trusted KYB details and agreements have happened with PayWise and your company, our team will manually review your request and provide you with the necessary API keys for live transactions.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div id='production_api_products' className='flex flex-col lg:flex-row justify-between items-start py-12 '>
+                        <div className=' w-full'>
+                            <h2 className='text-2xl lg:text-3xl font-semibold py-3'>API Product</h2>
+                            <p className='py-5 text-sm'>
+                            All <b>API Products</b> available in the <a href="#developers_portal">Developer Portal</a> will also be available in the <a href="#production_portal">Production Portal</a>. These include:
+                            </p>
+                        </div>
+                        
+                    </div>
+                    <div id='production_url' className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
+                        <div className='lg:w-2/5 w-full'>
+                            <h2 className='text-2xl lg:text-3xl font-semibold py-3'>Production URL</h2>
+                            <p className='py-5 text-sm'>
+                            This is the primary URL for all API interactions in the live environment. Once your application is approved and fully registered, you can use this URL to interact with PayWise services in production. Be sure to use your <b>production subscription key</b> follow the same structure as in the <a href="#developers_portal">Developer Portal</a>, ensuring all mandatory headers and parameters are properly included. Make sure to test thoroughly in that environment before transitioning your integration to production.
+                            </p>
+                        </div>
+                        <div className='lg:w-2/4 w-full sticky top-0'>
+                            <p className='py-4'>
+                                The production endpoints are hosted at the following base URL:
+                            </p>
+                            <div className='bg-[#2E3F51] rounded py-6 px-4'>
+                                <a className='green-link' href='https://api.paywise.co/' target="_blank">https://api.paywise.co/</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id='production_account_api' className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
+                        <div className='lg:w-2/5 w-full'>
+                            <h2 className='text-2xl lg:text-3xl font-semibold py-3'>Account API</h2>
+                            <p className='py-5 text-sm'>
+                            The Account API handles user registration and performs fraud checks on your customer’s account status in the live environment. For testing these endpoints, along with detailed parameter explanations, example codes, and usage scenarios, please refer to the Developer Portal. There, you can experiment with all Account API functionalities before moving to production.
+                            </p>
+                            <a href="https://devportal.paywise.co/product#product=account" target="_blank" className="btn btn-primary">Test Account API</a>
+                            <div className='py-4'>
+                                <div className="alert alert-warning flex items-center gap-4">
+                                    <img src="/images/Bulb.svg" alt="bulb" />
+                                    <small>You will not be able to use these APIs to create or top up accounts in this environment.</small>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div className='lg:w-2/4 w-full'>
+                           <img src="/images/account-api.jpg" alt="" />
+                        </div>
+                    </div>
+
+                    <div id='production_institution_api' className='flex flex-col lg:flex-row justify-between items-start py-12 '>
+                        <div className='lg:w-2/5 w-full'>
+                            <h2 className='text-2xl lg:text-3xl font-semibold py-3'>Institution API</h2>
+                            <p className='py-5 text-sm'>
+                            The Institution API facilitates remittances, currency exchange rate inquiries, and allows you to generate and reserve exchange rate quotations, as well as post credit and debit transactions to your customers through PayWise. To explore endpoint details, test functionalities, and see code examples, visit the Developer Portal, where you can fully test and prepare for production deployment.
+                            </p>
+                            <a href="https://devportal.paywise.co/product#product=institution" target="_blank" className="btn btn-primary">Test Institution API</a>
+                        </div>
+                        <div className='lg:w-2/4 w-full'>
+                           <img src="/images/paywise-institution.jpg" alt="" />
+                        </div>
+                    </div>
+
+
+                        
                 </div>
             </div>
         </div>
