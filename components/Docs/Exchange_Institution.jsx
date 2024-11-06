@@ -2,6 +2,7 @@
 // Importamos useState desde React
 import { useState } from 'react';
 import { useLanguage } from '../LenguageContext';
+import { Copy, Check } from 'lucide-react';
 
 // Datos de lenguajes de programación
 const languageData = {
@@ -103,6 +104,31 @@ print(response.json())
 
 const Reques_Example = () => {
     const { selectedLanguage, setSelectedLanguage } = useLanguage();
+    const [copiedRequest, setCopiedRequest] = useState(false);
+    const [copiedResponse, setCopiedResponse] = useState(false);
+
+    const handleCopy = async (text, setCopied) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const responseExample = `{
+    "status": "success",
+    "code": 200,
+    "rate": "6.7890",
+    "request_date": "2024-10-23"
+}
+#if there is an error, the response may look like:
+{
+    "status": "error",
+    "code": 400,
+    "message": "Invalid currency pair"
+}`;
   
 
   return (
@@ -112,12 +138,26 @@ const Reques_Example = () => {
                 <div className='w-2/4 py-2 sm:px-2'>
                     <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
                 </div>
-                <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
+                <div className='w-2/6 flex justify-center items-center gap-2'>
+                    <select 
+                        className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' 
+                        value={selectedLanguage} 
+                        onChange={(e) => setSelectedLanguage(e.target.value)}
+                    >
                         {Object.keys(languageData).map((lang) => (
-                        <option key={lang} value={lang}>{lang}</option>
+                            <option key={lang} value={lang}>{lang}</option>
                         ))}
                     </select>
+                    <button
+                        onClick={() => handleCopy(languageData[selectedLanguage]?.description, setCopiedRequest)}
+                        className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+                    >
+                        {copiedRequest ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                            <Copy className="h-4 w-4 text-[#F2F2F2]" />
+                        )}
+                    </button>
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
@@ -129,31 +169,33 @@ const Reques_Example = () => {
         <div className="bg-[#699EC7] rounded my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
                 <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-sm text-[#F2F2F2]'>Response example::</h2>
+                    <h2 className='text-sm text-[#F2F2F2]'>Response example:</h2>
                 </div>
-                <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
+                <div className='w-2/6 flex justify-center items-center gap-2'>
+                    <select 
+                        className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' 
+                        value={selectedLanguage} 
+                        onChange={(e) => setSelectedLanguage(e.target.value)}
+                    >
                         {Object.keys(languageData).map((lang) => (
-                        <option key={lang} value={lang}>{lang}</option>
+                            <option key={lang} value={lang}>{lang}</option>
                         ))}
                     </select>
+                    <button
+                        onClick={() => handleCopy(responseExample, setCopiedResponse)}
+                        className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+                    >
+                        {copiedResponse ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                            <Copy className="h-4 w-4 text-[#F2F2F2]" />
+                        )}
+                    </button>
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
                 <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-        {`{
-    "status": "success",
-    "code": 200,
-    "rate": "6.7890",
-    "request_date": "2024-10-23"
-}
-#if there is an error, the response may look like:
-{
-    "status": "error",
-    "code": 400,
-    "message": "Invalid currency pair"
-}
-`}
+                    {responseExample}
                 </pre>
             </div>
         </div>

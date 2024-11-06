@@ -240,7 +240,7 @@ const Codes = ({ showWooCommerce }) => {
                         <h2 className='text-2xl lg:text-3xl font-semibold'>WebApp URL:</h2>
                         <div className="alert alert-info flex items-center gap-4 my-5">
                             <img src="/images/Info.svg" alt="info" />
-                            <small>addition to using the mobile app, once you’ve created a <a href='#personal_account' className='font-semibold underline'>personal</a> or <a href='#business_account' className='font-semibold underline'>business</a> <b>PayWise</b> account (which differs from a developer account), you can log in <a className='font-bold' href='https://sandbox.paywise.co/user/login' target='_blank'>here</a> to access and review transactions associated with these accounts within this environment.</small>
+                            <small>In addition to using the mobile app, once you&rsquo;ve created a <a href='#personal_account' className='font-semibold underline'>personal</a> or <a href='#business_account' className='font-semibold underline'>business</a> <b>PayWise</b> account (which differs from a developer account), you can log in <a className='font-bold' href='https://sandbox.paywise.co/user/login' target='_blank'>here</a> to access and review transactions associated with these accounts within this environment.</small>
                         </div>
                         <div className="alert alert-info flex items-center gap-4 my-5">
                             <img src="/images/Info.svg" alt="info" />

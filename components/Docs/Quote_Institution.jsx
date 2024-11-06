@@ -2,6 +2,7 @@
 // Importamos useState desde React
 import { useState } from 'react';
 import { useLanguage } from '../LenguageContext';
+import { Copy, Check } from 'lucide-react';
 
 // Datos de lenguajes de programación
 const languageData = {
@@ -34,45 +35,20 @@ import requests
 
 const Reques_Example = () => {
     const { selectedLanguage, setSelectedLanguage } = useLanguage();
-  
+    const [copiedRequest, setCopiedRequest] = useState(false);
+    const [copiedResponse, setCopiedResponse] = useState(false);
 
-  return (
-    <div>
-        <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-            <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
-                <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
-                </div>
-                <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
-                        {Object.keys(languageData).map((lang) => (
-                        <option key={lang} value={lang}>{lang}</option>
-                        ))}
-                    </select>
-                </div>
-            </div>
-            <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-                    {languageData[selectedLanguage]?.description}
-                </pre>
-            </div>
-        </div>
-        <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-            <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
-                <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-sm text-[#F2F2F2]'>Response example::</h2>
-                </div>
-                <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
-                        {Object.keys(languageData).map((lang) => (
-                        <option key={lang} value={lang}>{lang}</option>
-                        ))}
-                    </select>
-                </div>
-            </div>
-            <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-        {`{
+    const handleCopy = async (text, setCopied) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const responseExample = `{
     "status": "success",
     "code": 200,
     "rate": "6.7890",
@@ -86,8 +62,74 @@ const Reques_Example = () => {
     "status": "error",
     "code": 404,
     "message": " Quote not found"
-}
-`}
+}`;
+  
+
+  return (
+    <div>
+        <div className="bg-[#699EC7] rounded my-8 md:mb-4">
+            <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
+                <div className='w-2/4 py-2 sm:px-2'>
+                    <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
+                </div>
+                <div className='w-2/6 flex justify-center items-center gap-2'>
+                    <select 
+                        className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' 
+                        value={selectedLanguage} 
+                        onChange={(e) => setSelectedLanguage(e.target.value)}
+                    >
+                        {Object.keys(languageData).map((lang) => (
+                            <option key={lang} value={lang}>{lang}</option>
+                        ))}
+                    </select>
+                    <button
+                        onClick={() => handleCopy(languageData[selectedLanguage]?.description, setCopiedRequest)}
+                        className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+                    >
+                        {copiedRequest ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                            <Copy className="h-4 w-4 text-[#F2F2F2]" />
+                        )}
+                    </button>
+                </div>
+            </div>
+            <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                    {languageData[selectedLanguage]?.description}
+                </pre>
+            </div>
+        </div>
+        <div className="bg-[#699EC7] rounded my-8 md:mb-4">
+            <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
+                <div className='w-2/4 py-2 sm:px-2'>
+                    <h2 className='text-sm text-[#F2F2F2]'>Response example:</h2>
+                </div>
+                <div className='w-2/6 flex justify-center items-center gap-2'>
+                    <select 
+                        className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' 
+                        value={selectedLanguage} 
+                        onChange={(e) => setSelectedLanguage(e.target.value)}
+                    >
+                        {Object.keys(languageData).map((lang) => (
+                            <option key={lang} value={lang}>{lang}</option>
+                        ))}
+                    </select>
+                    <button
+                        onClick={() => handleCopy(responseExample, setCopiedResponse)}
+                        className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+                    >
+                        {copiedResponse ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                            <Copy className="h-4 w-4 text-[#F2F2F2]" />
+                        )}
+                    </button>
+                </div>
+            </div>
+            <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                    {responseExample}
                 </pre>
             </div>
         </div>
@@ -204,118 +246,123 @@ const Quote_Institutions = () => {
                                         </div>
                                         {openSections["debit_party"] && (
                                         <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> An object that contains information about the debit participant.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> n/a</p>
+                                            <div className="pb-4">
+                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> An object that contains information about the debit participant.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> n/a</p>
+                                            </div>
+                                            
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("mobile_number_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">mobile_number</span> string</p>
+                                                </div>
+                                                {openSections["mobile_number_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full number of the debit participant. Example: "+18681234567".</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10 - 18</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("organization_id_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["organization_id_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">organization_id</span> string</p>
+                                                </div>
+                                                {openSections["organization_id_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 30</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("account_number_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">account_number</span> string</p>
+                                                </div>
+                                                {openSections["account_number_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Wallet account (or Bank account or IBAN number or card number) of the debit party.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 5 - 50</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("account_type_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_type_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">account_type</span> string</p>
+                                                </div>
+                                                {openSections["account_type_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Type of account of the credit party.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 50</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("currency_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">currency</span> string</p>
+                                                </div>
+                                                {openSections["currency_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Sender's currency of the debitor in ISO 4217 format. Eg. USD.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("country_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">country</span> string</p>
+                                                </div>
+                                                {openSections["country_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Sender's country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. US.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="px-2 pt-4">
+                                                <div onClick={() => handleClick("metadata_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">metadata</span> string</p>
+                                                </div>
+                                                {openSections["metadata_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Additional metadata needed for the credit party.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 255</p>
+                                                </div>
+                                                )}
+                                            </div>
+
                                         </div>
                                         )}
                                     </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("mobile_number_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">mobile_number</span> string</p>
-                                        </div>
-                                        {openSections["mobile_number_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full number of the debit participant. Example: "+18681234567".</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10 - 18</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("organization_id_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["organization_id_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">organization_id</span> string</p>
-                                        </div>
-                                        {openSections["organization_id_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 30</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("account_number_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">account_number</span> string</p>
-                                        </div>
-                                        {openSections["account_number_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Wallet account (or Bank account or IBAN number or card number) of the debit party.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 5 - 50</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("account_type_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_type_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">account_type</span> string</p>
-                                        </div>
-                                        {openSections["account_type_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Type of account of the credit party.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 50</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("currency_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">currency</span> string</p>
-                                        </div>
-                                        {openSections["currency_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Sender's currency of the debitor in ISO 4217 format. Eg. USD.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("country_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">country</span> string</p>
-                                        </div>
-                                        {openSections["country_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Sender's country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. US.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("metadata_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">metadata</span> string</p>
-                                        </div>
-                                        {openSections["metadata_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Additional metadata needed for the credit party.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 255</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
+                                    
+                                    <div className="pt-4">
                                         <div onClick={() => handleClick("credit_party_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["credit_party_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
@@ -324,117 +371,122 @@ const Quote_Institutions = () => {
                                         </div>
                                         {openSections["credit_party_quote_post"] && (
                                         <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> An object that contains information about the credit participant.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> n/a</p>
+                                            <div className='pb-4'>
+                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> An object that contains information about the credit participant.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> n/a</p>
+                                            </div>
+
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("mobile_number_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">mobile_number</span> string</p>
+                                                </div>
+                                                {openSections["mobile_number_quote_post"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full number of the credit participant. Example: "+18681234567".</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10 - 18</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("organization_id_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["organization_id_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">organization_id</span> string</p>
+                                                </div>
+                                                {openSections["organization_id_quote_post_2"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 30</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("account_number_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_number_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">account_number</span> string</p>
+                                                </div>
+                                                {openSections["account_number_quote_post_2"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Wallet account (or Bank account or IBAN number) of the credit party.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 5 - 50</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("account_type_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_type_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">account_type</span> string</p>
+                                                </div>
+                                                {openSections["account_type_quote_post_2"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Type of account of the credit party.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 50</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("currency_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">currency</span> string</p>
+                                                </div>
+                                                {openSections["currency_quote_post_2"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Currency of the creditor in ISO 4217 format. Eg. TTD.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("country_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">country</span> string</p>
+                                                </div>
+                                                {openSections["country_quote_post_2"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Destination country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. TT.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            <div className="px-2 pt-4">
+                                                <div onClick={() => handleClick("metadata_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                    <p><span className="font-semibold">metadata</span> string</p>
+                                                </div>
+                                                {openSections["metadata_quote_post_2"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Additional metadata needed for the credit party.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 255</p>
+                                                </div>
+                                                )}
+                                            </div>
+                                            
                                         </div>
                                         )}
                                     </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("mobile_number_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">mobile_number</span> string</p>
-                                        </div>
-                                        {openSections["mobile_number_quote_post"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full number of the credit participant. Example: "+18681234567".</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10 - 18</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("organization_id_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["organization_id_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">organization_id</span> string</p>
-                                        </div>
-                                        {openSections["organization_id_quote_post_2"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 30</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("account_number_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_number_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">account_number</span> string</p>
-                                        </div>
-                                        {openSections["account_number_quote_post_2"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Wallet account (or Bank account or IBAN number) of the credit party.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 5 - 50</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("account_type_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_type_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">account_type</span> string</p>
-                                        </div>
-                                        {openSections["account_type_quote_post_2"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Type of account of the credit party.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 50</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("currency_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">currency</span> string</p>
-                                        </div>
-                                        {openSections["currency_quote_post_2"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Currency of the creditor in ISO 4217 format. Eg. TTD.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="border-b-2 py-4">
-                                        <div onClick={() => handleClick("country_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">country</span> string</p>
-                                        </div>
-                                        {openSections["country_quote_post_2"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Destination country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. TT.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
-                                        </div>
-                                        )}
-                                    </div>
-                                    <div className="pt-4">
-                                        <div onClick={() => handleClick("metadata_quote_post_2")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                            <p><span className="font-semibold">metadata</span> string</p>
-                                        </div>
-                                        {openSections["metadata_quote_post_2"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Additional metadata needed for the credit party.</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 255</p>
-                                        </div>
-                                        )}
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <div className='border-b border-[#6FA43A] py-4'>

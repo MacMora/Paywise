@@ -2,6 +2,7 @@
 // Importamos useState desde React
 import { useState } from 'react';
 import { useLanguage } from '../LenguageContext';
+import { Copy, Check } from 'lucide-react';
 
 // Datos de lenguajes de programación
 const languageData = {
@@ -324,6 +325,31 @@ print(response.json())
 
 const Reques_Example = () => {
     const { selectedLanguage, setSelectedLanguage } = useLanguage();
+    const [copiedRequest, setCopiedRequest] = useState(false);
+    const [copiedResponse, setCopiedResponse] = useState(false);
+
+    const handleCopy = async (text, setCopied) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const responseExample = `{
+    "status": "success",
+    "code": 201,
+    "message": "Account created successfully",
+    "pin": "123456"
+}
+#if there is an error, the response may look like:
+{
+    "status": "error",
+    "code": 400,
+    "message": "Invalid email address format"
+}`;
   
 
   return (
@@ -333,12 +359,26 @@ const Reques_Example = () => {
                 <div className='w-2/4 py-2 sm:px-2'>
                     <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
                 </div>
-                <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
+                <div className='w-2/6 flex justify-center items-center gap-2'>
+                    <select 
+                        className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' 
+                        value={selectedLanguage} 
+                        onChange={(e) => setSelectedLanguage(e.target.value)}
+                    >
                         {Object.keys(languageData).map((lang) => (
-                        <option key={lang} value={lang}>{lang}</option>
+                            <option key={lang} value={lang}>{lang}</option>
                         ))}
                     </select>
+                    <button
+                        onClick={() => handleCopy(languageData[selectedLanguage]?.description, setCopiedRequest)}
+                        className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+                    >
+                        {copiedRequest ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                            <Copy className="h-4 w-4 text-[#F2F2F2]" />
+                        )}
+                    </button>
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
@@ -350,31 +390,33 @@ const Reques_Example = () => {
         <div className="bg-[#699EC7] rounded my-8 md:mb-4">
             <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
                 <div className='w-2/4 py-2 sm:px-2'>
-                    <h2 className='text-sm text-[#F2F2F2]'>Response example::</h2>
+                    <h2 className='text-sm text-[#F2F2F2]'>Response example:</h2>
                 </div>
-                <div className='w-2/6 flex justify-center'>
-                    <select className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
+                <div className='w-2/6 flex justify-center items-center gap-2'>
+                    <select 
+                        className='bg-[#699EC7] rounded text-[#F2F2F2] p-1' 
+                        value={selectedLanguage} 
+                        onChange={(e) => setSelectedLanguage(e.target.value)}
+                    >
                         {Object.keys(languageData).map((lang) => (
-                        <option key={lang} value={lang}>{lang}</option>
+                            <option key={lang} value={lang}>{lang}</option>
                         ))}
                     </select>
+                    <button
+                        onClick={() => handleCopy(responseExample, setCopiedResponse)}
+                        className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+                    >
+                        {copiedResponse ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                            <Copy className="h-4 w-4 text-[#F2F2F2]" />
+                        )}
+                    </button>
                 </div>
             </div>
             <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
                 <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-        {`{
-    "status": "success",
-    "code": 201,
-    "message": "Account created successfully",
-    "pin": "123456"
-}
-#if there is an error, the response may look like:
-{
-    "status": "error",
-    "code": 400,
-    "message": "Invalid email address format"
-}
-`}
+                    {responseExample}
                 </pre>
             </div>
         </div>
@@ -510,123 +552,127 @@ const Personal_Account = () => {
                                     </div>
                                     {openSections["address"] && (
                                         <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> JSON object that contains address information for the person associated with the business</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                            <div className='pb-4'>
+                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> JSON object that contains address information for the person associated with the business</p>
+                                                <p className="pt-2 pb-4"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                            </div>
+                                            
+                                            <div className="border-y-2 px-2 py-4">
+                                                <div onClick={() => handleClick("address_line1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">address_line1</span> string</p>
+                                                </div>
+                                                {openSections["address_line1"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> First line of the address</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-255</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("address_line2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">address_line2</span> string</p>
+                                                </div>
+                                                {openSections["address_line2"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Second line of the address</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-255</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("address_line3")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line3"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">address_line3</span> string</p>
+                                                </div>
+                                                {openSections["address_line3"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Third line of the address</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-255</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("city")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["city"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">city</span> string</p>
+                                                </div>
+                                                {openSections["city"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> City/Town of address</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 4-20</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("state_province")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["state_province"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">state_province</span> string</p>
+                                                </div>
+                                                {openSections["state_province"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> State of address</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 4-40</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("postal_code")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["postal_code"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">postal_code</span> string</p>
+                                                </div>
+                                                {openSections["postal_code"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Postal Code of address</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="px-2 pt-4">
+                                                <div onClick={() => handleClick("country")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">country</span> string</p>
+                                                </div>
+                                                {openSections["country"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Country in ISO Alpha-2 format</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
 
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("address_line1")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">address_line1</span> string</p>
-                                    </div>
-                                    {openSections["address_line1"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> First line of the address</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-255</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("address_line2")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">address_line2</span> string</p>
-                                    </div>
-                                    {openSections["address_line2"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Second line of the address</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-255</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("address_line3")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_line3"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">address_line3</span> string</p>
-                                    </div>
-                                    {openSections["address_line3"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Third line of the address</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-255</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("city")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["city"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">city</span> string</p>
-                                    </div>
-                                    {openSections["city"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> City/Town of address</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 4-20</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("state_province")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["state_province"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">state_province</span> string</p>
-                                    </div>
-                                    {openSections["state_province"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> State of address</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 4-40</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("postal_code")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["postal_code"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">postal_code</span> string</p>
-                                    </div>
-                                    {openSections["postal_code"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Postal Code of address</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("country")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">country</span> string</p>
-                                    </div>
-                                    {openSections["country"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Country in ISO Alpha-2 format</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
-                                        </div>
-                                    )}
-                                </div>
+                                
 
                                 <div className="border-b-2 py-4">
                                     <div onClick={() => handleClick("dob")} className="flex flex-row gap-2 items-center cursor-pointer">
@@ -654,161 +700,322 @@ const Personal_Account = () => {
                                     </div>
                                     {openSections["ids"] && (
                                         <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> A JSON object that contains the government IDs</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                            <div className='pb-4'>
+                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> A JSON object that contains the government IDs</p>
+                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                            </div>
+
+                                            {/* id_document1 */}
+                                            <div className="border-y-2 px-2 py-4">
+                                                <div onClick={() => handleClick("id_document1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_document1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">id_document1</span> object</p>
+                                                </div>
+                                                {openSections["id_document1"] && (
+                                                    <div className="py-3">
+                                                        <div className='px-2 pb-4'>
+                                                            <p className="p-2"><span className="font-semibold not-italic">Description:</span> A JSON object that contains ID document information for 1st ID card</p>
+                                                            <p className="p-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                        </div>
+                                                        
+
+                                                        {/* id_type (within id_document1) */}
+                                                        <div className="border-y-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("id_type_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_type_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">id_type</span> string</p>
+                                                            </div>
+                                                            {openSections["id_type_1"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document type of account holder used in sign up. Enum = {`{NationalIdCard, Passport, DriversPermit, Other}`}</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-20</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* id_number (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("id_number_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_number_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">id_number</span> string</p>
+                                                            </div>
+                                                            {openSections["id_number_1"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document number</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-30</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* issue_date (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("issue_date_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issue_date_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">issue_date</span> string</p>
+                                                            </div>
+                                                            {openSections["issue_date_1"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document issue date in YYYY-MM-DD format</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* expiry_date (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("expiry_date_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expiry_date_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">expiry_date</span> string</p>
+                                                            </div>
+                                                            {openSections["expiry_date_1"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document expiry date in YYYY-MM-DD format</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* issued_country (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("issued_country_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issued_country_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">issued_country</span> string</p>
+                                                            </div>
+                                                            {openSections["issued_country_1"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Country where the ID document was issued in ISO Alpha-2 format</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* name */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">name</span> string</p>
+                                                            </div>
+                                                            {openSections["name"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Name on the document</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* address */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("address_1")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">address</span> string</p>
+                                                            </div>
+                                                            {openSections["address_1"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Address on document on DriversPermit</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* file */}
+                                                        <div className="px-2 pt-4">
+                                                            <div onClick={() => handleClick("file")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["file"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">file</span> file</p>
+                                                            </div>
+                                                            {openSections["file"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> File for the document</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* id_document2 */}
+                                            <div className=" px-2 pt-4">
+                                                <div onClick={() => handleClick("id_document2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_document2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">id_document2</span> object</p>
+                                                </div>
+                                                {openSections["id_document2"] && (
+                                                    <div className="py-3">
+                                                        <div className='px-2 pb-4'>
+                                                            <p className="p-2"><span className="font-semibold not-italic">Description:</span> A JSON object that contains ID document information for 1st ID card</p>
+                                                            <p className="p-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                        </div>
+                                                        
+
+                                                        {/* id_type (within id_document1) */}
+                                                        <div className="border-y-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("id_type_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_type_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">id_type</span> string</p>
+                                                            </div>
+                                                            {openSections["id_type_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document type of account holder used in sign up. Enum = {`{NationalIdCard, Passport, DriversPermit, Other}`}</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-20</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* id_number (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("id_number_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_number_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">id_number</span> string</p>
+                                                            </div>
+                                                            {openSections["id_number_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document number</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-30</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* issue_date (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("issue_date_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issue_date_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">issue_date</span> string</p>
+                                                            </div>
+                                                            {openSections["issue_date_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document issue date in YYYY-MM-DD format</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* expiry_date (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("expiry_date_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expiry_date_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">expiry_date</span> string</p>
+                                                            </div>
+                                                            {openSections["expiry_date_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document expiry date in YYYY-MM-DD format</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* issued_country (within id_document1) */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("issued_country_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issued_country_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">issued_country</span> string</p>
+                                                            </div>
+                                                            {openSections["issued_country_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Country where the ID document was issued in ISO Alpha-2 format</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* name */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("name_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["name_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">name</span> string</p>
+                                                            </div>
+                                                            {openSections["name_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Name on the document</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* address */}
+                                                        <div className="border-b-2 px-2 py-4">
+                                                            <div onClick={() => handleClick("address_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">address</span> string</p>
+                                                            </div>
+                                                            {openSections["address_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Address on document on DriversPermit</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* file */}
+                                                        <div className="px-2 pt-4">
+                                                            <div onClick={() => handleClick("file_2")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["file_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                                </svg>
+                                                                <p><span className="font-semibold">file</span> file</p>
+                                                            </div>
+                                                            {openSections["file_2"] && (
+                                                                <div className="py-3">
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> File for the document</p>
+                                                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                    </div>
+                                                )}
+                                            </div>
+
                                         </div>
                                     )}
                                 </div>
 
-                                {/* id_document1 */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("id_document1")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_document1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">id_document1</span> object</p>
-                                    </div>
-                                    {openSections["id_document1"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> A JSON object that contains ID document information for 1st ID card</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* id_type (within id_document1) */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("id_type_1")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_type_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">id_type</span> string</p>
-                                    </div>
-                                    {openSections["id_type_1"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document type of account holder used in sign up. Enum = {`{NationalIdCard, Passport, DriversPermit, Other}`}</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-20</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* id_number (within id_document1) */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("id_number_1")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id_number_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">id_number</span> string</p>
-                                    </div>
-                                    {openSections["id_number_1"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document number</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 1-30</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* issue_date (within id_document1) */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("issue_date_1")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issue_date_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">issue_date</span> string</p>
-                                    </div>
-                                    {openSections["issue_date_1"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document issue date in YYYY-MM-DD format</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* expiry_date (within id_document1) */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("expiry_date_1")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expiry_date_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">expiry_date</span> string</p>
-                                    </div>
-                                    {openSections["expiry_date_1"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> ID document expiry date in YYYY-MM-DD format</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* issued_country (within id_document1) */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("issued_country_1")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["issued_country_1"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">issued_country</span> string</p>
-                                    </div>
-                                    {openSections["issued_country_1"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Country where the ID document was issued in ISO Alpha-2 format</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* name */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("name")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">name</span> string</p>
-                                    </div>
-                                    {openSections["name"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Name on the document</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* address */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("address")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["address"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">address</span> string</p>
-                                    </div>
-                                    {openSections["address"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Address on document on DriversPermit</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* file */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("file")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["file"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">file</span> file</p>
-                                    </div>
-                                    {openSections["file"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> File for the document</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                        </div>
-                                    )}
-                                </div>
-
+                                
                                 {/* poa */}
                                 <div className="border-b-2 py-4">
                                     <div onClick={() => handleClick("poa")} className="flex flex-row gap-2 items-center cursor-pointer">
@@ -819,92 +1026,97 @@ const Personal_Account = () => {
                                     </div>
                                     {openSections["poa"] && (
                                         <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> JSON object Proof of address</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                            <div className='pb-4'>
+                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> JSON object Proof of address</p>
+                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                            </div>
+                                            
+                                            {/* poa_type */}
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("poa_type")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">poa_type</span> string</p>
+                                                </div>
+                                                {openSections["poa_type"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Enum = {`{"UtilityBill", "BankStatement", "GovernmentDocument", "Other"}`}`</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* poa_bill_date */}
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("poa_bill_date")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_bill_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">poa_bill_date</span> string</p>
+                                                </div>
+                                                {openSections["poa_bill_date"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Date on bill in the YYYY-MM-DD format</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* poa_name */}
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("poa_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">poa_name</span> string</p>
+                                                </div>
+                                                {openSections["poa_name"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Name on the document</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* poa_address */}
+                                            <div className="border-b-2 px-2 py-4">
+                                                <div onClick={() => handleClick("poa_address")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_address"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">poa_address</span> string</p>
+                                                </div>
+                                                {openSections["poa_address"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> Address on the document</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* poa_file */}
+                                            <div className="px-2 pt-4">
+                                                <div onClick={() => handleClick("poa_file")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_file"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <p><span className="font-semibold">poa_file</span> file</p>
+                                                </div>
+                                                {openSections["poa_file"] && (
+                                                    <div className="py-3">
+                                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> File for the document</p>
+                                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
+                                                    </div>
+                                                )}
+                                            </div>
+
                                         </div>
                                     )}
                                 </div>
 
-                                {/* poa_type */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("poa_type")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">poa_type</span> string</p>
-                                    </div>
-                                    {openSections["poa_type"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Enum = {`{"UtilityBill", "BankStatement", "GovernmentDocument", "Other"}`}`</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* poa_bill_date */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("poa_bill_date")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_bill_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">poa_bill_date</span> string</p>
-                                    </div>
-                                    {openSections["poa_bill_date"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Date on bill in the YYYY-MM-DD format</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* poa_name */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("poa_name")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">poa_name</span> string</p>
-                                    </div>
-                                    {openSections["poa_name"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Name on the document</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* poa_address */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("poa_address")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_address"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">poa_address</span> string</p>
-                                    </div>
-                                    {openSections["poa_address"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> Address on the document</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* poa_file */}
-                                <div className="border-b-2 py-4">
-                                    <div onClick={() => handleClick("poa_file")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["poa_file"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <p><span className="font-semibold">poa_file</span> file</p>
-                                    </div>
-                                    {openSections["poa_file"] && (
-                                        <div className="py-3">
-                                            <p className="py-2"><span className="font-semibold not-italic">Description:</span> File for the document</p>
-                                            <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                        </div>
-                                    )}
-                                </div>
+                                
 
                                 {/* selfie */}
                                 <div className="pt-4">
