@@ -6,9 +6,8 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs
     <div>
       {/* SideBar y Menú desplegable en pantallas pequeñas */}
       <div
-        className={`z-10 text-sm fixed top-12 left-0 shadow-2xl h-screen lg:w-1/5 md:w-1/3 sm:w-2/3 w-full overflow-y-scroll overflow-hidden py-8 custom-scrollbar bg-white transition-transform transform ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0`}
+        className={`z-10 text-sm fixed top-12 left-0 shadow-2xl h-screen lg:w-1/5 md:w-1/3 sm:w-2/3 w-full overflow-y-scroll overflow-hidden py-8 custom-scrollbar bg-white transition-transform transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0`}
       >
         <div className="p-5">
           <div className="lg:hidden mb-4 flex flex-col gap-y-6">
@@ -55,19 +54,19 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs
           </p>
           <ul className="">
             <li className="p-2 flex flex-row gap-2">
-            <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"}/>
+              <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"} />
               <a href="#install_plugin" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
                 Install Plugin
               </a>
             </li>
             <li className="p-2 flex flex-row gap-2">
-              <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"}/>
+              <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"} />
               <a href="#configure_plugin" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
                 Configure Plugin
               </a>
             </li>
             <li className="p-2 flex flex-row gap-2">
-              <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"}/>
+              <img src="/images/woocommerce/chevron.svg" width={"6px"} height={"6px"} />
               <a href="#get_api_key" onClick={() => { showWooCommerce(); toggleSidebar(); }}>
                 Get API Key
               </a>

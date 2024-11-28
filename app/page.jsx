@@ -33,7 +33,7 @@ export default function HomePage() {
   };
 
   return (
-    <div>
+    <div className="font-cabin">
       <div className="bg-white flex items-center shadow-sm fixed z-20 py-3 px-5 w-full">
         <div className="flex lg:basis-1/5 gap-x-4">
           <div className="flex items-center">

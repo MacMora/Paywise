@@ -1,28 +1,32 @@
-import { LanguageProvider } from './LenguageContext';
-import Register_Account from './Docs/Register_Account'; 
-import Account from './Docs/Account'; 
-import Personal_Account from './Docs/Personal_Account';
-import Business_Account from './Docs/Business_Account';
-import Bless_Account from './Docs/Bless_Account';
-import Transaction_Institutions from './Docs/Transaction_Institution';
-import Transaction_Id_Institutions from './Docs/Transaction_Id_Institution';
-import Exchange_Institution from './Docs/Exchange_Institution';
-import Quote_Institutions from './Docs/Quote_Institution';
-import Quote_Id_Institutions from './Docs/Quote_Id_Institution';
+import { LanguageProvider } from "./LenguageContext";
+import Register_Account from "./Docs/api_account/Register_Account";
+import Account from "./Docs/api_account/Account";
+import Personal_Account from "./Docs/api_account/Personal_Account";
+import Business_Account from "./Docs/api_account/Business_Account";
+import Balance_Account from "./Docs/api_account/Balance_Account";
+import History_Account from "./Docs/api_account/History_Account";
+import Bless_Account from "./Docs/api_account/Bless_Account";
+import Transaction_Institutions from "./Docs/api_institution/Transaction_Institution";
+import Transaction_Id_Institutions from "./Docs/api_institution/Transaction_Id_Institution";
+import Exchange_Institution from "./Docs/api_institution/Exchange_Institution";
+import Quote_Institutions from "./Docs/api_institution/Quote_Institution";
+import Quote_Id_Institutions from "./Docs/api_institution/Quote_Id_Institution";
 
 function App() {
   return (
     <LanguageProvider>
       <Register_Account />
       <Account />
-      <Personal_Account/>
-      <Business_Account/>
-      <Bless_Account/>
-      <Transaction_Institutions/>
-      <Transaction_Id_Institutions/>
-      <Exchange_Institution/>
-      <Quote_Institutions/>
-      <Quote_Id_Institutions/>
+      <Personal_Account />
+      <Business_Account />
+      <Balance_Account />
+      <History_Account />
+      <Bless_Account />
+      <Transaction_Institutions />
+      <Transaction_Id_Institutions />
+      <Exchange_Institution />
+      <Quote_Institutions />
+      <Quote_Id_Institutions />
     </LanguageProvider>
   );
 }
