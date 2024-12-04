@@ -246,13 +246,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_pair"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>currency_pair</span> string</p>
+                                <p className='font-semibold'>currency_pair <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["currency_pair"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> The trading pair. Trading codes from ISO 4217. Example "USD"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 3</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The trading pair. Trading codes from ISO 4217. Example "USD"</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 3</p>
                                 </div>
                             )}
                         </div>
@@ -261,13 +261,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["rate_type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>rate_type</span> string</p>
+                                <p className='font-semibold'>rate_type <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["rate_type"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Enum = {`{buying, selling}`}. Default to "selling"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 6 - 8</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Enum = {`{buying, selling}`}. Default to "selling"</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 6 - 8</p>
                                 </div>
                             )}
                         </div>
@@ -276,13 +276,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>request_date</span> string</p>
+                                <p className='font-semibold'>request_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["request_date"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Date to source the currency rate. Format "YYYY-MM-DD"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> optional</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 10</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Date to source the currency rate. Format "YYYY-MM-DD"</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> optional</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
                                 </div>
                             )}
                         </div>
@@ -291,13 +291,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["version_exchange_rate"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">version</span> string</p>
+                                <p className='font-semibold'>version <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["version_exchange_rate"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 10</p>
                                 </div>
                             )}
                         </div>
@@ -317,13 +317,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>status</span> string</p>
+                                <p className='font-semibold'>status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["status"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 10</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
                                 </div>
                             )}
                         </div>
@@ -332,13 +332,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["code_exchange"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>code</span> integer</p>
+                                <p className='font-semibold'>code <span className='font-cabin text-[#8D9298] font-normal'>integer</span></p>
                             </div>
                             {openSections["code_exchange"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> HTTP return code.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 3</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> HTTP return code.</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 3</p>
                                 </div>
                             )}
                         </div>
@@ -347,13 +347,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>message</span> string</p>
+                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["message"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Messages will show based on condition applied. Added one example only. Example: {`"{Date's}: {rate}"`}</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 255</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Messages will show based on condition applied. Added one example only. Example: {`"{Date's}: {rate}"`}</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
                                 </div>
                             )}
                         </div>
@@ -362,13 +362,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["rate_exchange"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>rate</span> string</p>
+                                <p className='font-semibold'>rate <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["rate_exchange"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> The TTD equivalent for 1 dollar of the currency pair. Precision of up to 4 decimal points.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 8 , 4</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The TTD equivalent for 1 dollar of the currency pair. Precision of up to 4 decimal points.</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 8 , 4</p>
                                 </div>
                             )}
                         </div>
@@ -377,13 +377,13 @@ const Exchange_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_date_exchange"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className='font-semibold'>request_date</span> string</p>
+                                <p className='font-semibold'>request_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["request_date_exchange"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Description:</span> Date to source the currency rate. Format "YYYY-MM-DD"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 19</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Date to source the currency rate. Format "YYYY-MM-DD"</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 19</p>
                                 </div>
                             )}
                         </div>

@@ -178,13 +178,13 @@ const Quote_Institutions = () => {
                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["version"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            <p><span className='font-semibold'>version</span> string</p>
+                            <p className='font-semibold'>version <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                         </div>
                         {openSections["version"] && (
                             <div className='py-3'>
-                                <p className='py-2'><span className='font-semibold not-italic'>Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
-                                <p className='py-2'><span className='font-semibold not-italic'>Requirement:</span> mandatory</p>
-                                <p className='py-2'><span className='font-semibold not-italic'>Field Length:</span> 10</p>
+                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
+                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> mandatory</p>
+                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
                             </div>
                         )}
                     </div>
@@ -197,13 +197,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["session_token_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">session_token</span> string</p>
+                                <p className='font-semibold'>session_token <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["session_token_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Encrypted session_token. Institution encrypts the session_token sent using shared key.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 20 - 40</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Encrypted session_token. Institution encrypts the session_token sent using shared key.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 20 - 40</p>
                                 </div>
                             )}
                         </div>
@@ -212,13 +212,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_amount_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">request_amount</span> string</p>
+                                <p className='font-semibold'>request_amount <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["request_amount_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Requested quotation amount with precision of 2 decimal places.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> "8 , 2"</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Requested quotation amount with precision of 2 decimal places.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> "8 , 2"</p>
                                 </div>
                             )}
                         </div>
@@ -227,13 +227,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_currency_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">request_currency</span> string</p>
+                                <p className='font-semibold'>request_currency <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["request_currency_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Currency of the requestAmount provided in ISO 4217 format. Eg. TTD.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Currency of the requestAmount provided in ISO 4217 format. Eg. TTD.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 3</p>
                                 </div>
                             )}
                         </div>
@@ -242,14 +242,14 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["debit_party"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">debit_party</span> object</p>
+                                <p className='font-semibold'>debit_party <span className='font-cabin text-[#8D9298] font-normal'>object</span></p>
                             </div>
                             {openSections["debit_party"] && (
                                 <div className="py-3">
                                     <div className="pb-4">
-                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> An object that contains information about the debit participant.</p>
-                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
-                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> n/a</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> An object that contains information about the debit participant.</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> n/a</p>
                                     </div>
 
                                     <div className="border-b-2 px-2 py-4">
@@ -257,13 +257,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">mobile_number</span> string</p>
+                                            <p className='font-semibold'>mobile_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["mobile_number_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full number of the debit participant. Example: "+18681234567".</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10 - 18</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full number of the debit participant. Example: "+18681234567".</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 10 - 18</p>
                                             </div>
                                         )}
                                     </div>
@@ -272,13 +272,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["organization_id_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">organization_id</span> string</p>
+                                            <p className='font-semibold'>organization_id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["organization_id_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 30</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 30</p>
                                             </div>
                                         )}
                                     </div>
@@ -287,13 +287,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">account_number</span> string</p>
+                                            <p className='font-semibold'>account_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["account_number_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Wallet account (or Bank account or IBAN number or card number) of the debit party.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 5 - 50</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Wallet account (or Bank account or IBAN number or card number) of the debit party.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 5 - 50</p>
                                             </div>
                                         )}
                                     </div>
@@ -302,13 +302,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_type_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">account_type</span> string</p>
+                                            <p className='font-semibold'>account_type <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["account_type_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Type of account of the credit party.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 50</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account of the credit party.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 50</p>
                                             </div>
                                         )}
                                     </div>
@@ -317,13 +317,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">currency</span> string</p>
+                                            <p className='font-semibold'>currency <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["currency_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Sender's currency of the debitor in ISO 4217 format. Eg. USD.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Sender's currency of the debitor in ISO 4217 format. Eg. USD.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 3</p>
                                             </div>
                                         )}
                                     </div>
@@ -332,13 +332,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">country</span> string</p>
+                                            <p className='font-semibold'>country <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["country_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Sender's country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. US.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Sender's country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. US.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 2</p>
                                             </div>
                                         )}
                                     </div>
@@ -347,13 +347,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">metadata</span> string</p>
+                                            <p className='font-semibold'>metadata <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["metadata_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Additional metadata needed for the credit party.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 255</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Additional metadata needed for the credit party.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
                                             </div>
                                         )}
                                     </div>
@@ -367,14 +367,14 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["credit_party_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">credit_party</span> object</p>
+                                <p className='font-semibold'>credit_party <span className='font-cabin text-[#8D9298] font-normal'>object</span></p>
                             </div>
                             {openSections["credit_party_quote_post"] && (
                                 <div className="py-3">
                                     <div className='pb-4'>
-                                        <p className="py-2"><span className="font-semibold not-italic">Description:</span> An object that contains information about the credit participant.</p>
-                                        <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Conditional</p>
-                                        <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> n/a</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> An object that contains information about the credit participant.</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> n/a</p>
                                     </div>
 
                                     <div className="border-b-2 px-2 py-4">
@@ -382,13 +382,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">mobile_number</span> string</p>
+                                            <p className='font-semibold'>mobile_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["mobile_number_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full number of the credit participant. Example: "+18681234567".</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10 - 18</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full number of the credit participant. Example: "+18681234567".</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 10 - 18</p>
                                             </div>
                                         )}
                                     </div>
@@ -397,13 +397,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["organization_id_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">organization_id</span> string</p>
+                                            <p className='font-semibold'>organization_id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["organization_id_quote_post_2"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 30</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 30</p>
                                             </div>
                                         )}
                                     </div>
@@ -412,13 +412,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_number_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">account_number</span> string</p>
+                                            <p className='font-semibold'>account_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["account_number_quote_post_2"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Wallet account (or Bank account or IBAN number) of the credit party.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 5 - 50</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Wallet account (or Bank account or IBAN number) of the credit party.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 5 - 50</p>
                                             </div>
                                         )}
                                     </div>
@@ -427,13 +427,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_type_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">account_type</span> string</p>
+                                            <p className='font-semibold'>account_type <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["account_type_quote_post_2"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Type of account of the credit party.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 50</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account of the credit party.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 50</p>
                                             </div>
                                         )}
                                     </div>
@@ -442,13 +442,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["currency_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">currency</span> string</p>
+                                            <p className='font-semibold'>currency <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["currency_quote_post_2"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Currency of the creditor in ISO 4217 format. Eg. TTD.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Currency of the creditor in ISO 4217 format. Eg. TTD.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 3</p>
                                             </div>
                                         )}
                                     </div>
@@ -457,13 +457,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["country_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">country</span> string</p>
+                                            <p className='font-semibold'>country <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["country_quote_post_2"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Destination country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. TT.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 2</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Destination country where the payout is to be made. To be specified in ISO Alpha 2 format. Eg. TT.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 2</p>
                                             </div>
                                         )}
                                     </div>
@@ -472,13 +472,13 @@ const Quote_Institutions = () => {
                                             <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_quote_post_2"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            <p><span className="font-semibold">metadata</span> string</p>
+                                            <p className='font-semibold'>metadata <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                                         </div>
                                         {openSections["metadata_quote_post_2"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic">Description:</span> Additional metadata needed for the credit party.</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                                <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 255</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Additional metadata needed for the credit party.</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
                                             </div>
                                         )}
                                     </div>
@@ -498,13 +498,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["status_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">status</span> string</p>
+                                <p className='font-semibold'>status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["status_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 10</p>
                                 </div>
                             )}
                         </div>
@@ -513,13 +513,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["code_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">code</span> integer</p>
+                                <p className='font-semibold'>code <span className='font-cabin text-[#8D9298] font-normal'>integer</span></p>
                             </div>
                             {openSections["code_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> HTTP return code.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 3</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> HTTP return code.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 3</p>
                                 </div>
                             )}
                         </div>
@@ -528,13 +528,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["rate_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">rate</span> string</p>
+                                <p className='font-semibold'>rate <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["rate_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> The TTD equivalent for 1 dollar of the currency pair. Precision of up to 4 decimal points.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 8 , 4</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> The TTD equivalent for 1 dollar of the currency pair. Precision of up to 4 decimal points.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 8 , 4</p>
                                 </div>
                             )}
                         </div>
@@ -543,13 +543,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["quote_date_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">quote_date</span> string</p>
+                                <p className='font-semibold'>quote_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["quote_date_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Date & time to source the currency rate. Format "YYYY-MM-DD HH:mi:ss".</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 19</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date & time to source the currency rate. Format "YYYY-MM-DD HH:mi:ss".</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 19</p>
                                 </div>
                             )}
                         </div>
@@ -558,13 +558,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["amount_quoted_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">amount_quoted</span> string</p>
+                                <p className='font-semibold'>amount_quoted <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["amount_quoted_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> The quote amount. Precision of up to 2 decimal places.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Optional</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 10 , 2</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> The quote amount. Precision of up to 2 decimal places.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 10 , 2</p>
                                 </div>
                             )}
                         </div>
@@ -573,13 +573,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">message</span> string</p>
+                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["message_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Message is conditional. Messages will show based on condition applied. Example: "Error: Exceeds user limits."</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 255</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Message is conditional. Messages will show based on condition applied. Example: "Error: Exceeds user limits."</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
                                 </div>
                             )}
                         </div>
@@ -588,13 +588,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expiry_date_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">expiry_date</span> string</p>
+                                <p className='font-semibold'>expiry_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["expiry_date_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Date and time when this currency rate is no longer valid. Format "YYYY-MM-DD HH:mi:ss".</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 19</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date and time when this currency rate is no longer valid. Format "YYYY-MM-DD HH:mi:ss".</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 19</p>
                                 </div>
                             )}
                         </div>
@@ -603,13 +603,13 @@ const Quote_Institutions = () => {
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["quote_id_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p><span className="font-semibold">quote_id</span> string</p>
+                                <p className='font-semibold'>quote_id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
                             {openSections["quote_id_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic">Description:</span> Unique identifier of the quote.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic">Field Length:</span> 20 - 40</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Unique identifier of the quote.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 20 - 40</p>
                                 </div>
                             )}
                         </div>

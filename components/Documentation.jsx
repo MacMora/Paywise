@@ -28,7 +28,7 @@ const Codes = ({ showWooCommerce }) => {
     };
 
     return (
-        <div className="main-content absolute top-12 left-0 lg:left-80 right-0 bottom-0 py-8 lg:py-4 px-4 lg:px-8 overflow-auto custom-scrollbar">
+        <div className="main-content absolute top-12 left-0 lg:left-60 xl:left-80 right-0 bottom-0 py-8 lg:py-4 px-4 lg:px-8 overflow-auto custom-scrollbar">
             <div id="paywise_api" className="py-4">
                 <div className="bg-[#F6F9FC] my-8 rounded-3xl overflow-hidden flex flex-col lg:flex-row justify-between items-center">
                     <div className="lg:relative flex flex-row max-lg:flex-wrap w-full items-center lg:min-h-[350px]">
@@ -805,43 +805,43 @@ const Codes = ({ showWooCommerce }) => {
                         </div>
                         <div className="lg:w-2/4 w-full sticky top-0">
                             <div className="bg-[#F5F6F8] overflow-hidden font-code rounded">
-                                <div className="bg-[#EBEEF1] p-4 flex flex-row border items-center">
-                                    <div className="basis-2/5">
+                                <div className="bg-[#EBEEF1] p-4 flex flex-col max-md:gap-4 md:flex-row border md:items-center">
+                                    <div className="md:basis-2/5">
                                         <p className="font-bold text-xs">Key</p>
                                     </div>
-                                    <div className="basis-3/5">
+                                    <div className="md:basis-3/5">
                                         <p className="font-bold text-xs">Example</p>
                                     </div>
                                 </div>
-                                <div className="p-4 flex flex-row border items-center">
-                                    <div className="basis-2/5">
+                                <div className="p-4 flex flex-col max-md:gap-4 md:flex-row border md:items-center">
+                                    <div className="md:basis-2/5">
                                         <p className="text-xs">PW-subscription-key</p>
                                     </div>
-                                    <div className="basis-3/5">
+                                    <div className="md:basis-3/5">
                                         <p className="text-xs">eed0d85c530c4b26a91d09b783d8fab3</p>
                                     </div>
                                 </div>
-                                <div className="p-4 flex flex-row border items-center">
-                                    <div className="basis-2/5">
+                                <div className="p-4 flex flex-col max-md:gap-4 md:flex-row border md:items-center">
+                                    <div className="md:basis-2/5">
                                         <p className="text-xs">PW-origin-country</p>
                                     </div>
-                                    <div className="basis-3/5">
+                                    <div className="md:basis-3/5">
                                         <p className="text-xs">TT</p>
                                     </div>
                                 </div>
-                                <div className="p-4 flex flex-row border items-center">
-                                    <div className="basis-2/5">
+                                <div className="p-4 flex flex-col max-md:gap-4 md:flex-row border md:items-center">
+                                    <div className="md:basis-2/5">
                                         <p className="text-xs">PW-request-date</p>
                                     </div>
-                                    <div className="basis-3/5">
+                                    <div className="md:basis-3/5">
                                         <p className="text-xs">2014-10-08 16:01:31</p>
                                     </div>
                                 </div>
-                                <div className="p-4 flex flex-row border items-center">
-                                    <div className="basis-2/5">
+                                <div className="p-4 flex flex-col max-md:gap-4 md:flex-row border md:items-center">
+                                    <div className="md:basis-2/5">
                                         <p className="text-xs">PW-ip-address</p>
                                     </div>
-                                    <div className="basis-3/5">
+                                    <div className="md:basis-3/5">
                                         <p className="text-xs">255.255.255.255</p>
                                     </div>
                                 </div>
@@ -1178,10 +1178,7 @@ const Codes = ({ showWooCommerce }) => {
                         </div>
                     </div>
 
-                    <div
-                        id="production_institution_api"
-                        className="flex flex-col lg:flex-row justify-between items-center py-8 "
-                    >
+                    <div id="production_institution_api" className="flex flex-col lg:flex-row justify-between items-center py-8 ">
                         <div className="lg:w-2/5 w-full max-lg:py-6">
                             <h2 className="text-2xl lg:text-3xl font-semibold py-3">
                                 Institution API
@@ -1206,6 +1203,461 @@ const Codes = ({ showWooCommerce }) => {
                         <div className="lg:w-2/4 w-full">
                             <img src="/images/paywise-institution.jpg" alt="" />
                         </div>
+                    </div>
+
+                    <div id="look-up" className="w-full flex flex-col gap-8 py-8">
+                        <h2 className="text-2xl lg:text-3xl font-semibold py-3">
+                            Look Up
+                        </h2>
+                        <div className="bg-[#F5F6F8] overflow-hidden font-code rounded">
+                            <div className="bg-[#EBEEF1] p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="font-bold text-xs">Remittance Purpose</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="font-bold text-xs">Description</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">family_support</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For remittances sent to support family members financially.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">education</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For transfers made to cover education-related expenses (e.g., school fees, tuition).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">medical_expenses</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For remittances sent to cover healthcare or medical-related expenses.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">living_expenses</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For transfers intended to cover basic living costs like rent, groceries, utilities, etc.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">business_investment</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For remittances used to fund or invest in a business or commercial activity.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">salary_payment:</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For payments related to salaries, wages, or freelance work.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">loan_repayment</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For transfers meant to repay a personal or business loan.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">charitable_donation</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For remittances sent as donations to charities or nonprofit organizations.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">gift</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For transfers made as a gift for special occasions, celebrations, or holidays.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">real_estate</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For remittances sent for property-related purposes (e.g., down payments, rent, or mortgage).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">savings</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For transfers into a savings account, whether personal or for investment purposes.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">travel_expenses</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For remittances sent to cover travel costs, vacations, or business trips.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">utilities</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For payments made to cover utility bills such as electricity, water, gas, or telecommunications.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">tax_payment</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For transfers made for tax payments to local or foreign governments.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">subscription_services</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For recurring or one-time payments for digital services (e.g., streaming, software subscriptions).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">investment</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For transfers intended to be used for investments in financial markets, stocks, bonds, or mutual funds.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">insurance_premium</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For remittances made to pay insurance premiums (e.g., health, life, or property insurance).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">membership_fee</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">For payments related to memberships (e.g., clubs, professional organizations, etc.).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-[#F5F6F8] my-8 overflow-hidden font-code rounded">
+                            <div className="bg-[#EBEEF1] p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="font-bold text-xs">source_of_funds</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="font-bold text-xs">Description</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">salary_income</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds originate from the sender's salary or wage earnings.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">business_income</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds come from the sender's business profits or activities.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">savings</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds come from the sender's personal savings.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">investment_income</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds are derived from the sender's investments (e.g., dividends, stocks).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">loan_proceeds</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds originate from a personal or business loan.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">gift</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender received the funds as a gift from another person.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">sale_of_property</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds come from the sale of property or real estate.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">inheritance</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds are inherited from a deceased relative or estate.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">pension</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds come from pension payments or retirement income.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">rental_income</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds are from rental properties or leasing activities.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">scholarship_grant</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds come from an academic scholarship or grant.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">trust_fund</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds originate from a trust fund.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">dividend_income</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds come from dividends earned from investments.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">insurance_claim</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds are derived from an insurance claim payout.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">cryptocurrency</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds are derived from cryptocurrency transactions.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">government_benefit</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">Funds are from government assistance programs (e.g., unemployment, welfare).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-[#F5F6F8] overflow-hidden font-code rounded">
+                            <div className="bg-[#EBEEF1] p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="font-bold text-xs">relationship_sender</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="font-bold text-xs">Description</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">self</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender and recipient are the same person.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">parent</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is the parent of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">sibling</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a sibling (brother or sister) of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">spouse</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is the spouse (husband or wife) of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">child</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is the child (son or daughter) of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">friend</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a friend of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">employer</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is the employer of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">business_partner</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender has a business relationship with the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">colleague</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a colleague or co-worker of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">extended_family</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is an extended family member (e.g., cousin, aunt, etc.).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">other_relative</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a relative, but not immediate family (e.g., in-laws).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">service_provider</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is providing a service to the recipient (e.g., contractor).</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">landlord</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is the landlord of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">tenant</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is the tenant of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">customer</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a customer or client of the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">vendor</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a vendor or supplier to the recipient.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">charity_organization</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a charitable organization sending funds.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 max-md:gap-4 flex flex-col md:flex-row border md:items-center">
+                                <div className="md:basis-1/4">
+                                    <p className="text-xs">government</p>
+                                </div>
+                                <div className="md:basis-3/4">
+                                    <p className="text-xs">The sender is a government entity providing funds to the recipient.</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
