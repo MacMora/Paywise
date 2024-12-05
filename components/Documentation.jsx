@@ -1178,7 +1178,7 @@ const Codes = ({ showWooCommerce }) => {
                         </div>
                     </div>
 
-                    <div id="production_institution_api" className="flex flex-col lg:flex-row justify-between items-center py-8 ">
+                    <div id="production_institution_api" className="border-b-2 flex flex-col lg:flex-row justify-between items-center py-8 ">
                         <div className="lg:w-2/5 w-full max-lg:py-6">
                             <h2 className="text-2xl lg:text-3xl font-semibold py-3">
                                 Institution API

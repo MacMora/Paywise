@@ -174,13 +174,13 @@ const Transaction_Institutions = () => {
                         <div className='basis-[5%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='basis-[30%]'>
+                        <div className='md:basis-[43%] xl:basis-[30%]'>
                             <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
                         </div>
                         <div className='basis-[15%]'>
                             <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
                         </div>
-                        <div className='basis-[15%]'>
+                        <div className='md:basis-[20%] xl:basis-[15%]'>
                             <a href='#institution_transaction'>/transaction</a>
                         </div>
                         <div className='full xl:basis-[35%]'>
@@ -191,13 +191,13 @@ const Transaction_Institutions = () => {
                         <div className='basis-[5%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='basis-[30%]'>
+                        <div className='md:basis-[43%] xl:basis-[30%]'>
                             <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
                         </div>
                         <div className='basis-[15%]'>
                             <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
                         </div>
-                        <div className='basis-[15%]'>
+                        <div className='md:basis-[20%] xl:basis-[15%]'>
                             <a href='#transaction_get'>/transaction/{`{transaction_id}`}</a>
                         </div>
                         <div className='full xl:basis-[35%]'>
@@ -208,13 +208,13 @@ const Transaction_Institutions = () => {
                         <div className='basis-[5%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='basis-[30%]'>
+                        <div className='md:basis-[43%] xl:basis-[30%]'>
                             <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
                         </div>
                         <div className='basis-[15%]'>
                             <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
                         </div>
-                        <div className='basis-[15%]'>
+                        <div className='md:basis-[20%] xl:basis-[15%]'>
                             <a href='#exchange_rate_usd'>/exchange_rate_usd</a>
                         </div>
                         <div className='full xl:basis-[35%]'>
@@ -225,13 +225,13 @@ const Transaction_Institutions = () => {
                         <div className='basis-[5%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='basis-[30%]'>
+                        <div className='md:basis-[43%] xl:basis-[30%]'>
                             <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
                         </div>
                         <div className='basis-[15%]'>
                             <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
                         </div>
-                        <div className='basis-[15%]'>
+                        <div className='md:basis-[20%] xl:basis-[15%]'>
                             <a href='#quote_post'>/quote</a>
                         </div>
                         <div className='full xl:basis-[35%]'>
@@ -242,13 +242,13 @@ const Transaction_Institutions = () => {
                         <div className='basis-[5%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='basis-[30%]'>
+                        <div className='md:basis-[43%] xl:basis-[30%]'>
                             <a href='https://devapi.paywise.co/' target='_blank'>https://devapi.paywise.co/</a>
                         </div>
                         <div className='basis-[15%]'>
                             <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
                         </div>
-                        <div className='basis-[15%]'>
+                        <div className='md:basis-[20%] xl:basis-[15%]'>
                             <a href='#balance_account'>/quote/{`{quote_id}`}</a>
                         </div>
                         <div className='full xl:basis-[35%]'>

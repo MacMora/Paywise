@@ -287,6 +287,7 @@ const SideBar_Doc = ({
                                 </li>
                             </ul>
                         )}
+                        <li className="p-2"><a href="#look-up" onClick={toggleSidebar}>Look Up</a></li>
                     </ul>
                 </div>
             </div>
