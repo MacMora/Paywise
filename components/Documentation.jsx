@@ -218,14 +218,7 @@ const Codes = ({ showWooCommerce }) => {
                                     >
                                         Android app
                                     </a>
-                                    ,{" "}
-                                    <a
-                                        href="https://apps.apple.com/us/app/paywise-mobile-wallet-app/id6444257738"
-                                        target="_blank"
-                                        className="font-semibold underline"
-                                    >
-                                        IOS app
-                                    </a>{" "}
+                                    {" "}
                                     and our{" "}
                                     <a
                                         href="https://pwapp.co/user/login"
@@ -255,6 +248,39 @@ const Codes = ({ showWooCommerce }) => {
                         <h2 className="text-2xl lg:text-3xl font-bold">
                             Use Our Sandbox APK
                         </h2>
+                    </div>
+
+                    <div>
+                        <h2 className="text-2xl font-semibold">
+                            Installing the APK from the Developer&rsquo;s Portal:
+                        </h2>
+                        <p className="text-sm py-5">
+                            To get started with the PayWise Developer Portal APK, you&rsquo;ll
+                            need to install the APK directly on your Android device. This
+                            process requires you to allow installation from unknown sources,
+                            as the APK is not distributed via the Google Play Store. Please
+                            note that you are proceeding with this installation at your own
+                            risk. PayWise assumes no responsibility for any issues that arise
+                            from enabling installations from unknown sources. Once the APK is
+                            installed, it is strongly recommended that you disable this
+                            feature to maintain the security of your device.
+                            <br />
+                            <br />
+                            Follow these steps to install the APK on your device
+                        </p>
+                        <div>
+                            <h3 className="text-xl font-semibold">1. Download the APK</h3>
+                            <ul className="text-sm">
+                                <li>
+                                    Go to the PayWise Developer Portal from your Android
+                                    device&rsquo;s web browser.
+                                </li>
+                                <li>
+                                    Navigate to the APK Download section and click on the link to
+                                    download the APK file.
+                                </li>
+                            </ul>
+                        </div>
                         <div className="alert alert-info flex items-center gap-4 my-5">
                             <svg
                                 width="14"
@@ -280,44 +306,11 @@ const Codes = ({ showWooCommerce }) => {
                                 . (build date 2024-09-01)
                             </small>
                         </div>
-                    </div>
-
-                    <div>
-                        <h2 className="text-2xl font-semibold">
-                            Installing the APK from the Developer&rsquo;s Portal:
-                        </h2>
-                        <p className="text-sm py-5">
-                            To get started with the PayWise Developer Portal APK, you&rsquo;ll
-                            need to install the APK directly on your Android device. This
-                            process requires you to allow installation from unknown sources,
-                            as the APK is not distributed via the Google Play Store. Please
-                            note that you are proceeding with this installation at your own
-                            risk. PayWise assumes no responsibility for any issues that arise
-                            from enabling installations from unknown sources. Once the APK is
-                            installed, it is strongly recommended that you disable this
-                            feature to maintain the security of your device.
-                            <br />
-                            <br />
-                            Follow these steps to install the APK on your device
-                        </p>
-                        <div className="pb-5">
-                            <h3 className="text-xl font-semibold">1. Download the APK</h3>
-                            <ul className="text-sm">
-                                <li>
-                                    Go to the PayWise Developer Portal from your Android
-                                    device&rsquo;s web browser.
-                                </li>
-                                <li>
-                                    Navigate to the APK Download section and click on the link to
-                                    download the APK file.
-                                </li>
-                            </ul>
-                        </div>
                         <div className="pb-5">
                             <h3 className="text-xl font-semibold">
                                 2. Enable Installation from Unknown Sources
                             </h3>
-                            <div className="py-5">
+                            <div className="pt-5">
                                 <p className="text-sm">
                                     Since the APK is not installed from the Google Play Store, you
                                     need to adjust your security settings to allow installations
@@ -783,7 +776,7 @@ const Codes = ({ showWooCommerce }) => {
                                     {openSections["pw-ip-address"] && (
                                         <div className="py-3">
                                             <p className="py-2">
-                                                Fixed IP for Institution, used in the "PW-Institution" product
+                                                Fixed IP for Institution, used in the "PW-Institution" & "PW-Account" products
                                             </p>
                                             <p className="py-2">
                                                 <span className="font-semibold not-italic">
@@ -995,7 +988,7 @@ const Codes = ({ showWooCommerce }) => {
                         <h2 className="text-5xl py-5 font-bold">Production Portal</h2>
                         <p className="text-sm">
                             The Production Portal is where live transactions occur. Once
-                            you've completed integration and testing in the Developers’
+                            you've completed integration and testing in the Developers&rsquo;
                             environment, you can transition to production. The Production
                             Portal offers access to real-time transaction data, logs, and API
                             usage for your live environment.

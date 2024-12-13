@@ -37,9 +37,9 @@ export default function HomePage() {
       <div className="bg-white flex items-center shadow-sm fixed z-20 py-3 px-5 w-full">
         <div className="flex lg:basis-1/5 gap-x-4">
           <div className="flex items-center">
-            <h1>
+            <a href="https://pwapp.co/home">
               <Image src="/images/paywise_logo.png" alt="Paywise Logo" width={130} height={30}/>
-            </h1>
+            </a>
           </div>
           <div>
             <div className="bg-[#1E64A7] text-white rounded-3xl py-2 px-2.5" id="Navbar">
@@ -49,19 +49,19 @@ export default function HomePage() {
         </div>
         <div className="hidden lg:flex basis-2/5 ml-auto gap-x-8">
           <a href="https://devportal.paywise.co/" className="text-gray-700">
-            Home
+            Dev Portal
           </a>
           <a href="#" className="text-gray-700" onClick={showDocumentation}>
             Docs
           </a>
-          <a href="https://devportal.paywise.co/apis" className="text-gray-700">
-            APIs
-          </a>
           <a href="https://devportal.paywise.co/products" className="text-gray-700">
-            Products
+            API Products
           </a>
           <a href="#" className="text-gray-700" onClick={showPluginDocs}>
             Plugins
+          </a>
+          <a href="https://pwapp.co/home" className="text-gray-700">
+            PayWise.co
           </a>
         </div>
         <div className="hidden lg:flex basis-1/5 justify-end items-center gap-x-6">

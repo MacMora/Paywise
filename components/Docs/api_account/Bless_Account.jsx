@@ -15,7 +15,7 @@ curl -X POST https://devapi.paywise.co/account/bless_account?version=2023-10-23
 -H "PW-request-date: 2024-10-23 12:34:56"
 -d '{
   "amount": "500.00",
-  "account_mobile_number": "+18681234567"
+  "mobile_number": "+18681234567"
 }'  
     `
     },
@@ -34,7 +34,7 @@ header = {
 }
 body = {
   amount: "500.00",
-  account_mobile_number: "+18681234567"
+  mobile_number: "+18681234567"
 }.to_json
 
 http = Net::HTTP.new(uri.host, uri.port)
@@ -52,7 +52,7 @@ puts response.body
 $api_url = "https://devapi.paywise.co/account/bless_account?version=2023-10-23";
 $data = [
     "amount" => "500.00",
-    "account_mobile_number" => "+18681234567"
+    "mobile_number" => "+18681234567"
 ];
 
 $headers = [
@@ -88,7 +88,7 @@ const headers = {
 
 const data = {
   amount: "500.00",
-  account_mobile_number: "+18681234567"
+  mobile_number: "+18681234567"
 };
 
 fetch(api_url, {
@@ -116,7 +116,7 @@ headers = {
 
 data = {
     "amount": "500.00",
-    "account_mobile_number": "+18681234567"
+    "mobile_number": "+18681234567"
 }
 
 response = requests.post(url, headers=headers, data=json.dumps(data))

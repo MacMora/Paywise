@@ -685,7 +685,7 @@ const Personal_Account = () => {
                             {openSections["dob"] && (
                                 <div className="py-3">
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date of birth in YYYY-MM-DD format</p>
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 10</p>
                                 </div>
                             )}
@@ -850,7 +850,7 @@ const Personal_Account = () => {
                                                     {openSections["file"] && (
                                                         <div className="py-3">
                                                             <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> File for the document</p>
-                                                            <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                            <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                                         </div>
                                                     )}
                                                 </div>
@@ -1003,7 +1003,7 @@ const Personal_Account = () => {
                                                     {openSections["file_2"] && (
                                                         <div className="py-3">
                                                             <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> File for the document</p>
-                                                            <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                            <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> ConditionalConditional</p>
                                                         </div>
                                                     )}
                                                 </div>
@@ -1029,7 +1029,7 @@ const Personal_Account = () => {
                                 <div className="py-3">
                                     <div className='pb-4'>
                                         <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> JSON object Proof of address</p>
-                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                     </div>
 
                                     {/* poa_type */}
@@ -1043,7 +1043,7 @@ const Personal_Account = () => {
                                         {openSections["poa_type"] && (
                                             <div className="py-3">
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Enum = {`{"UtilityBill", "BankStatement", "GovernmentDocument", "Other"}`}`</p>
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                             </div>
                                         )}
                                     </div>
@@ -1059,7 +1059,7 @@ const Personal_Account = () => {
                                         {openSections["poa_bill_date"] && (
                                             <div className="py-3">
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date on bill in the YYYY-MM-DD format</p>
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 10</p>
                                             </div>
                                         )}
@@ -1076,7 +1076,7 @@ const Personal_Account = () => {
                                         {openSections["poa_name"] && (
                                             <div className="py-3">
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Name on the document</p>
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                             </div>
                                         )}
                                     </div>
@@ -1092,7 +1092,7 @@ const Personal_Account = () => {
                                         {openSections["poa_address"] && (
                                             <div className="py-3">
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Address on the document</p>
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                             </div>
                                         )}
                                     </div>
@@ -1108,7 +1108,7 @@ const Personal_Account = () => {
                                         {openSections["poa_file"] && (
                                             <div className="py-3">
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> File for the document</p>
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                             </div>
                                         )}
                                     </div>
@@ -1120,7 +1120,7 @@ const Personal_Account = () => {
 
 
                         {/* selfie */}
-                        <div className="pt-4">
+                        <div className="border-b-2 py-4">
                             <div onClick={() => handleClick("selfie")} className="flex flex-row gap-2 items-center cursor-pointer">
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["selfie"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
@@ -1130,11 +1130,130 @@ const Personal_Account = () => {
                             {openSections["selfie"] && (
                                 <div className="py-3">
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> File for the document</p>
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                 </div>
                             )}
                         </div>
+                        
+                        {/* Institution */}
+                        <div className="pt-4">
+                            <div onClick={() => handleClick("institution")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>institution <span className='font-cabin text-[#8D9298] font-normal'>object</span></p>
+                            </div>
+                            {openSections["institution"] && (
+                                <div className="py-3">
+                                    <div className='pb-4'>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> JSON object containing payload information from the institution about their member</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                    </div>
 
+                                    {/* institutions id */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("institution_id")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_id"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["institution_id"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Institution id needed to create account linkage</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 21-40</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* institution name */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("institution_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["institution_name"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Institution name needed to create account linkage</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 21-40</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* member_key */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("member_key")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["member_key"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>member_key <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["member_key"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Membership key needed to create account linkage</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 21-40</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* instituton_account_type */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("instituton_account_type")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["instituton_account_type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>account_type <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["instituton_account_type"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account at institution</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-50</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* instituton_account_number */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("instituton_account_number")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["instituton_account_number"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>account_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["instituton_account_number"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Membership account institution account number</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-60</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* metadata */}
+                                    <div className="px-2 pt-4">
+                                        <div onClick={() => handleClick("metadata")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>metadata <span className='font-cabin text-[#8D9298] font-normal'>Object</span></p>
+                                        </div>
+                                        {openSections["metadata"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Additional data sent in the payload as key/ value pairs</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                </div>
+                            )}
+                        </div>
 
                     </div>
                 </div>
@@ -1200,7 +1319,7 @@ const Personal_Account = () => {
                             {openSections["personal_pin"] && (
                                 <div className='py-3'>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The pin associated with the newly created account</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 6</p>
                                 </div>
                             )}

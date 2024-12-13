@@ -8,15 +8,15 @@ import { Copy, Check } from 'lucide-react';
 const languageData = {
     Bash: {
         description: `
-curl -X POST "https://devapi.paywise.co/account?version=2024-10-20"
+curl -X POST "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith"
 -H "PW-subscription-key: eed0d85c530c4b26a91d09b783d8fab3"
 -H "PW-origin-country: TT"
--H "PW-request-date: 2024-10-20 15:30:00"
+-H "PW-request-date: 2024-10-20 15:30:00" 
 -d '{
-    "account_mobile_number": "+18681234567",
+    "mobile_number": "+18681234567",
     "institution_name": "PayWise Institution",
-    "account_first_name": "John",
-    "account_last_name": "Doe",
+    "first_name": "John",
+    "last_name": "Doe",
     "sender_first_name": "Jane",
     "sender_last_name": "Smith"
 }'  
@@ -27,7 +27,7 @@ curl -X POST "https://devapi.paywise.co/account?version=2024-10-20"
 require 'net/http'
 require 'json'
 
-url = URI("https://devapi.paywise.co/account?version=2024-10-20")
+url = URI("https://devapi.paywise.co/account/account?version=2024-10-20")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
 
@@ -39,10 +39,10 @@ headers = {
 }
 
 body = {
-  "account_mobile_number" => "+18681234567",
+  "mobile_number" => "+18681234567",
   "institution_name" => "PayWise Institution",
-  "account_first_name" => "John",
-  "account_last_name" => "Doe",
+  "first_name" => "John",
+  "last_name" => "Doe",
   "sender_first_name" => "Jane",
   "sender_last_name" => "Smith"
 }
@@ -60,7 +60,7 @@ puts response.read_body
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://devapi.paywise.co/account?version=2024-10-20",
+    CURLOPT_URL => "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => array(
         "PW-subscription-key: eed0d85c530c4b26a91d09b783d8fab3",
@@ -69,10 +69,10 @@ curl_setopt_array($curl, array(
         "Content-Type: application/json"
     ),
     CURLOPT_POSTFIELDS => json_encode(array(
-        "account_mobile_number" => "+18681234567",
+        "mobile_number" => "+18681234567",
         "institution_name" => "PayWise Institution",
-        "account_first_name" => "John",
-        "account_last_name" => "Doe",
+        "first_name" => "John",
+        "last_name" => "Doe",
         "sender_first_name" => "Jane",
         "sender_last_name" => "Smith"
     )),
@@ -86,7 +86,7 @@ echo $response;
     },
     JavaScript: {
         description: `
-const url = "https://devapi.paywise.co/account?version=2024-10-20";
+const url = "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith";
 const headers = {
     "PW-subscription-key": "eed0d85c530c4b26a91d09b783d8fab3",
     "PW-origin-country": "TT",
@@ -95,10 +95,10 @@ const headers = {
 };
 
 const body = {
-    "account_mobile_number": "+18681234567",
+    "mobile_number": "+18681234567",
     "institution_name": "PayWise Institution",
-    "account_first_name": "John",
-    "account_last_name": "Doe",
+    "first_name": "John",
+    "last_name": "Doe",
     "sender_first_name": "Jane",
     "sender_last_name": "Smith"
 };
@@ -117,7 +117,7 @@ fetch(url, {
         description: `
 import requests
 
-url = "https://devapi.paywise.co/account"
+url = "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith"
 headers = {
     "PW-subscription-key": "eed0d85c530c4b26a91d09b783d8fab3",
     "PW-origin-country": "TT",
@@ -129,10 +129,10 @@ params = {
 }
 
 data = {
-    "account_mobile_number": "+18681234567",
+    "mobile_number": "+18681234567",
     "institution_name": "PayWise Institution",
-    "account_first_name": "John",
-    "account_last_name": "Doe",
+    "first_name": "John",
+    "last_name": "Doe",
     "sender_first_name": "Jane",
     "sender_last_name": "Smith"
 }
@@ -164,7 +164,14 @@ const Reques_Example = () => {
     "message": "Registration request sent",
     "account_status": "available",
     "session_token": "abcd1234xyz"
-}`;
+}
+#if there is an error, the response may look like:
+{
+    "status": "error",
+    "code": 400,
+    "message": "Invalid mobile number format"
+}
+`;
 
     return (
         <div>
@@ -452,8 +459,8 @@ const Account = () => {
                             </div>
                             {openSections["account_status"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the status of the user.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> {`Enum = {available, unavailable, unknown}`}</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the status of the user. Enum = {`{available, unavailable, unknown}`}</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 8 - 11</p>
                                 </div>
                             )}

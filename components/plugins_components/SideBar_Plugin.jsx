@@ -13,19 +13,19 @@ const SideBar_Plugin = ({ isOpen, toggleSidebar, showWooCommerce, showPluginDocs
           <div className="lg:hidden mb-4 flex flex-col gap-y-6">
             <div className="flex flex-col gap-y-4 font-semibold px-2">
               <a href="https://devportal.paywise.co/" className="">
-                Home
+                Dev Portal
               </a>
               <a href="#" className="" onClick={() => { showDocumentation(); toggleSidebar(); }} >
                 Docs
               </a>
-              <a href="https://devportal.paywise.co/apis" className="">
-                APIs
-              </a>
               <a href="https://devportal.paywise.co/products" className="">
-                Products
+                API Products
               </a>
               <a href="#" className="" onClick={() => { showPluginDocs(); toggleSidebar(); }}>
                 Plugins
+              </a>
+              <a href="https://pwapp.co/home">
+                PayWise.co
               </a>
             </div>
             <div className="flex flex-col gap-y-4 font-semibold px-2 border-solid border-t border-[#d8dee4]">

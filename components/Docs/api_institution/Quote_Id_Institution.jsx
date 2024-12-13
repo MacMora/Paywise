@@ -176,7 +176,7 @@ const Quote_Id_Institutions = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="pt-4">
+                        <div className="border-b-2 py-4">
                             <div onClick={() => handleClick("quote_id_quote_get")} className="flex flex-row gap-2 items-center cursor-pointer">
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["quote_id_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
@@ -188,6 +188,21 @@ const Quote_Id_Institutions = () => {
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Unique identifier of the quote</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 20 - 40</p>
+                                </div>
+                            )}
+                        </div>
+                        <div className="pt-4">
+                            <div onClick={() => handleClick("institution_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>institution_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                            </div>
+                            {openSections["institution_name"] && (
+                                <div className="py-3">
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Name of party who request this api.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
                                 </div>
                             )}
                         </div>

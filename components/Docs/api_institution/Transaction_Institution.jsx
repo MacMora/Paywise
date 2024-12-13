@@ -156,11 +156,11 @@ const Transaction_Institutions = () => {
 
             {/* INSTITUTION_API */}
 
-            <div id='institution_api'  className='py-12 border-b-2'>
+            <div id='institution_api' className='py-12 border-b-2'>
                 <h2 className='text-2xl lg:text-3xl font-semibold py-3'>Institution API</h2>
                 <p className='py-5 text-sm'>
                     The Institution API allows third-party entities (e.g., financial institutions, remittance services, or payment processors) to integrate with the PayWise system to facilitate transactions on behalf of their customers. These entities do not need to hold a PayWise account to interact with PayWise accounts and can still perform operations like crediting or debiting PayWise customer accounts, enabling seamless cross-platform payments.
-                    <br/>
+                    <br />
                     This API is specifically designed to provide integrations for external platforms, enabling them to:
                 </p>
                 <ol className='text-sm p-4'>
@@ -170,88 +170,87 @@ const Transaction_Institutions = () => {
                 </ol>
                 <p className='py-5 text-sm'>By using the Institution API, third-party platforms can integrate secure financial services to support remittances, bill payments, and money transfers while maintaining compliance with regulations such as Know Your Customer (KYC) and Anti-Money Laundering (AML).</p>
                 <div className='bg-[#F5F6F8] overflow-hidden rounded'>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='bg-[#ebeef1] py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base font-bold'>
+                            <p>HTTP</p>
+                        </div>
+                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
+                            <p>Sandbox URL</p>
+                        </div>
+                        <div className='basis-[50%] md:basis-[20%] font-bold'>
+                            <p>Endpoint</p>
+                        </div>
+                        <div className='basis-[50%] font-bold'>
+                            <p>Endpoints Description</p>
+                        </div>
+                    </div>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='basis-[15%]'>
-                            <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='basis-[50%] md:basis-[20%] font-bold'>
                             <a href='#institution_transaction'>/transaction</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Post a creditt or debit transaction</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='basis-[15%]'>
-                            <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='basis-[50%] md:basis-[20%] font-bold'>
                             <a href='#transaction_get'>/transaction/{`{transaction_id}`}</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Retrieve a transaction completion confirmation</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='basis-[15%]'>
-                            <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='basis-[50%] md:basis-[20%] font-bold'>
                             <a href='#exchange_rate_usd'>/exchange_rate_usd</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Gets the exchange rate price on a particular date. Defaults to TTD for 1 USD.</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='basis-[15%]'>
-                            <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='basis-[50%] md:basis-[20%] font-bold'>
                             <a href='#quote_post'>/quote</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Post a quote to understand what the TTD amount will be and the period of time to keep it valid</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devapi.paywise.co/' target='_blank'>https://devapi.paywise.co/</a>
+                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='basis-[15%]'>
-                            <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='basis-[50%] md:basis-[20%] font-bold'>
                             <a href='#balance_account'>/quote/{`{quote_id}`}</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Retrieves the quoted payload</p>
                         </div>
                     </div>
@@ -310,7 +309,7 @@ const Transaction_Institutions = () => {
                                 </div>
                                 {openSections["transaction_id"] && (
                                     <div className="py-3">
-                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Encrypted transaction id, generated by Institution. Encryption public keys are shared with PayWise.</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Transaction id, generated by Institution. Encryption public keys are shared with PayWise.</p>
                                         <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
                                         <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 30 - 60</p>
                                     </div>
@@ -346,6 +345,95 @@ const Transaction_Institutions = () => {
                                     </div>
                                 )}
                             </div>
+
+                            {/* Fees */}
+                            <div className="border-b-2 py-4">
+                                <div onClick={() => handleClick("fees")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["fees"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <p className='font-semibold'>fees <span className='font-cabin text-[#8D9298] font-normal'>object</span></p>
+                                </div>
+                                {openSections["fees"] && (
+                                    <div className="py-3">
+                                        <div className='pb-4'>
+                                            <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> JSON object capturing the fees</p>
+                                            <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                            <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 7, 2</p>
+                                        </div>
+
+                                        {/* total */}
+                                        <div className="border-b-2 px-2 py-4">
+                                            <div onClick={() => handleClick("total")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["total"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <p className='font-semibold'>total <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                            </div>
+                                            {openSections["total"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Total transaction fees</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 7, 2</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* convenience */}
+                                        <div className="border-b-2 px-2 py-4">
+                                            <div onClick={() => handleClick("convenience")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["convenience"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <p className='font-semibold'>convenience <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                            </div>
+                                            {openSections["convenience"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Institution fee charged</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 7, 2</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* sender_pays */}
+                                        <div className="border-b-2 px-2 py-4">
+                                            <div onClick={() => handleClick("sender_pays")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["sender_pays"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <p className='font-semibold'>sender_pays <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                            </div>
+                                            {openSections["sender_pays"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Fee paid by Sender</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 7, 2</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* recipient_pays */}
+                                        <div className="px-2 pt-4">
+                                            <div onClick={() => handleClick("recipient_pays")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["recipient_pays"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <p className='font-semibold'>recipient_pays <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                            </div>
+                                            {openSections["recipient_pays"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Fee paid by Receiver</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 7, 2</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                    </div>
+                                )}
+                            </div>
+
                             <div className="border-b-2 py-4">
                                 <div onClick={() => handleClick("sender_currency")} className="flex flex-row gap-2 items-center cursor-pointer">
                                     <svg className={`cursor-pointer transition-transform duration-150 ${rotations["sender_currency"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1420,7 +1508,22 @@ const Transaction_Institutions = () => {
                                                 <div className="py-3">
                                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> The specific quoteId to be used for the transaction. This quoteId is generated when a quotation is created and it is returned on the quotation response.</p>
                                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
-                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 16 - 20</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 16-20</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="border-b-2 py-4">
+                                            <div onClick={() => handleClick("institution_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <p className='font-semibold'>institution_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                            </div>
+                                            {openSections["institution_name"] && (
+                                                <div className="py-3">
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Name of party who request this api.</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
                                                 </div>
                                             )}
                                         </div>
@@ -1526,7 +1629,7 @@ const Transaction_Institutions = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className="pt-4">
+                            <div className="border-b-2 py-4">
                                 <div onClick={() => handleClick("message")} className='flex flex-row gap-2 items-center cursor-pointer'>
                                     <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
@@ -1538,6 +1641,21 @@ const Transaction_Institutions = () => {
                                         <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Registration request sent"</p>
                                         <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
                                         <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="pt-4">
+                                <div onClick={() => handleClick("institution_receipt_id")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                    <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_receipt_id"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <p className='font-semibold'>institution_receipt_id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                </div>
+                                {openSections["institution_receipt_id"] && (
+                                    <div className='py-3'>
+                                        <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The PayWise ID returned once the transaction has been posted.</p>
+                                        <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
+                                        <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10-40</p>
                                     </div>
                                 )}
                             </div>

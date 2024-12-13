@@ -22,7 +22,7 @@ curl -X POST https://devapi.paywise.co/account/register_account?version=2023-10-
     "session_token": "encrypted_session_token",
     "authorisation_token": "unencrypted_authorisation_token"
 }'
-    
+
     `
     },
     Ruby: {
@@ -174,9 +174,9 @@ const Reques_Example = () => {
     "status": "success",
     "code": 200,
     "message": "Registration request sent"
-    }
+}
 #if there is an error, the response may look like:
-    {
+{
     "status": "error",
     "code": 400,
     "message": "Invalid mobile number format"
@@ -289,122 +289,115 @@ const Register_Account = () => {
                     The Account Product API provides a comprehensive set of endpoints for managing user registrations and creating both business and personal accounts within the platform. This API is designed to streamline the onboarding process, allowing seamless creation and management of user identities. It supports various operations such as registering new users, handling account information, and managing business-specific attributes. The API is secured with role-based access control and rate limiting, ensuring a robust and compliant solution for account management.
                 </p>
                 <div className='bg-[#F5F6F8] overflow-hidden rounded'>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='bg-[#ebeef1] py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base font-bold'>
+                            <p>HTTP</p>
+                        </div>
+                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
+                            <p>Sandbox URL</p>
+                        </div>
+                        <div className='basis-[50%] md:basis-[20%] font-bold'>
+                            <p>Endpoint</p>
+                        </div>
+                        <div className='basis-[50%] font-bold'>
+                            <p>Endpoints Description</p>
+                        </div>
+                    </div>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%]'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='basis-[15%]'>
-                            <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='md:basis-[20%]'>
                             <a href='#register_account'>/account/register_account</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Calling institution (i.e. caller) and/or PayWise, requests and retains the authorization or rejection from the PayWise account holder to establish a connection to Calling institution There needs to be adequate transparency as data about the user, may be shared via this connection.</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%]'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='basis-[15%]'>
-                            <a href='https://api.paywise.co/' target='_blank'>https://api.paywise.co/</a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='md:basis-[20%]'>
                             <a href='#dev_account'>/account/account</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Retrieves the account status. This checks that the account is in good standing and is available to receive or send funds.</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%]'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='md:basis-[18%] xl:basis-[15%]'>
-                            <a></a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='md:basis-[20%]'>
                             <a href='#personal_account'>/account/personal_account</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Create a personal account for testing on the Developer portal.</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devportal.paywise.co/register-customer' target='_blank'>https://devportal.paywise.co/register-customer</a>
+                        <div className='md:basis-[43%] xl:basis-[20%]'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='md:basis-[18%] xl:basis-[15%]'>
-                            <a></a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='md:basis-[20%]'>
                             <a href='#business_account'>/account/business_account</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Create a business account for testing on the Developer portal.</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devapi.paywise.co/' target='_blank'>https://devapi.paywise.co/</a>
+                        <div className='md:basis-[43%] xl:basis-[20%]'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='md:basis-[18%] xl:basis-[15%]'>
-                            <a></a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='md:basis-[20%]'>
                             <a href='#balance_account'>/account/balance</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Retrieves the current balance of the PayWise account.</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>GET</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devapi.paywise.co/' target='_blank'>https://devapi.paywise.co/</a>
+                        <div className='md:basis-[43%] xl:basis-[20%]'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='md:basis-[18%] xl:basis-[15%]'>
-                            <a></a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='md:basis-[20%]'>
                             <a href='#history_account'>/account/transaction_history</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Returns a list of all transactions within a specified date range. Defaults to last 7 days</p>
                         </div>
                     </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap gap-4 text-sm items-center'>
-                        <div className='basis-[5%] text-base'>
+                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
+                        <div className='basis-[10%] text-base'>
                             <p>POST</p>
                         </div>
-                        <div className='md:basis-[43%] xl:basis-[30%]'>
-                            <a href='https://devapi.paywise.co/' target='_blank'>https://devapi.paywise.co/</a>
+                        <div className='md:basis-[43%] xl:basis-[20%]'>
+                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
                         </div>
-                        <div className='md:basis-[18%] xl:basis-[15%]'>
-                            <a></a>
-                        </div>
-                        <div className='md:basis-[20%] xl:basis-[15%]'>
+                        <div className='md:basis-[20%]'>
                             <a href='#bless_account'>/account/bless_account</a>
                         </div>
-                        <div className='full xl:basis-[35%]'>
+                        <div className='full xl:basis-[50%]'>
                             <p>Adds credit to an account</p>
                         </div>
                     </div>

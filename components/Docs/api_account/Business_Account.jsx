@@ -642,6 +642,7 @@ const Business_Account = () => {
                                 <div className="py-3">
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Enum = {`{"Sole Trader", "Partnership", "Company"}`}</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 7-11</p>
                                 </div>
                             )}
                         </div>
@@ -658,6 +659,7 @@ const Business_Account = () => {
                                 <div className="py-3">
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> If business_type = "Company", then Enum = {`{"Director", "Secretary", "Acting Secretary", "Shareholder", "Person of Interest", "Shareholder, Director and/or Secretary"}`}</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 4-40</p>
                                 </div>
                             )}
                         </div>
@@ -1441,7 +1443,7 @@ const Business_Account = () => {
                         </div>
 
                         {/* signature */}
-                        <div className="pt-4">
+                        <div className="border-b-2 py-4">
                             <div onClick={() => handleClick("signature")} className="flex flex-row gap-2 items-center cursor-pointer">
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["signature"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
@@ -1453,6 +1455,126 @@ const Business_Account = () => {
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> File for the document</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1-255</p>
+                                </div>
+                            )}
+                        </div>
+
+                         {/* Institution */}
+                         <div className="pt-4">
+                            <div onClick={() => handleClick("institution")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>institution <span className='font-cabin text-[#8D9298] font-normal'>object</span></p>
+                            </div>
+                            {openSections["institution"] && (
+                                <div className="py-3">
+                                    <div className='pb-4'>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> JSON object containing payload information from the institution about their member</p>
+                                        <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                    </div>
+
+                                    {/* institutions id */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("institution_id")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_id"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["institution_id"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Institution id needed to create account linkage</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 21-40</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* institution name */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("institution_name")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["institution_name"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Institution name needed to create account linkage</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 21-40</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* member_key */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("member_key")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["member_key"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>member_key <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["member_key"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Membership key needed to create account linkage</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 21-40</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* instituton_account_type */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("instituton_account_type")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["instituton_account_type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>account_type <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["instituton_account_type"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account at institution</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-50</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* instituton_account_number */}
+                                    <div className="border-b-2 px-2 py-4">
+                                        <div onClick={() => handleClick("instituton_account_number")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["instituton_account_number"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>account_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                        </div>
+                                        {openSections["instituton_account_number"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Membership account institution account number</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-60</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* metadata */}
+                                    <div className="px-2 pt-4">
+                                        <div onClick={() => handleClick("metadata")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='font-semibold'>metadata <span className='font-cabin text-[#8D9298] font-normal'>Object</span></p>
+                                        </div>
+                                        {openSections["metadata"] && (
+                                            <div className="py-3">
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Additional data sent in the payload as key/ value pairs</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
+                                            </div>
+                                        )}
+                                    </div>
+
                                 </div>
                             )}
                         </div>
@@ -1521,7 +1643,7 @@ const Business_Account = () => {
                             {openSections["pin"] && (
                                 <div className='py-3'>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The pin associated with the newly created account</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 6</p>
                                 </div>
                             )}
@@ -1537,7 +1659,7 @@ const Business_Account = () => {
                             {openSections["api_key"] && (
                                 <div className='py-3'>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The api key associated with the newly created account</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 40 - 60</p>
                                 </div>
                             )}

@@ -276,7 +276,7 @@ const Quote_Institutions = () => {
                                         </div>
                                         {openSections["organization_id_quote_post"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full name of the organization where the funds is harboured for the debit_party. Example: "PayWise"</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 30</p>
                                             </div>
@@ -401,7 +401,7 @@ const Quote_Institutions = () => {
                                         </div>
                                         {openSections["organization_id_quote_post_2"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full name of the sending organization. Example: "PayWise".</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Full name of the organization where the funds is harboured for the credit_party. Example: "PayWise".</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 30</p>
                                             </div>

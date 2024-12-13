@@ -41,7 +41,7 @@ const SideBar_Doc = ({
                     <div className="lg:hidden mb-4 flex flex-col gap-y-6">
                         <div className="flex flex-col gap-y-4 font-semibold px-2">
                             <a href="https://devportal.paywise.co/" className="">
-                                Home
+                                Dev Portal
                             </a>
                             <a
                                 href="#"
@@ -53,11 +53,8 @@ const SideBar_Doc = ({
                             >
                                 Docs
                             </a>
-                            <a href="https://devportal.paywise.co/apis" className="">
-                                APIs
-                            </a>
                             <a href="https://devportal.paywise.co/products" className="">
-                                Products
+                                API Products
                             </a>
                             <a
                                 href="#"
@@ -68,6 +65,9 @@ const SideBar_Doc = ({
                                 }}
                             >
                                 Plugins
+                            </a>
+                            <a href="https://pwapp.co/home">
+                                PayWise.co
                             </a>
                         </div>
                         <div className="flex flex-col gap-y-4 font-semibold px-2 border-solid border-t border-[#d8dee4]">
@@ -287,7 +287,7 @@ const SideBar_Doc = ({
                                 </li>
                             </ul>
                         )}
-                        <li className="p-2"><a href="#look-up" onClick={toggleSidebar}>Look Up</a></li>
+                        <li className="p-2 border-t"><a href="#look-up" onClick={toggleSidebar}>Look Up</a></li>
                     </ul>
                 </div>
             </div>

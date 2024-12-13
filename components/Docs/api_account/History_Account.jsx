@@ -448,7 +448,7 @@ const History_Account = () => {
                                                     </div>
                                                     {openSections["id"] && (
                                                         <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> PayWise transaction id.</p>
+                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> PayWise friendly transaction id.</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 30-60</p>
                                                         </div>
