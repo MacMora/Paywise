@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { FaSearch, FaTimes } from "react-icons/fa"; // Importar los íconos
 
 const SideBar_Doc = ({
     isOpen,
@@ -9,6 +10,7 @@ const SideBar_Doc = ({
 }) => {
     const [openSections, setOpenSections] = useState({});
     const [rotations, setRotations] = useState({});
+    const [searchTerm, setSearchTerm] = useState("");
 
     // Función para alternar la visibilidad de una sección específica
     const toggleVisibility = (id) => {
@@ -28,17 +30,100 @@ const SideBar_Doc = ({
     const handleClick = (key) => {
         toggleRotation(key);
         toggleVisibility(key);
+        toggleSidebar(key)
     };
+
+    // Función para manejar el término de búsqueda
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+    };
+
+    const clearSearch = () => {
+        setSearchTerm("");
+    };
+
+    // Elementos del Sidebar
+    const sidebarItems = [
+        { label: "About PayWise's API", href: "#paywise_api", },
+        { label: "Quick Start", href: "#quick_start" },
+        { label: "Environments", href: "#environments" },
+        { label: "Integrations", href: "#integrations" },
+        { label: "Developers Portal", href: "#developers_portal" },
+        { label: "Installation - Developers Portal", href: "#installation" },
+        { label: "Registration - Developers Portal", href: "#registration" },
+        { label: "API Product - Developers Portal", href: "#api_product" },
+        { label: "Headers", href: "#headers" },
+        { label: "Errors", href: "#errors" },
+        { label: "Account API - Developers Portal", href: "#account_api" },
+        { label: "register_account", href: "#register_account" },
+        { label: "account", href: "#dev_account" },
+        { label: "personal_account", href: "#personal_account" },
+        { label: "business_account", href: "#business_account" },
+        { label: "balance", href: "#balance_account" },
+        { label: "account_history", href: "#history_account" },
+        { label: "bless_account", href: "#bless_account" },
+        { label: "Institution API - Developers Portal", href: "#institution_api" },
+        { label: "transaction", href: "#institution_transaction" },
+        { label: "transaction/{transaction_id}", href: "#transaction_get" },
+        { label: "exchange_rate_usd", href: "#exchange_rate_usd" },
+        { label: "quote", href: "#quote_post" },
+        { label: "quote/{quote_id}", href: "#quote_get" },
+        { label: "Production Portal", href: "#production_portal" },
+        { label: "Installation - Production Portal", href: "#production_portal" },
+        { label: "Registration - Production Portal", href: "#production_registration" },
+        { label: "API Product - Production Portal", href: "#production_api_products" },
+        { label: "Production URL - Production Portal", href: "#production_url" },
+        { label: "Account API - Production Portal", href: "#production_account_api" },
+        { label: "Institution API - Production Portal", href: "#production_institution_api" },
+        { label: "Look Up", href: "#look-up" },
+        
+    ];
+
+    // Filtrar elementos en función del término de búsqueda
+    const filteredItems = sidebarItems.filter((item) =>
+        item.label.toLowerCase().includes(searchTerm)
+    );
 
     return (
         <div className="font-cabin">
+
             {/* SideBar y Menú desplegable en pantallas pequeñas */}
             <div
                 className={`z-10 text-sm fixed top-12 left-0 shadow-2xl h-screen lg:w-1/5 md:w-1/3 sm:w-2/3 w-full overflow-y-scroll overflow-hidden py-8 custom-scrollbar bg-white transition-transform transform ${isOpen ? "translate-x-0" : "-translate-x-full"
                     } lg:translate-x-0`}
             >
+
                 <div className="p-5">
-                    <div className="lg:hidden mb-4 flex flex-col gap-y-6">
+                    {/* Campo de búsqueda */}
+                    <div className="mb-4 relative">
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="w-full p-2 border rounded-md pl-10"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                        <div
+                            className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                            onClick={searchTerm ? clearSearch : null}
+                        >
+                            {searchTerm ? <FaTimes /> : <FaSearch />}
+                        </div>
+                    </div>
+
+                    {/* Mostrar resultados en submenu */}
+                    {searchTerm && (
+                        <ul className="bg-[#f5f6f8]">
+                        {filteredItems.map((item, index) => (
+                            <li key={index} className="p-2">
+                                <a href={item.href} onClick={toggleSidebar}>
+                                    {item.label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                    )}
+                    <div className="lg:hidden mb-4 flex flex-col gap-y-6 py-5">
                         <div className="flex flex-col gap-y-4 font-semibold px-2">
                             <a href="https://devportal.paywise.co/" className="">
                                 Dev Portal
@@ -118,12 +203,11 @@ const SideBar_Doc = ({
                                 Registration
                             </a>
                         </li>
-                        <div className="p-2 flex flex-row justify-between gap-6 items-center">
-                            <a onClick={toggleSidebar} href="#api_product">
+                        <div onClick={() => handleClick("developers_portal")} className="p-2 flex flex-row justify-between gap-6 items-center">
+                            <a href="#api_product">
                                 API Products
                             </a>
                             <img
-                                onClick={() => handleClick("developers_portal")}
                                 className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["developers_portal"]}`}
                                 width={"8px"}
                                 height={"8px"}
@@ -142,12 +226,11 @@ const SideBar_Doc = ({
                                         Errors
                                     </a>
                                 </li>
-                                <div className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
-                                    <a onClick={toggleSidebar} href="#account_api">
+                                <div onClick={() => handleClick("account_api")} className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
+                                    <a href="#account_api">
                                         Account API
                                     </a>
                                     <img
-                                        onClick={() => handleClick("account_api")}
                                         className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["account_api"]}`}
                                         width={"8px"}
                                         height={"8px"}
@@ -193,12 +276,11 @@ const SideBar_Doc = ({
                                         </li>
                                     </ul>
                                 )}
-                                <div className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
-                                    <a onClick={toggleSidebar} href="#institution_api">
+                                <div onClick={() => handleClick("institution_api")} className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
+                                    <a href="#institution_api">
                                         Institution API
                                     </a>
                                     <img
-                                        onClick={() => handleClick("institution_api")}
                                         className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["institution_api"]}`}
                                         width={"8px"}
                                         height={"8px"}
@@ -256,12 +338,11 @@ const SideBar_Doc = ({
                                 Registration
                             </a>
                         </li>
-                        <div className="p-2 flex flex-row justify-between gap-6 items-center">
-                            <a onClick={toggleSidebar} href="#production_api_products">
+                        <div onClick={() => handleClick("production_portal")} className="p-2 flex flex-row justify-between gap-6 items-center">
+                            <a href="#production_api_products">
                                 API Products
                             </a>
                             <img
-                                onClick={() => handleClick("production_portal")}
                                 className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["production_portal"]}`}
                                 width={"8px"}
                                 height={"8px"}
