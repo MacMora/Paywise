@@ -6,7 +6,7 @@ import { Copy, Check } from 'lucide-react';
 const languageData = {
     Bash: {
         description: `
-curl -X GET "https://devapi.paywise.co/account?version=2024-10-20" 
+curl -X GET "https://devapi.paywise.co/quote/{quote_id}?version=2024-10-20" 
     `
     },
     Ruby: {
@@ -21,7 +21,7 @@ $curl = curl_init();
     },
     JavaScript: {
         description: `
-const url = "https://devapi.paywise.co/account?version=2024-10-20";
+const url = "https://devapi.paywise.co/quote/{quote_id}?version=2024-10-20";
     `
     },
     Python: {
@@ -244,6 +244,21 @@ const Quote_Id_Institutions = () => {
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> HTTP return code.</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 3</p>
+                                </div>
+                            )}
+                        </div>
+                        <div className="border-b-2 py-4">
+                            <div onClick={() => handleClick("message_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                            </div>
+                            {openSections["message_quote_get"] && (
+                                <div className='py-3'>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Error: Exceeds user limits."</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
                                 </div>
                             )}
                         </div>

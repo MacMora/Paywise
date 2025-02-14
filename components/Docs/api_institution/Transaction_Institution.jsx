@@ -8,7 +8,7 @@ import { Copy, Check } from 'lucide-react';
 const languageData = {
     Bash: {
         description: `
-curl -X GET "https://devapi.paywise.co/account?version=2024-10-20" 
+curl -X GET "https://devapi.paywise.co/transaction?version=2024-10-20" 
     `
     },
     Ruby: {
@@ -23,7 +23,7 @@ $curl = curl_init();
     },
     JavaScript: {
         description: `
-const url = "https://devapi.paywise.co/account?version=2024-10-20";
+const url = "https://devapi.paywise.co/transation?version=2024-10-20";
     `
     },
     Python: {

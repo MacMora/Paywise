@@ -1,35 +1,14 @@
 "use client";
 import Documentation from "@/components/Documentation";
-import Plugin_Docs from "@/components/plugins_components/plugin_docs";
 import SideBar_Doc from "@/components/SideBar";
-import Sidebar_Plugin from "@/components/plugins_components/SideBar_Plugin";
-import WooCommerce from "@/components/plugins_components/woocommerce/woocommerce"; // Import WooCommerce component
 import React, { useState } from "react";
 import Image from "next/image";
 
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false); // Controla el sidebar principal
-  const [showPluginsSidebar, setShowPluginsSidebar] = useState(false); // Controla la vista del sidebar de plugins
-  const [activeComponent, setActiveComponent] = useState(''); // Track the active component
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen); // Alterna el sidebar
-  };
-
-  const showWooCommerce = () => {
-    setActiveComponent('WooCommerce'); // Set WooCommerce as the active component
-    setShowPluginsSidebar(true); // Ensure the plugins sidebar is shown
-    setIsOpen(false); // Optionally close the sidebar after clicking
-  };
-
-  const showPluginDocs = () => {
-    setActiveComponent('Plugin_Docs'); // Set Plugin_Docs as the active component
-    setShowPluginsSidebar(true); // Ensure the plugins sidebar is shown
-  };
-
-  const showDocumentation = () => {
-    setActiveComponent('Documentation'); // Set Documentation as the active component
-    setShowPluginsSidebar(false); // Ensure the plugins sidebar is hidden
   };
 
   return (
@@ -51,13 +30,13 @@ export default function HomePage() {
           <a href="https://devportal.paywise.co/" className="text-gray-700">
             Dev Portal
           </a>
-          <a href="#" className="text-gray-700" onClick={showDocumentation}>
+          <a href="#" className="text-gray-700">
             Docs
           </a>
           <a href="https://devportal.paywise.co/products" className="text-gray-700">
             API Products
           </a>
-          <a href="#" className="text-gray-700" onClick={showPluginDocs}>
+          <a href="https://docs.paywise.co/plugins" className="text-gray-700">
             Plugins
           </a>
           <a href="https://pwapp.co/home" className="text-gray-700">
@@ -100,18 +79,10 @@ export default function HomePage() {
           )}
         </button>
       </div>
-      {/* Conditionally Render Components */}
-      {showPluginsSidebar ? (
         <div>
-          <Sidebar_Plugin isOpen={isOpen} toggleSidebar={toggleSidebar} showWooCommerce={showWooCommerce} showPluginDocs={showPluginDocs} showDocumentation={showDocumentation}/>
-          {activeComponent === 'WooCommerce' ? <WooCommerce /> : <Plugin_Docs showWooCommerce={showWooCommerce} />}
+          <SideBar_Doc isOpen={isOpen} toggleSidebar={toggleSidebar} />
+          <Documentation />
         </div>
-      ) : (
-        <div>
-          <SideBar_Doc isOpen={isOpen} toggleSidebar={toggleSidebar} showWooCommerce={showWooCommerce} showPluginDocs={showPluginDocs} showDocumentation={showDocumentation}/>
-          <Documentation showWooCommerce={showWooCommerce} />
-        </div>
-      )}
     </div>
   );
 }

@@ -5,8 +5,6 @@ import { FaSearch, FaTimes } from "react-icons/fa"; // Importar los íconos
 const SideBar_Doc = ({
     isOpen,
     toggleSidebar,
-    showPluginDocs,
-    showDocumentation,
 }) => {
     const [openSections, setOpenSections] = useState({});
     const [rotations, setRotations] = useState({});
@@ -68,6 +66,10 @@ const SideBar_Doc = ({
         { label: "exchange_rate_usd", href: "#exchange_rate_usd" },
         { label: "quote", href: "#quote_post" },
         { label: "quote/{quote_id}", href: "#quote_get" },
+        { label: "Merchant API - Developers Portal", href: "#merchant_api" },
+        { label: "request", href: "#request_merchant" },
+        { label: "cancel", href: "#cancel_merchant" },
+        { label: "status", href: "#status_merchant" },
         { label: "Production Portal", href: "#production_portal" },
         { label: "Installation - Production Portal", href: "#production_portal" },
         { label: "Registration - Production Portal", href: "#production_registration" },
@@ -128,26 +130,14 @@ const SideBar_Doc = ({
                             <a href="https://devportal.paywise.co/" className="">
                                 Dev Portal
                             </a>
-                            <a
-                                href="#"
-                                className=""
-                                onClick={() => {
-                                    showDocumentation();
-                                    toggleSidebar();
-                                }}
+                            <a href="#" className=""
                             >
                                 Docs
                             </a>
                             <a href="https://devportal.paywise.co/products" className="">
                                 API Products
                             </a>
-                            <a
-                                href="#"
-                                className=""
-                                onClick={() => {
-                                    showPluginDocs();
-                                    toggleSidebar();
-                                }}
+                            <a href="https://docs.paywise.co/plugins" className=""
                             >
                                 Plugins
                             </a>
@@ -211,7 +201,7 @@ const SideBar_Doc = ({
                                 className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["developers_portal"]}`}
                                 width={"8px"}
                                 height={"8px"}
-                                src="/images/woocommerce/chevron.svg"
+                                src="/images/chevron.svg"
                             />
                         </div>
                         {openSections["developers_portal"] && (
@@ -234,7 +224,7 @@ const SideBar_Doc = ({
                                         className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["account_api"]}`}
                                         width={"8px"}
                                         height={"8px"}
-                                        src="/images/woocommerce/chevron.svg"
+                                        src="/images/chevron.svg"
                                     />
                                 </div>
                                 {openSections["account_api"] && (
@@ -284,7 +274,7 @@ const SideBar_Doc = ({
                                         className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["institution_api"]}`}
                                         width={"8px"}
                                         height={"8px"}
-                                        src="/images/woocommerce/chevron.svg"
+                                        src="/images/chevron.svg"
                                     />
                                 </div>
                                 {openSections["institution_api"] && (
@@ -319,6 +309,39 @@ const SideBar_Doc = ({
                                         </li>
                                     </ul>
                                 )}
+                                <div onClick={() => handleClick("merchant_api")} className="py-2 px-4 flex flex-row justify-between gap-6 items-center">
+                                    <a href="#merchant_api">
+                                        Merchant API
+                                    </a>
+                                    <img
+                                        className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["merchant_api"]}`}
+                                        width={"8px"}
+                                        height={"8px"}
+                                        src="/images/chevron.svg"
+                                    />
+                                </div>
+                                {openSections["merchant_api"] && (
+                                    <ul className="">
+                                        <li className="py-2 px-6">
+                                            <a
+                                                href="#request_merchant"
+                                                onClick={toggleSidebar}
+                                            >
+                                                request
+                                            </a>
+                                        </li>
+                                        <li className="py-2 px-6">
+                                            <a href="#cancel_merchant" onClick={toggleSidebar}>
+                                                cancel
+                                            </a>
+                                        </li>
+                                        <li className="py-2 px-6">
+                                            <a href="#status_merchant" onClick={toggleSidebar}>
+                                                status
+                                            </a>
+                                        </li>
+                                    </ul>
+                                )}
                             </ul>
                         )}
                     </ul>
@@ -346,7 +369,7 @@ const SideBar_Doc = ({
                                 className={`cursor-pointer rotate-90 transition-transform duration-150 ${rotations["production_portal"]}`}
                                 width={"8px"}
                                 height={"8px"}
-                                src="/images/woocommerce/chevron.svg"
+                                src="/images/chevron.svg"
                             />
                         </div>
                         {openSections["production_portal"] && (

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import App from "@/components/App";
 
-const Codes = ({ showWooCommerce }) => {
+const Codes = () => {
     // Estado para controlar la visibilidad del div que contiene el <p>
     const [openSections, setOpenSections] = useState({});
     const [rotations, setRotations] = useState({});
@@ -39,7 +39,7 @@ const Codes = ({ showWooCommerce }) => {
                         </div>
                         <img
                             className="object-cover lg:absolute end-0 z-0"
-                            src="/images/woocommerce/3d-shapes.png"
+                            src="/images/3d-shapes.png"
                         />
                     </div>
                 </div>
@@ -184,15 +184,17 @@ const Codes = ({ showWooCommerce }) => {
                             Offer all payment methods in your online store. Use one of our
                             integrations
                         </p>
-                        <div className="py-4">
-                            <div
-                                onClick={showWooCommerce}
-                                className="cursor-pointer flex flex-col justify-center items-center rounded-xl shadow-lg w-[125px] h-[125px]"
-                            >
-                                <img src="/images/woo-logo.svg" width="76px" height="76px" />
-                                <p className="text-xs">Woocommerce</p>
+                        <a href="https://docs.paywise.co/plugins">
+                            <div className="py-4">
+                                <div
+                                    className="cursor-pointer flex flex-col justify-center items-center rounded-xl shadow-lg w-[125px] h-[125px]"
+                                >
+                                    <img src="/images/woo-logo.svg" width="76px" height="76px" />
+                                    <p className="text-xs">Woocommerce</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
+
                     </div>
 
                     <div id="developers_portal" className="py-8">
@@ -221,7 +223,7 @@ const Codes = ({ showWooCommerce }) => {
                                     {" "}
                                     and our{" "}
                                     <a
-                                        href="https://pwapp.co/user/login"
+                                        href="https://sandbox.paywise.co/user/login"
                                         target="_blank"
                                         className="font-semibold underline"
                                     >
@@ -1658,10 +1660,10 @@ const Codes = ({ showWooCommerce }) => {
     );
 };
 
-export default function Documentation({ showWooCommerce }) {
+export default function Documentation() {
     return (
         <div className="h-screen overflow-hidden">
-            <Codes showWooCommerce={showWooCommerce} />
+            <Codes />
         </div>
     );
 }
