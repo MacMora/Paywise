@@ -11,7 +11,7 @@ import Transaction_Id_Institutions from "./Docs/api_institution/Transaction_Id_I
 import Exchange_Institution from "./Docs/api_institution/Exchange_Institution";
 import Quote_Institutions from "./Docs/api_institution/Quote_Institution";
 import Quote_Id_Institutions from "./Docs/api_institution/Quote_Id_Institution";
-import Request_Merchant from "./Docs/api_merchant/request_merchant"
+import Request_Merchant from "./Docs/api_merchant/Request_Merchant"
 import Cancel_Merchant from "./Docs/api_merchant/Cancel_Merchant"
 import Status_Merchant from './Docs/api_merchant/Status_Merchant'
 
