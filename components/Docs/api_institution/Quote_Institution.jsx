@@ -51,17 +51,20 @@ const Reques_Example = () => {
     const responseExample = `{
     "status": "success",
     "code": 200,
-    "rate": "6.7890",
-    "request_date": "2024-10-23",
-    "quote_date": "2024-10-23 14:30:00",
-    "amount_quoted": "500.00",
-    "expiry_date": "2024-10-23 14:33:00"
+    "message": "Quote generated successfully",
+    "expire_date": "2025-02-15 12:30:00",
+    "quote_id": "Q12345678901234567890",
+    "rate": "6.7450",
+    "quote_date": "2025-02-14 12:00:00",
+    "amount_quoted": "1500.75"
 }
 #if there is an error, the response may look like:
 {
     "status": "error",
-    "code": 404,
-    "message": " Quote not found"
+    "code": 403,
+    "message": "Error: Exceeds user limits.",
+    "expire_date": "2025-02-15 12:30:00",
+    "quote_id": "Q12345678901234567890"
 }`;
 
 
@@ -94,8 +97,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -127,8 +130,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>
@@ -520,6 +523,21 @@ const Quote_Institutions = () => {
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> HTTP return code.</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 3</p>
+                                </div>
+                            )}
+                        </div>
+                        <div className="border-b-2 py-4">
+                            <div onClick={() => handleClick("message_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                            </div>
+                            {openSections["message_quote_post"] && (
+                                <div className="py-3">
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Error: Exceeds user limits."</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
                                 </div>
                             )}
                         </div>

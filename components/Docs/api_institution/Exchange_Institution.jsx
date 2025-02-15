@@ -120,14 +120,17 @@ const Reques_Example = () => {
     const responseExample = `{
     "status": "success",
     "code": 200,
-    "rate": "6.7890",
-    "request_date": "2024-10-23"
+    "message": "2025-02-14: 6.7450",
+    "rate": "6.7450",
+    "request_date": "2025-02-14"
 }
 #if there is an error, the response may look like:
 {
     "status": "error",
-    "code": 400,
-    "message": "Invalid currency pair"
+    "code": 404,
+    "message": "Exchange rate not available for the requested date",
+    "rate": "0.0000",
+    "request_date": "2025-02-14"
 }`;
 
 
@@ -160,8 +163,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -193,8 +196,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>

@@ -49,7 +49,16 @@ const Reques_Example = () => {
     };
 
     const responseExample = `{
-
+    "status": "success",
+    "code": 200,
+    "message": "Registration request sent",
+    "institution_receipt_id": "PW-9876543210"
+}
+#if there is an error, the response may look like:
+{
+    "status": "error",
+    "code": 400,
+    "message": "Invalid registration request"
 }`;
 
 
@@ -82,8 +91,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -115,8 +124,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>

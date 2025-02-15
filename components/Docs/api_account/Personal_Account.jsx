@@ -381,8 +381,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -414,8 +414,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>

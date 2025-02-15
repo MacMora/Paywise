@@ -51,17 +51,56 @@ const Reques_Example = () => {
     const responseExample = `{
     "status": "success",
     "code": 200,
-    "rate": "6.7890",
-    "request_date": "2024-10-23",
-    "quote_date": "2024-10-23 14:30:00",
-    "amount_quoted": "500.00",
-    "expiry_date": "2024-10-23 14:33:00"
+    "message": "Payment request successful",
+    "payment_details": {
+        "id": "PW123456789",
+        "transaction_id": "ORD987654321",
+        "amount": "500.00",
+        "fees": {
+            "total": "10.00",
+            "card_processing": "5.00",
+            "crypto_processing": "0.00",
+            "platform_processing": "3.00",
+            "agent_processing": "2.00",
+            "convenience": "0.00"
+        },
+        "payers": [
+            {
+                "mobile_number": "+18681234567",
+                "amount": "500.00",
+                "fee": "10.00",
+                "tip": "5.00",
+                "status": "completed",
+                "metadata": {
+                    "customer_type": "VIP",
+                    "payment_method": "credit_card"
+                }
+            }
+        ],
+        "payees": [
+            {
+                "mobile_number": "+18689876543",
+                "amount": "490.00",
+                "fee": "10.00",
+                "delay_days": 1,
+                "metadata": {
+                    "merchant_id": "M12345"
+                },
+                "qr_code": {
+                    "data": "QR123456789",
+                    "url": "https://paywise.co/payment/QR123456789",
+                    "expire_time": "2024-10-23 15:30:00"
+                }
+            }
+        ]
+    },
+    "fraud_check_status": "passed"
 }
 #if there is an error, the response may look like:
 {
     "status": "error",
     "code": 404,
-    "message": " Quote not found"
+    "message": "Payment request not found"
 }`;
 
 
@@ -94,8 +133,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -127,8 +166,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>
@@ -1545,7 +1584,7 @@ const Request_Merchant = () => {
                                 )}
                             </div>
 
-                            <div className="border-b-2 py-4">
+                            <div className="pt-4">
                                 <div onClick={() => handleClick("fraud_check_status_response")} className="flex flex-row gap-2 items-center cursor-pointer">
                                     <svg className={`cursor-pointer transition-transform duration-150 ${rotations["fraud_check_status_response"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />

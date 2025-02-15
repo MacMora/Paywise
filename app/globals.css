@@ -35,6 +35,31 @@
   background-color: #555; /* Color de la barra de desplazamiento al pasar el ratón */
 }
 
+.code-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.code-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #136AB7;
+  border-radius: 4px;
+}
+
+.code-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #0F5A9D;
+}
+
+.code-scrollbar::-webkit-scrollbar-track {
+  background-color: #699EC7;
+  border-radius: 4px;
+}
+
+/* Estilo para Firefox */
+pre {
+  scrollbar-width: thin;
+  scrollbar-color: #136AB7 #699EC7;
+}
+
 
 
 /* PABLO CSS */

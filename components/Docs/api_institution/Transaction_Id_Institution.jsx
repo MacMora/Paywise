@@ -49,7 +49,51 @@ const Reques_Example = () => {
     };
 
     const responseExample = `{
-
+    "status": "success",
+    "code": 200,
+    "message": "Transaction completed successfully",
+    "transaction": {
+        "id": "TXN-123456789",
+        "type": "credit",
+        "amount": "1500.00",
+        "fees": {
+            "total": "50.00",
+            "convenience": "10.00",
+            "sender_pays": "20.00",
+            "recipient_pays": "20.00"
+        },
+        "sender_full_name": "John Doe",
+        "recipient_full_name": "Jane Smith",
+        "cleared_date": "2025-02-14",
+        "posted_date": "2025-02-13",
+        "description": "Payment for services rendered",
+        "status": "completed",
+        "source": "wallet",
+        "transaction_method": "bank_transfer",
+        "parent_mobile_number": "+18681234567",
+        "metadata": "Urgent transaction",
+        "quote_id": "QUOTE-987654321",
+        "institution_receipt_id": "PW-6543210987"
+    }
+}
+#if there is an error, the response may look like:
+{
+    "status": "error",
+    "code": 400,
+    "message": "Transaction failed due to insufficient funds",
+    "transaction": {
+        "id": "TXN-987654321",
+        "type": "debit",
+        "amount": "500.00",
+        "sender_full_name": "Alice Johnson",
+        "recipient_full_name": "Bob Williams",
+        "cleared_date": "2025-02-14",
+        "posted_date": "2025-02-14",
+        "description": "Subscription payment",
+        "status": "failed",
+        "source": "wallet",
+        "transaction_method": "wallet_transfer"
+    }
 }`;
 
 
@@ -82,8 +126,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -115,8 +159,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>

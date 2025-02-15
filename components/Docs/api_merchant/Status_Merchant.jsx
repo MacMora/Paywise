@@ -47,7 +47,64 @@ const Reques_Example = () => {
     };
 
     const responseExample = `{
-
+    "status": "success",
+    "code": 200,
+    "message": "Payment successful",
+    "payment_details": {
+        "id": "PW-1234567890",
+        "transaction_id": "ORD-987654321",
+        "amount": "150.00",
+        "tax": "10.00",
+        "fees": {
+            "total": "5.00",
+            "card_processing": "2.00",
+            "platform_processing": "1.50",
+            "agent_processing": "0.50",
+            "payer_pays": "3.00",
+            "payee_pays": "2.00"
+        },
+        "currency": "TTD",
+        "payments_status": {
+            "paid": "100.00",
+            "remaining": "50.00"
+        },
+        "timestamps": {
+            "created_time": "2024-10-23 12:00:00",
+            "updated_time": "2024-10-23 12:05:00",
+            "expire_time": "2024-10-23 12:30:00"
+        },
+        "payers": [
+            {
+                "mobile_number": "1234567890",
+                "amount": "100.00",
+                "fee": "3.00",
+                "tip": "2.00",
+                "payment_method": "card",
+                "status": "completed"
+            }
+        ],
+        "payees": [
+            {
+                "mobile_number": "0987654321",
+                "amount": "97.00",
+                "fee": "2.00",
+                "payment_date": "2024-10-23 12:10:00",
+                "delay_days": 2,
+                "status": "pending",
+                "payments_status": {
+                    "paid": "50.00",
+                    "remaining": "47.00"
+                }
+            }
+        ]
+    },
+    "fraud_check_status": "passed"
+}
+#if there is an error, the response may look like:
+{
+    "status": "error",
+    "code": 404,
+    "message": "Payment request not found"
 }`;
 
     return (
@@ -79,8 +136,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -112,8 +169,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>

@@ -47,7 +47,20 @@ const Reques_Example = () => {
     };
 
     const responseExample = `{
-
+    "status": "success",
+    "code": 200,
+    "message": "Quote generated successfully",
+    "rate": "6.7450",
+    "request_date": "2025-02-14",
+    "quote_date": "2025-02-14 12:00:00",
+    "amount_quoted": "1500.75",
+    "expire_date": "2025-02-15 12:30:00"
+}
+#if there is an error, the response may look like:
+{
+    "status": "error",
+    "code": 403,
+    "message": "Error: Exceeds user limits."
 }`;
 
     return (
@@ -79,8 +92,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {languageData[selectedLanguage]?.description}
                     </pre>
                 </div>
@@ -112,8 +125,8 @@ const Reques_Example = () => {
                         </button>
                     </div>
                 </div>
-                <div className='px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
+                    <pre>
                         {responseExample}
                     </pre>
                 </div>
