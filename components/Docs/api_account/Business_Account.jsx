@@ -1535,7 +1535,7 @@ const Business_Account = () => {
                                         </div>
                                         {openSections["instituton_account_type"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account at institution</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account at the institution</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-50</p>
                                             </div>
@@ -1552,7 +1552,7 @@ const Business_Account = () => {
                                         </div>
                                         {openSections["instituton_account_number"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Membership account institution account number</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Member's account number at the institution.</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-60</p>
                                             </div>
@@ -1649,7 +1649,7 @@ const Business_Account = () => {
                             )}
                         </div>
 
-                        <div className="pt-4">
+                        <div className="border-b-2 py-4">
                             <div onClick={() => handleClick("api_key")} className='flex flex-row gap-2 items-center cursor-pointer'>
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["api_key"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
@@ -1665,6 +1665,21 @@ const Business_Account = () => {
                             )}
                         </div>
 
+                        <div className="pt-4">
+                            <div onClick={() => handleClick("authorisation_token")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["authorisation_token"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>authorisation_token <span className='font-cabin text-[#8D9298] font-normal'>string</span> </p>
+                            </div>
+                            {openSections["authorisation_token"] && (
+                                <div className='py-3'>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> A token that PayWise will use during callback events</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 40 - 60</p>
+                                </div>
+                            )}
+                        </div>
 
                     </div>
                 </div>

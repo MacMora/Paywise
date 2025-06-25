@@ -211,6 +211,21 @@ const Quote_Institutions = () => {
                             )}
                         </div>
                         <div className="border-b-2 py-4">
+                            <div onClick={() => handleClick("institution_name_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_name_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>institution_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                            </div>
+                            {openSections["institution_name_quote_post"] && (
+                                <div className="py-3">
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Name of party who requested this api.</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
+                                </div>
+                            )}
+                        </div>
+                        <div className="border-b-2 py-4">
                             <div onClick={() => handleClick("request_amount_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_amount_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
@@ -565,7 +580,7 @@ const Quote_Institutions = () => {
                             </div>
                             {openSections["quote_date_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date & time to source the currency rate. Format "YYYY-MM-DD HH:mi:ss".</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date and time to the quote was created. Format "YYYY-MM-DD HH:mi:ss"</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 19</p>
                                 </div>
@@ -602,21 +617,21 @@ const Quote_Institutions = () => {
                             )}
                         </div>
                         <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("expiry_date_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expiry_date_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <div onClick={() => handleClick("expire_date_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expire_date_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <p className='font-semibold'>expiry_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                <p className='font-semibold'>expire_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
                             </div>
-                            {openSections["expiry_date_quote_post"] && (
+                            {openSections["expire_date_quote_post"] && (
                                 <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date and time when this currency rate is no longer valid. Format "YYYY-MM-DD HH:mi:ss".</p>
+                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Date and time when this quote and currency rate is no longer be valid. Format "YYYY-MM-DD HH:mi:ss"</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
                                     <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 19</p>
                                 </div>
                             )}
                         </div>
-                        <div className="border-b-2 py-4">
+                        <div className="pt-4">
                             <div onClick={() => handleClick("quote_id_quote_post")} className="flex flex-row gap-2 items-center cursor-pointer">
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["quote_id_quote_post"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />

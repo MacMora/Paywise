@@ -502,7 +502,7 @@ const Status_Merchant = () => {
                                                     </div>
                                                     {openSections["payee_pays_fees"] && (
                                                         <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Total fee covered by the Payers</p>
+                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Total fee covered by the Payees</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 7, 2</p>
                                                         </div>
@@ -682,7 +682,7 @@ const Status_Merchant = () => {
                                                     </div>
                                                     {openSections["expire_time_timestamps"] && (
                                                         <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The expiration time for the payment request (for QR codes and payment links). Format = YYYY-MM-DD HH:MI:SS</p>
+                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The expiration time for the payment request (for QR codes and payment links). This is at the parent transaction level Format = YYYY-MM-DD HH:MI:SS</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 11 - 19</p>
                                                         </div>
@@ -799,6 +799,22 @@ const Status_Merchant = () => {
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Payment status. Enum = pending, completed, failed, declined, expired</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
                                                             <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 6 - 9</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                <div className="border-b-2 px-2 py-4">
+                                                    <div onClick={() => handleClick("expire_time_payers")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expire_time_payers"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                                        </svg>
+                                                        <p className='font-semibold'>expire_time <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                                                    </div>
+                                                    {openSections["expire_time_payers"] && (
+                                                        <div className='py-3'>
+                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The expiration time for the payment to complete depending on the particular payment method/ channel (for example Wallet, QR codes and payment links) for a particular Payer. Format = YYYY-MM-DD HH:MI:SS</p>
+                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
+                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 11 - 19</p>
                                                         </div>
                                                     )}
                                                 </div>
@@ -1029,7 +1045,7 @@ const Status_Merchant = () => {
                             </div>
                             {openSections["fraud_check_status"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> "Outcome of the fraud detection check. {`Enum = { ""passed"", ""failed"", ""skipped"" }`}.	"</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> "Outcome of the fraud detection check. {`Enum = { "passed", "failed", "skipped" }`}.	"</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 6 - 8</p>
                                 </div>

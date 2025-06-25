@@ -1211,7 +1211,7 @@ const Personal_Account = () => {
                                         </div>
                                         {openSections["instituton_account_type"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account at institution</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Type of account at the institution</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Optional</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-50</p>
                                             </div>
@@ -1228,7 +1228,7 @@ const Personal_Account = () => {
                                         </div>
                                         {openSections["instituton_account_number"] && (
                                             <div className="py-3">
-                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Membership account institution account number</p>
+                                                <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Member's account number at the institution.</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Conditional</p>
                                                 <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 1-60</p>
                                             </div>

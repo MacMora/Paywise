@@ -326,7 +326,7 @@ const Account = () => {
                             </div>
                             {openSections["account_institution_name"] && (
                                 <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Name of the institution or party requesting this API.</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Name of party who requested this api.</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
                                 </div>
@@ -343,7 +343,7 @@ const Account = () => {
                             {openSections["first_name"] && (
                                 <div className='py-3'>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> First name of the account holder as registered with PayWise. This should match the KYC document provided during registration.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1 - 50</p>
                                 </div>
                             )}
@@ -359,7 +359,7 @@ const Account = () => {
                             {openSections["last_name"] && (
                                 <div className='py-3'>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Last name of the account holder as registered with PayWise. This should match the KYC document provided during registration.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1 - 75</p>
                                 </div>
                             )}
@@ -381,7 +381,7 @@ const Account = () => {
                             )}
                         </div>
 
-                        <div className="pt-4">
+                        <div className="border-b-2 py-4">
                             <div onClick={() => handleClick("sender_last_name")} className='flex flex-row gap-2 items-center cursor-pointer'>
                                 <svg className={`cursor-pointer transition-transform duration-150 ${rotations["sender_last_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
@@ -393,6 +393,22 @@ const Account = () => {
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Last name of the sender as registered with the sender partner. This should match the KYC document provided during registration process.</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
                                     <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1 - 75</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="pt-4">
+                            <div onClick={() => handleClick("email")} className='flex flex-row gap-2 items-center cursor-pointer'>
+                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["email"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <p className='font-semibold'>email <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
+                            </div>
+                            {openSections["email"] && (
+                                <div className='py-3'>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Email verification to take place on the email of the PayWise account holder</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
+                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 5 - 255</p>
                                 </div>
                             )}
                         </div>
