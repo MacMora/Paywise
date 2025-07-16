@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLanguage } from "../../LenguageContext";
 import { Copy, Check } from "lucide-react";
+import ParameterItem from "@/components/ParameterItem";
 
 // Datos de lenguajes de programación
 const languageData = {
@@ -180,30 +181,748 @@ const Reques_Example = () => {
   );
 };
 
+// Parámetros de la API Request Merchant
+const requestMerchantParameters = [
+  // Request Parameters
+  {
+    key: "version",
+    label: "version",
+    type: "string",
+    description:
+      'For version control. Format = "YYYY-MM-DD". Defaults to the latest version',
+    requirement: "mandatory",
+    length: "10",
+    section: "Request Parameters",
+  },
+  // Body Parameters
+  {
+    key: "api_key",
+    label: "api_key",
+    type: "string",
+    description:
+      "PayWise business (Merchant) account api key. Found in your profile.",
+    requirement: "Mandatory",
+    length: "30",
+    section: "Body Parameters",
+  },
+  {
+    key: "transaction_request",
+    label: "transaction_request",
+    type: "object",
+    description:
+      "A JSON object that contains information about the Merchant's transaction request",
+    requirement: "Mandatory",
+    section: "Body Parameters",
+    children: [
+      {
+        key: "id",
+        label: "id",
+        type: "string",
+        description: "Merchant's unique transaction id/ order number",
+        requirement: "Mandatory",
+        length: "1 - 50",
+      },
+      {
+        key: "amount",
+        label: "amount",
+        type: "string",
+        description:
+          "Total amount in transaction payable to Merchant in TTD with precision of 2 decimal places.",
+        requirement: "Mandatory",
+        length: "8, 2",
+      },
+      {
+        key: "partial_payments",
+        label: "partial_payments",
+        type: "object",
+        description:
+          "JSON Object defining details about any partial payment. Merchants decide if partial payments are allowed if they set this object. Allows combining on-platform (PayWise) and off-platform (e.g., cash) payments. Supported use cases: I. Customer pays a fixed amount off-platform with an alternative source e.g. cash. AND then uses PayWise to fund the amount to be processed on the platform. II. Customer uses PayWise to fund the amount AND then uses an off-platform source to fund the rest of amount.",
+        requirement: "Optional",
+        section: "Body Parameters",
+        children: [
+          {
+            key: "amount_partial",
+            label: "amount",
+            type: "string",
+            description:
+              "Total amount in transaction payable to Merchant (or Payees) in TTD with precision of 2 decimal places on the PayWise platform. This amount includes fees + taxes + tips + convenience charges.",
+            requirement: "Conditional",
+            length: "8, 2",
+          },
+          {
+            key: "metadata_partial",
+            label: "metadata",
+            type: "object",
+            description:
+              'This object captures metadata about the partial payment as key-value pairs if the information does not fit, example description --> "<some description>" or notes --> "<some notes>"',
+            requirement: "Optional",
+          },
+        ],
+      },
+      {
+        key: "fees_transaction",
+        label: "fees",
+        type: "object",
+        description:
+          "This object captures information about the payment fee structure",
+        requirement: "Optional",
+        section: "Body Parameters",
+        children: [
+          {
+            key: "pays_fees",
+            label: "pays_fees",
+            type: "integer",
+            description:
+              'Determines who pays all of the payment fees. Enum = {"1", "2", "3"}. 1 = first object in Payee array {i.e. the Merchant (default)}, 2 = Payers {i.e. Merchant\'s customer(s)}, 3 = both {the Merchant and their customers split the fees}',
+            requirement: "Conditional",
+            length: "1",
+          },
+          {
+            key: "payer_covers",
+            label: "payer_covers",
+            type: "integer",
+            description:
+              'Percent payable by Payer. Example 40 = Each Payer will cover 40% of the fee. Payees will cover the rest (i.e. 60%). This field only applies if "transaction_request.fees.pays_fees = 3" is used, otherwise it is ignored. Payees.fees_covered must respect these ratios. Default is 50%. The merchant will be the first object in the Payee array.',
+            requirement: "Conditional",
+            length: "3",
+          },
+        ],
+      },
+      {
+        key: "tax",
+        label: "tax",
+        type: "string",
+        description: "Any amount that represents the tax paid",
+        requirement: "Optional",
+        length: "7, 2",
+      },
+      {
+        key: "tip",
+        label: "tip",
+        type: "string",
+        description:
+          "An amount that represents the total tip paid. Tip must be less than 50% of the amount.",
+        requirement: "Optional",
+        length: "7, 2",
+      },
+      {
+        key: "convenience",
+        label: "convenience",
+        type: "string",
+        description: "Additional Merchant fee charged to payer(s)",
+        requirement: "Optional",
+        length: "7, 2",
+      },
+      {
+        key: "currency",
+        label: "currency",
+        type: "string",
+        description: 'Currency in ISO 4217 format. Example "TTD"',
+        requirement: "Mandatory",
+        length: "3",
+      },
+      {
+        key: "description",
+        label: "description",
+        type: "string",
+        description:
+          "This field is used to provide additional context or details about the payment request. It can include a summary of the transaction, such as the goods or services being purchased, to make it clear to both the merchant and payer what the payment is for.",
+        requirement: "Mandatory",
+        length: "1 - 255",
+      },
+      {
+        key: "metadata",
+        label: "metadata",
+        type: "object",
+        description:
+          "This object allows the merchant to pass additional information as key-value pairs if the information does not fit, example product data",
+        requirement: "Optional",
+      },
+      {
+        key: "payees",
+        label: "payees",
+        type: "object",
+        description:
+          "This supports splitting payments to multiple payees. The first Payee is always the Merchant. JSON object that is an array to define how the payment disburses to different accounts. This is optional. If this object is not set, the disbursement will be tied to the Merchant's account based on the API key. A merchant can explicitly decide which member within the array will cover the fees as well. The sum of the total amount across the array must add up to the transaction_details.partial_payments.amount or transaction_details.amount (which already includes fees, taxes & tips). The merchant account must be one of the members in the array. Supports splitting payments to multiple accounts. Includes options for delayed payouts and per-payee metadata.",
+        requirement: "Optional",
+        section: "Body Parameters",
+        children: [
+          {
+            key: "mobile_number_payee",
+            label: "mobile_number",
+            type: "string",
+            description:
+              'Payee/ destination account. The PW account that the funds will be deposited within. Full mobile number of account holder. Example: "+18681234567".',
+            requirement: "Conditional",
+            length: "12",
+          },
+          {
+            key: "amount_payee",
+            label: "amount",
+            type: "string",
+            description:
+              "Amount sent to Payee/ destination account by the payer in TTD with precision of 2 decimal places - it ignores fees deductable.",
+            requirement: "Conditional",
+            length: "8, 2",
+          },
+          {
+            key: "fees_covered_payee",
+            label: "fees_covered",
+            type: "number",
+            description:
+              'Percent of payment fees payable by a Payee. N.B. This field will only be applicable if the "transaction_request.fees.pays_fees = 3" AND all "payees.fees_covered" values are set and aggregate to 100, otherwise, this field is ignored. Example: If for this API POST request, "transaction_request.fees.fees.pays_fees = 3", "transaction_request.fees.payer_covers = 80" Suppose the total payment fees calculated across all relevant payment methods is $100, and there are two (2) Payees: the first payee has "transaction_request.payees.fees_covered = 40" and the second has "transaction_request.payees.fees_covered = 60". This means that the 2 payees will pay a total of 20$ towards the 100$ fee. The first Payee will cover 40% of the percentage of the fee that and would have 8$ deducted from the funds they receive in their PayWise account, the 2nd Payee will pay 12$',
+            requirement: "Conditional",
+            length: "3",
+          },
+          {
+            key: "delay_days_payee",
+            label: "delay_days",
+            type: "number",
+            description:
+              "Number of days to delay sending the funds. Defaults to 0. Max is 30 days",
+            requirement: "Optional",
+            length: "2",
+          },
+          {
+            key: "metadata_payee",
+            label: "metadata",
+            type: "object",
+            description:
+              'This object captures metadata for a Payee as key-value pairs if the information does not fit, example description --> "<some description>" or notes --> "<some notes>"',
+            requirement: "Optional",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: "url",
+    label: "url",
+    type: "object",
+    description: "A JSON object that contains information about the URLs",
+    requirement: "Optional",
+    section: "Body Parameters",
+    children: [
+      {
+        key: "success",
+        label: "success",
+        type: "string",
+        description:
+          "This is used to redirect to merchant domain after a successful payment is made.",
+        requirement: "Optional",
+        length: "1 - 255",
+      },
+      {
+        key: "notify",
+        label: "notify",
+        type: "string",
+        description:
+          "This is used to notify the merchant about the order status after a payment is made. The Merchant can provide their customized webhook address to receive asynchronous payment status updates from here.",
+        requirement: "Optional",
+        length: "1 - 255",
+      },
+      {
+        key: "error",
+        label: "error",
+        type: "string",
+        description:
+          "This is used to redirect to an error handling page. This could happen due to insufficient funds, declined transactions, or connectivity issues. Best Practice: Ensure that the error URL provides clear instructions or options for the payer, such as retrying the payment, contacting customer support, or checking the transaction status.",
+        requirement: "Optional",
+        length: "1 - 255",
+      },
+      {
+        key: "callback",
+        label: "callback",
+        type: "string",
+        description:
+          "Merchants can use this to receive a synchronous real-time updates on the transaction's status.",
+        requirement: "Optional",
+        length: "1 - 255",
+      },
+    ],
+  },
+  {
+    key: "payers",
+    label: "payers",
+    type: "object",
+    description:
+      "This supports receiving payments from multiple payers. JSON object to validate up to 20 payers and dynamically calculate amounts based on split payment preferences. A merchant can support spliting the bill, the array will include fees as well. The sum of the total amount across the array must add up to the transaction_details.partial_payments.amount or transaction_details.amount (which already includes fees, taxes & tips)",
+    requirement: "Mandatory",
+    section: "Body Parameters",
+    children: [
+      {
+        key: "mobile_number_payers",
+        label: "mobile_number",
+        type: "string",
+        description:
+          'Full number of the Payer. Example: "+18681234567". Payer may or may not be a PW account holder.',
+        requirement: "Mandatory",
+        length: "10 - 18",
+      },
+      {
+        key: "first_name",
+        label: "first_name",
+        type: "string",
+        description: "Payer's first name",
+        requirement: "Mandatory",
+        length: "1 - 50",
+      },
+      {
+        key: "last_name",
+        label: "last_name",
+        type: "string",
+        description: "Payer's last name",
+        requirement: "Mandatory",
+        length: "1 - 50",
+      },
+      {
+        key: "email",
+        label: "email",
+        type: "string",
+        description: "Email address",
+        requirement: "Optional",
+        length: "1 - 150",
+      },
+      {
+        key: "payment_channel",
+        label: "payment_channel",
+        type: "string",
+        description:
+          "Payer's channel field identifies whether the payment is being made through an agent, a direct QR code scan, or online via a payment link. Enum = agent, direct_qr, payment_link",
+        requirement: "Conditional",
+        length: "5 - 12",
+      },
+      {
+        key: "payment_method",
+        label: "payment_method",
+        type: "string",
+        description:
+          "Payer's method of payment to Merchant. Enum = card, credit, debit, wallet, qr_code, crypto",
+        requirement: "Mandatory",
+        length: "5 - 20",
+      },
+      {
+        key: "amount_payers",
+        label: "amount",
+        type: "string",
+        description:
+          "Amount payable to Merchant by this payer in TTD with precision of 2 decimal places.",
+        requirement: "Mandatory",
+        length: "8, 2",
+      },
+      {
+        key: "tip_payers",
+        label: "tip",
+        type: "string",
+        description:
+          "An amount that represents the tip paid. Tip must be less than 50% of the amount.",
+        requirement: "Optional",
+        length: "7, 2",
+      },
+      /*{
+        key: "fees_covered_payers",
+        label: "fees_covered",
+        type: "integer",
+        description: "Percent of the payment fees payable by a Payee. Example: \"40\" means that this Payee will cover 40% of the fees component. This field only applies if \"transaction _details.fees.pays_fees = 3\" is used, otherwise it is ignored. If \"pays_fees = 3\" AND this key/ value is not used by all Payees in the array, the merchant will pay the proportion of the fees defined by \"payee_covers\".",
+        requirement: "Conditional",
+      },*/
+      {
+        key: "metadata_payers",
+        label: "metadata",
+        type: "object",
+        description:
+          'This object captures metadata for a Payer as key-value pairs if the information does not fit, example description --> "<some description>" or notes --> "<some notes>"',
+        requirement: "Optional",
+      },
+      {
+        key: "crypto_wallet_payers",
+        label: "crypto_wallet",
+        type: "String",
+        description: "Source address for the crypto payments",
+        requirement: "Conditional",
+        length: "1 - 150",
+      },
+      {
+        key: "qr_code",
+        label: "qr_code",
+        type: "object",
+        description: "JSON object capturing the QR code data for this payer.",
+        requirement: "Optional",
+        section: "Body Parameters",
+        children: [
+          {
+            key: "expire_date_qr",
+            label: "expire_date",
+            type: "string",
+            description:
+              "Timestamp of when the code will expire. Format = YYYY-MM-DD HH:MI:SS",
+            requirement: "Optional",
+            length: "11 - 19",
+          },
+          {
+            key: "type_qr",
+            label: "type",
+            type: "string",
+            description: "QR code type. Enum = static, dynamic",
+            requirement: "Optional",
+            length: "6 - 7",
+          },
+          {
+            key: "format_qr",
+            label: "format",
+            type: "string",
+            description:
+              'The format the merchant wants it returned to them. Default is "url". Enum = data, url',
+            requirement: "Optional",
+            length: "3 - 4",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: "fraud_check",
+    label: "fraud_check",
+    type: "boolean",
+    description:
+      "Indicate if the payment should invoke fraud detection via a third-party system (e.g., MetaMap). Enum = 0, 1 Optional fraud detection adds an additional security layer.",
+    requirement: "Optional",
+    length: "1",
+    section: "Body Parameters",
+  },
+  // POST Callback URL Parameters
+  {
+    key: "authorisation_token_callback",
+    label: "authorisation_token",
+    type: "string",
+    description:
+      "PW shares this token in the merchant's profile. Merchants are strongly encouraged to verify this header for all incoming POST calls.",
+    requirement: "Mandatory",
+    length: "20 - 40",
+    section: "POST Callback URL",
+  },
+  // POST Notify URL Parameters
+  {
+    key: "authorisation_token_notify",
+    label: "authorisation_token",
+    type: "string",
+    description:
+      "PW shares this token in the merchant's profile. Merchants are strongly encouraged to verify this header for all incoming POST calls.",
+    requirement: "Mandatory",
+    length: "20 - 40",
+    section: "POST Notify URL",
+  },
+  // Response Parameters
+  {
+    key: "status_request",
+    label: "status",
+    type: "string",
+    description: 'Returns the API call status. Enum = { "success", "error" }.',
+    requirement: "Mandatory",
+    length: "10",
+    section: "Response Parameters",
+  },
+  {
+    key: "code_request",
+    label: "code",
+    type: "integer",
+    description: "HTTP return code.",
+    requirement: "Mandatory",
+    length: "3",
+    section: "Response Parameters",
+  },
+  {
+    key: "message_request",
+    label: "message",
+    type: "string",
+    description:
+      'Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Payment request successful"',
+    requirement: "Mandatory",
+    length: "255",
+    section: "Response Parameters",
+  },
+  {
+    key: "payment_details",
+    label: "payment_details",
+    type: "object",
+    description:
+      "A JSON object that contains payload about successfully beginning the payment process.",
+    requirement: "Conditional",
+    section: "Response Parameters",
+    children: [
+      {
+        key: "id_response",
+        label: "id",
+        type: "string",
+        description: "Unique PW transaction receipt.",
+        requirement: "Conditional",
+        length: "1 - 255",
+      },
+      {
+        key: "transaction_id",
+        label: "transaction_id",
+        type: "string",
+        description: "Merchant's unique transaction id/ order number",
+        requirement: "Conditional",
+        length: "1 - 50",
+      },
+      {
+        key: "amount_response",
+        label: "amount",
+        type: "string",
+        description:
+          "Total amonut of the transaction including fees, tax, and tip",
+        requirement: "Conditional",
+        length: "8, 2",
+      },
+      {
+        key: "fees_response",
+        label: "fees",
+        type: "object",
+        description:
+          "Total amonut of the transaction including fees, tax, and tip",
+        requirement: "Conditional",
+        section: "Response Parameters",
+        children: [
+          {
+            key: "total_response",
+            label: "total",
+            type: "string",
+            description: "Total amount of for the transaction",
+            requirement: "Conditional",
+            length: "7, 2",
+          },
+          {
+            key: "card_processing_response",
+            label: "card_processing",
+            type: "string",
+            description: "Fees associated with processing cards",
+            requirement: "Optional",
+            length: "7, 2",
+          },
+          {
+            key: "crypto_processing_response",
+            label: "crypto_processing",
+            type: "string",
+            description: "Fees associated with processing crypto payments",
+            requirement: "Optional",
+            length: "7, 2",
+          },
+          {
+            key: "platform_processing_response",
+            label: "platform_processing",
+            type: "string",
+            description:
+              "Fees associated with processing, including wallet-to-wallet optional fraud checks on via the PW platform",
+            requirement: "Optional",
+            length: "7, 2",
+          },
+          {
+            key: "agent_processing_response",
+            label: "agent_processing",
+            type: "string",
+            description: "Fees associated with processing a transaction",
+            requirement: "Optional",
+            length: "7, 2",
+          },
+          {
+            key: "convenience_response",
+            label: "convenience",
+            type: "string",
+            description: "Additional fees charged by the Merchant",
+            requirement: "Optional",
+            length: "7, 2",
+          },
+        ],
+      },
+      {
+        key: "payers_response",
+        label: "payers",
+        type: "object",
+        description: "JSON array of payers contributing to the transaction.",
+        requirement: "Conditional",
+        section: "Response Parameters",
+        children: [
+          {
+            key: "mobile_number_response_payers",
+            label: "mobile_number",
+            type: "string",
+            description: "Payer's mobile number.",
+            requirement: "Conditional",
+            length: "12",
+          },
+          {
+            key: "amount_response_payers",
+            label: "amount",
+            type: "string",
+            description: "Total amount paid by the payer in TTD.",
+            requirement: "Mandatory",
+            length: "8, 2",
+          },
+          {
+            key: "fee_response_payers",
+            label: "fee",
+            type: "string",
+            description:
+              "Wherever applicable, total fee amount paid by the payer.",
+            requirement: "Conditional",
+            length: "7, 2",
+          },
+          {
+            key: "tip_response_payers",
+            label: "tip",
+            type: "string",
+            description: "Tip amount paid by the payer, if applicable",
+            requirement: "Optional",
+            length: "7, 2",
+          },
+          {
+            key: "status_response_payers",
+            label: "status",
+            type: "string",
+            description:
+              "Payment request status for payer. Enum = pending, completed, failed, rejected",
+            requirement: "Conditional",
+            length: "6 - 9",
+          },
+          {
+            key: "url_response_payers",
+            label: "url",
+            type: "string",
+            description: "Hosted URL for the payer to pay",
+            requirement: "Conditional",
+            length: "1-255",
+          },
+          {
+            key: "expire_date_time_response_payers",
+            label: "expire_date_time",
+            type: "string",
+            description: "Datetime, the link will expire",
+            requirement: "Conditional",
+            length: "19",
+          },
+          {
+            key: "metadata_response_payers",
+            label: "metadata",
+            type: "object",
+            description: "Key-value pairs for additional payer details.",
+            requirement: "Optional",
+          },
+        ],
+      },
+      {
+        key: "payees_response",
+        label: "payees",
+        type: "object",
+        description: "JSON array of payees receiving split payments.",
+        requirement: "Conditional",
+        section: "Response Parameters",
+        children: [
+          {
+            key: "mobile_number_response_payees",
+            label: "mobile_number",
+            type: "string",
+            description: "Payee's mobile number.",
+            requirement: "Mandatory",
+            length: "12",
+          },
+          {
+            key: "amount_response_payees",
+            label: "amount",
+            type: "string",
+            description: "Total amount received by the payee.",
+            requirement: "Mandatory",
+            length: "8, 2",
+          },
+          {
+            key: "fee_response_payees",
+            label: "fee",
+            type: "string",
+            description:
+              "Wherever applicable, total fee amount paid by the payee.",
+            requirement: "Conditional",
+            length: "7, 2",
+          },
+          {
+            key: "delay_days_response_payees",
+            label: "delay_days",
+            type: "integer",
+            description:
+              "Number of days before the payment is disbursed to the payee.",
+            requirement: "Optional",
+            length: "2",
+          },
+          {
+            key: "metadata_response_payees",
+            label: "metadata",
+            type: "object",
+            description: "Key-value pairs for additional payee details.",
+            requirement: "Optional",
+          },
+        ],
+      },
+      {
+        key: "qr_code_response",
+        label: "qr_code",
+        type: "object",
+        description: "JSON object capturing the QR code data for this payer.",
+        requirement: "Optional",
+        length: "1 - 255",
+        section: "Response Parameters",
+        children: [
+          {
+            key: "data_response_qr",
+            label: "data",
+            type: "string",
+            description: "QR code returned as data.",
+            requirement: "Optional",
+            length: "2 - 255",
+          },
+          {
+            key: "url_response_qr",
+            label: "url",
+            type: "string",
+            description: "Payment URL such as hosted QR codes or payment URL",
+            requirement: "Conditional",
+            length: "1 - 255",
+          },
+          {
+            key: "expire_time_response_qr",
+            label: "expire_time",
+            type: "string",
+            description:
+              "The expiration time for the payment request (for example: Wallet, QR codes and payment links). Format = YYYY-MM-DD HH:MI:SS",
+            requirement: "Conditional",
+            length: "11 - 19",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: "fraud_check_status_response",
+    label: "fraud_check_status",
+    type: "string",
+    description:
+      'Outcome of the fraud detection check. Enum = { "passed", "failed", "skipped" }.',
+    requirement: "Conditional",
+    length: "6 - 8",
+    section: "Response Parameters",
+  },
+];
+
 const Request_Merchant = () => {
   // Estado para controlar la visibilidad del div que contiene el <p>
   const [openSections, setOpenSections] = useState({});
   const [rotations, setRotations] = useState({});
 
-  // Función para alternar la visibilidad de una sección específica
-  const toggleVisibility = (id) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [id]: !prev[id], // Alterna el estado de la sección específica
-    }));
-  };
-
-  const toggleRotation = (key) => {
-    setRotations((prevState) => ({
-      ...prevState,
-      [key]: prevState[key] ? "" : "rotate-90",
-    }));
-  };
-
-  const handleClick = (key) => {
-    toggleRotation(key);
-    toggleVisibility(key);
-  };
+  const sections = [
+    "Request Parameters",
+    "Body Parameters",
+    "POST Callback URL",
+    "POST Notify URL",
+    "Response Parameters",
+  ];
 
   return (
     <div>
@@ -365,4250 +1084,27 @@ const Request_Merchant = () => {
             merchants can ensure a secure and seamless checkout experience for
             their customers.
           </p>
-          <div className="border-b border-[#6FA43A] py-4">
-            <h3 className="text-[#1E64A7] font-semibold py-3">
-              Request Parameters:
-            </h3>
-            <div className="font-code text-sm italic text-[#495059] py-2">
-              <div
-                onClick={() => handleClick("version")}
-                className="flex flex-row gap-2 items-center cursor-pointer"
-              >
-                <svg
-                  className={`cursor-pointer transition-transform duration-150 ${rotations["version"]}`}
-                  width="14"
-                  height="14"
-                  viewBox="0 0 192 336"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M24 24L168 168L24 312"
-                    stroke="#536374"
-                    strokeWidth="48"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <p className="font-semibold">
-                  version{" "}
-                  <span className="font-cabin text-[#8D9298] font-normal">
-                    string
-                  </span>
-                </p>
-              </div>
-              {openSections["version"] && (
-                <div className="py-3">
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Description:
-                    </span>{" "}
-                    For version control. Format = "YYYY-MM-DD". Defaults to the
-                    latest version
-                  </p>
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Requirement:
-                    </span>{" "}
-                    mandatory
-                  </p>
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Field Length:
-                    </span>{" "}
-                    10
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="border-b border-[#6FA43A] py-4">
-            <h3 className="text-[#1E64A7] font-semibold py-3">
-              Body Parameters:
-            </h3>
-            <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("api_key")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["api_key"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+
+          {sections.map((section) => (
+            <div key={section} className="border-b border-[#6FA43A] py-4">
+              <h3 className="text-[#1E64A7] font-semibold py-3">{section}:</h3>
+              <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
+                {requestMerchantParameters
+                  .filter((param) => param.section === section)
+                  .map((param, idx, arr) => (
+                    <ParameterItem
+                      key={param.key}
+                      param={param}
+                      openSections={openSections}
+                      setOpenSections={setOpenSections}
+                      rotations={rotations}
+                      setRotations={setRotations}
+                      isLast={idx === arr.length - 1}
                     />
-                  </svg>
-                  <p className="font-semibold">
-                    api_key{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      string
-                    </span>
-                  </p>
-                </div>
-                {openSections["api_key"] && (
-                  <div className="py-3">
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Description:
-                      </span>{" "}
-                      PayWise business (Merchant) account api key. Found in your
-                      profile.
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Requirement:
-                      </span>{" "}
-                      Mandatory
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Field Length:
-                      </span>{" "}
-                      30
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("transaction_request")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["transaction_request"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    transaction_request{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      object
-                    </span>
-                  </p>
-                </div>
-                {openSections["transaction_request"] && (
-                  <div className="py-3">
-                    <div className="pb-4">
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Description:
-                        </span>{" "}
-                        A JSON object that contains information about the
-                        Merchant's transaction request
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Requirement:
-                        </span>{" "}
-                        Mandatory
-                      </p>
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("id")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["id"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          id{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["id"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Merchant's unique transaction id/ order number
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 50
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("amount")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["amount"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          amount{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["amount"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Total amount in transaction payable to Merchant in
-                            TTD with precision of 2 decimal places.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            8, 2
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("partial_payments")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["partial_payments"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          partial_payments{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["partial_payments"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:
-                              </span>{" "}
-                              JSON Object defining details about any partial
-                              payment. Merchants decide if partial payments are
-                              allowed if they set this object. Allows combining
-                              on-platform (PayWise) and off-platform (e.g.,
-                              cash) payments.
-                              <br />
-                              Supported use cases:
-                            </p>
-                            <ol className="py-2">
-                              <li className="py-2">
-                                I. Customer pays a fixed amount off-platform
-                                with an alternative source e.g. cash. AND then
-                                uses PayWise to fund the amount to be processed
-                                on the platform.
-                              </li>
-                              <li className="py-2">
-                                II. Customer uses PayWise to fund the amount AND
-                                then uses an off-platform source to fund the
-                                rest of amount.
-                              </li>
-                            </ol>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Optional
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("amount_partial")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["amount_partial"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                amount{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["amount_partial"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Total amount in transaction payable to
-                                  Merchant (or Payees) in TTD with precision of
-                                  2 decimal places on the PayWise platform.
-                                  <br />
-                                  <b>
-                                    This amount includes fees + taxes + tips +
-                                    convenience charges.
-                                  </b>
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  8, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() => handleClick("metadata_partial")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_partial"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                metadata{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  object
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["metadata_partial"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  This object captures metadata about the
-                                  partial payment as key-value pairs if the
-                                  information does not fit, example description{" "}
-                                  {`--> "<some description>" or notes --> "<some notes>"`}
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("fees_transaction")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["fees_transaction"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          fees{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["fees_transaction"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:
-                              </span>{" "}
-                              This object captures information about the payment
-                              fee structure
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Optional
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("pays_fees")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["pays_fees"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                pays_fees{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  integer
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["pays_fees"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Determines who pays all of the payment fees.
-                                  Enum ={" "}
-                                  {`{"1", "2", "3"}. 1 = first object in Payee array {i.e. the Merchant (default)}, 2 = Payers {i.e. Merchant's customer(s)}, 3 = both {the Merchant and their customers split the fees}`}
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  1
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() => handleClick("payer_covers")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["payer_covers"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                payer_covers{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  integer
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["payer_covers"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Percent payable by Payer. Example 40 = Each
-                                  Payer will cover 40% of the fee. Payees will
-                                  cover the rest (i.e. 60%). This field only
-                                  applies if "transaction_request.fees.pays_fees
-                                  = 3" is used, otherwise it is ignored.
-                                  Payees.fees_covered must respect these ratios.
-                                  <br />
-                                  <br />
-                                  <b>Default is 50%.</b>
-                                  <br />
-                                  <br />
-                                  <b>
-                                    The merchant will be the first object in the
-                                    Payee array.{" "}
-                                  </b>
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  3
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("tax")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["tax"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          tax{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["tax"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Any amount that represents the tax paid
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            7, 2
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("tip")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["tip"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          tip{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["tip"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            An amount that represents the total tip paid. Tip
-                            must be less than 50% of the amount.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            7, 2
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("convenience")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["convenience"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          convenience{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["convenience"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Additional Merchant fee charged to payer(s)
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            7, 2
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("currency")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["currency"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          currency{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["currency"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Currency in ISO 4217 format. Example "TTD"
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            3
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("description")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["description"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          description{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["description"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            This field is used to provide additional context or
-                            details about the payment request. It can include a
-                            summary of the transaction, such as the goods or
-                            services being purchased, to make it clear to both
-                            the merchant and payer what the payment is for.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 255
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("metadata")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["metadata"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          metadata{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["metadata"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            This object allows the merchant to pass additional
-                            information as key-value pairs if the information
-                            does not fit, example product data
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="px-2 pt-4">
-                      <div
-                        onClick={() => handleClick("payees")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["payees"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          payees{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["payees"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:{" "}
-                              </span>
-                              <b>
-                                This supports splitting payments to multiple
-                                payees. The first Payee is always the Merchant.
-                              </b>{" "}
-                              JSON object that is an array to define how the
-                              payment disburses to different accounts. This is
-                              optional. If this object is not set, the
-                              disbursement will be tied to the Merchant's
-                              account based on the API key.
-                              <br />
-                              <br />A merchant can explicitly decide which
-                              member within the array will cover the fees as
-                              well. The sum of the total amount across the array
-                              must add up to the
-                              transaction_details.partial_payments.amount or
-                              transaction_details.amount (which already includes
-                              fees, taxes & tips). The merchant account must be
-                              one of the members in the array.
-                              <br />
-                              <br />
-                              Supports splitting payments to multiple accounts.
-                              Includes options for delayed payouts and per-payee
-                              metadata.
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Optional
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("mobile_number_payee")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_payee"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                mobile_number{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["mobile_number_payee"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Payee/ destination account. The PW account
-                                  that the funds will be deposited within. Full
-                                  mobile number of account holder. Example:
-                                  "+18681234567".
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  12
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("amount_payee")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["amount_payee"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                amount{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["amount_payee"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Amount sent to Payee/ destination account by
-                                  the payer in TTD with precision of 2 decimal
-                                  places - it ignores fees deductable.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  8, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("fees_covered_payee")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["fees_covered_payee"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                fees_covered{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  number
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["fees_covered_payee"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:{" "}
-                                  </span>
-                                  Percent of payment fees payable by a Payee.
-                                  <br />
-                                  N.B. This field will only be applicable if the
-                                  "transaction_request.fees.pays_fees = 3" AND
-                                  all "payees.fees_covered" values are set and
-                                  aggregate to 100, otherwise, this field is
-                                  ignored.
-                                  <br />
-                                  <br />
-                                  Example: If for this API POST request,
-                                  "transaction_request.fees.fees.pays_fees = 3",
-                                  "transaction_request.fees.payer_covers = 80"
-                                  Suppose the total payment fees calculated
-                                  across all relevant payment methods is $100,
-                                  and there are two (2) Payees: the first payee
-                                  has "transaction_request.payees.fees_covered =
-                                  40" and the second has
-                                  "transaction_request.payees.fees_covered =
-                                  60". This means that the 2 payees will pay a
-                                  total of 20$ towards the 100$ fee. The first
-                                  Payee will cover 40% of the percentage of the
-                                  fee that and would have 8$ deducted from the
-                                  funds they receive in their PayWise account,
-                                  the 2nd Payee will pay 12$
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  3
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("delay_days_payee")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["delay_days_payee"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                delay_days{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  number
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["delay_days_payee"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Number of days to delay sending the funds.
-                                  Defaults to 0. Max is 30 days
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() => handleClick("metadata_payee")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_payee"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                metadata{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  object
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["metadata_payee"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  This object captures metadata for a Payee as
-                                  key-value pairs if the information does not
-                                  fit, example description{" "}
-                                  {`--> "<some description>" or notes --> "<some notes>"`}
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("url")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["url"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    url{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      object
-                    </span>
-                  </p>
-                </div>
-                {openSections["url"] && (
-                  <div className="py-3">
-                    <div className="pb-4">
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Description:
-                        </span>{" "}
-                        A JSON object that contains information about the URLs
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Requirement:
-                        </span>{" "}
-                        Optional
-                      </p>
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("success")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["success"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          success{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["success"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            This is used to redirect to merchant domain after a
-                            successful payment is made.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 255
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("notify")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["notify"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          notify{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["notify"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            This is used to notify the merchant about the order
-                            status after a payment is made. The Merchant can
-                            provide their customized webhook address to receive
-                            asynchronous payment status updates from here.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 255
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("error")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["error"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          error{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["error"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            This is used to redirect to an error handling page.
-                            This could happen due to insufficient funds,
-                            declined transactions, or connectivity issues.
-                            <br />
-                            <br />
-                            Best Practice: Ensure that the error URL provides
-                            clear instructions or options for the payer, such as
-                            retrying the payment, contacting customer support,
-                            or checking the transaction status.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 255
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="px-2 pt-4">
-                      <div
-                        onClick={() => handleClick("callback")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["callback"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          callback{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["callback"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Merchants can use this to receive a synchronous
-                            real-time updates on the transaction's status.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 255
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("payers")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["payers"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    payers{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      object
-                    </span>
-                  </p>
-                </div>
-                {openSections["payers"] && (
-                  <div className="py-3">
-                    <div className="pb-4">
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Description:
-                        </span>{" "}
-                        This supports receiving payments from multiple payers.
-                        JSON object to validate up to 20 payers and dynamically
-                        calculate amounts based on split payment preferences.
-                      </p>
-                      <p className="py-2">
-                        A merchant can support spliting the bill, the array will
-                        include fees as well. The sum of the total amount across
-                        the array must add up to the
-                        transaction_details.partial_payments.amount or
-                        transaction_details.amount (which already includes fees,
-                        taxes & tips)
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Requirement:
-                        </span>{" "}
-                        Mandatory
-                      </p>
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("mobile_number_payers")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_payers"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          mobile_number{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["mobile_number_payers"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Full number of the Payer. Example: "+18681234567".
-                            Payer may or may not be a PW account holder.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            10 - 18
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("first_name")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["first_name"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          first_name{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["first_name"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Payer's first name
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 50
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("last_name")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["last_name"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          last_name{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["last_name"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Payer's last name
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 50
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("email")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["email"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          email{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["email"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Email address
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 150
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("payment_channel")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["payment_channel"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          payment_channel{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["payment_channel"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Payer's channel field identifies whether the payment
-                            is being made through an agent, a direct QR code
-                            scan, or online via a payment link. Enum = agent,
-                            direct_qr, payment_link
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Conditional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            5 - 12
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("payment_method")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["payment_method"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          payment_method{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["payment_method"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Payer's method of payment to Merchant. Enum = card, credit, debit, wallet, qr_code, crypto
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            5 - 20
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("amount_payers")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["amount_payers"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          amount{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["amount_payers"] && (
-                        <div className="py-3">
-                          {/*<p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Amount payable to Merchant by this payer in TTD with
-                            precision of 2 decimal places.
-                          </p>*/}
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Mandatory
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            8, 2
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("tip_payers")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["tip_payers"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          tip{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["tip_payers"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            An amount that represents the tip paid. Tip must be
-                            less than 50% of the amount.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            7, 2
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("fees_covered_payers")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["fees_covered_payers"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          fees_covered{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            integer
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["fees_covered_payers"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Percent of the payment fees payable by a Payee.
-                            Example: "40" means that this Payee will cover 40%
-                            of the fees component. This field only applies if
-                            "transaction _details.fees.pays_fees = 3" is used,
-                            otherwise it is ignored. If "pays_fees = 3" AND this
-                            key/ value is not used by all Payees in the array,
-                            the merchant will pay the proportion of the fees
-                            defined by "payee_covers".{" "}
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Conditional
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("metadata_payers")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_payers"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          metadata{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["metadata_payers"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            This object captures metadata for a Payer as
-                            key-value pairs if the information does not fit,
-                            example description{" "}
-                            {`--> "<some description>" or notes --> "<some notes>"`}
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Optional
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("crypto_wallet_payers")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["crypto_wallet_payers"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          crypto_wallet{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            String
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["crypto_wallet_payers"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Source address for the crypto payments
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Conditional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 150
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="px-2 pt-4">
-                      <div
-                        onClick={() => handleClick("qr_code")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["qr_code"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          qr_code{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["qr_code"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:
-                              </span>{" "}
-                              JSON object capturing the QR code data for this
-                              payer.
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Optional
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("expire_date_qr")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["expire_date_qr"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                expire_date{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["expire_date_qr"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Timestamp of when the code will expire. Format
-                                  = YYYY-MM-DD HH:MI:SS
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  11 - 19
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("type_qr")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["type_qr"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                type{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["type_qr"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  QR code type. Enum = static, dynamic
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  6 - 7
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() => handleClick("format_qr")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["format_qr"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                format{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["format_qr"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  The format the merchant wants it returned to
-                                  them. Default is "url". Enum = data, url
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  3 - 4
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="pt-4">
-                <div
-                  onClick={() => handleClick("fraud_check")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["fraud_check"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    fraud_check{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      boolean
-                    </span>
-                  </p>
-                </div>
-                {openSections["fraud_check"] && (
-                  <div className="py-3">
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Description:
-                      </span>{" "}
-                      Indicate if the payment should invoke fraud detection via
-                      a third-party system (e.g., MetaMap). Enum = 0, 1<br />
-                      <br />
-                      Optional fraud detection adds an additional security
-                      layer.
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Requirement:
-                      </span>{" "}
-                      Optional
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Field Length:
-                      </span>{" "}
-                      1
-                    </p>
-                  </div>
-                )}
+                  ))}
               </div>
             </div>
-          </div>
-
-          <div className="border-b border-[#6FA43A] py-4">
-            <h3 className="text-[#1E64A7] font-semibold py-3">
-              POST Callback URL:
-            </h3>
-            <div className="font-code text-sm italic text-[#495059] py-2">
-              <div
-                onClick={() => handleClick("authorisation_token_callback")}
-                className="flex flex-row gap-2 items-center cursor-pointer"
-              >
-                <svg
-                  className={`cursor-pointer transition-transform duration-150 ${rotations["authorisation_token_callback"]}`}
-                  width="14"
-                  height="14"
-                  viewBox="0 0 192 336"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M24 24L168 168L24 312"
-                    stroke="#536374"
-                    strokeWidth="48"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <p className="font-semibold">
-                  authorisation_token{" "}
-                  <span className="font-cabin text-[#8D9298] font-normal">
-                    string
-                  </span>
-                </p>
-              </div>
-              {openSections["authorisation_token_callback"] && (
-                <div className="py-3">
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Description:
-                    </span>{" "}
-                    PW shares this token in the merchant's profile. Merchants
-                    are strongly encouraged to verify this header for all
-                    incoming POST calls.
-                  </p>
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Requirement:
-                    </span>{" "}
-                    Mandatory
-                  </p>
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Field Length:
-                    </span>{" "}
-                    20 - 40
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="border-b border-[#6FA43A] py-4">
-            <h3 className="text-[#1E64A7] font-semibold py-3">
-              POST Notify URL:
-            </h3>
-            <div className="font-code text-sm italic text-[#495059] py-2">
-              <div
-                onClick={() => handleClick("authorisation_token_notify")}
-                className="flex flex-row gap-2 items-center cursor-pointer"
-              >
-                <svg
-                  className={`cursor-pointer transition-transform duration-150 ${rotations["authorisation_token_notify"]}`}
-                  width="14"
-                  height="14"
-                  viewBox="0 0 192 336"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M24 24L168 168L24 312"
-                    stroke="#536374"
-                    strokeWidth="48"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <p className="font-semibold">
-                  authorisation_token{" "}
-                  <span className="font-cabin text-[#8D9298] font-normal">
-                    string
-                  </span>
-                </p>
-              </div>
-              {openSections["authorisation_token_notify"] && (
-                <div className="py-3">
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Description:
-                    </span>{" "}
-                    PW shares this token in the merchant's profile. Merchants
-                    are strongly encouraged to verify this header for all
-                    incoming POST calls.
-                  </p>
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Requirement:
-                    </span>{" "}
-                    Mandatory
-                  </p>
-                  <p className="py-2">
-                    <span className="font-semibold not-italic font-cabin">
-                      Field Length:
-                    </span>{" "}
-                    20 - 40
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="border-b border-[#6FA43A] py-4">
-            <h3 className="text-[#1E64A7] font-semibold py-3">
-              Response Parameters:
-            </h3>
-            <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("status_request")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["status_request"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    status{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      string
-                    </span>
-                  </p>
-                </div>
-                {openSections["status_request"] && (
-                  <div className="py-3">
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Description:
-                      </span>{" "}
-                      Returns the API call status. Enum ={" "}
-                      {`{ "success", "error" }`}.
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Requirement:
-                      </span>{" "}
-                      Mandatory
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Field Length:
-                      </span>{" "}
-                      10
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("code_request")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["code_request"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    code{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      integer
-                    </span>
-                  </p>
-                </div>
-                {openSections["code_request"] && (
-                  <div className="py-3">
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Description:
-                      </span>{" "}
-                      HTTP return code.
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Requirement:
-                      </span>{" "}
-                      Mandatory
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Field Length:
-                      </span>{" "}
-                      3
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("message_request")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["message_request"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    message{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      string
-                    </span>
-                  </p>
-                </div>
-                {openSections["message_request"] && (
-                  <div className="py-3">
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Description:
-                      </span>{" "}
-                      Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Payment request successful"
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Requirement:
-                      </span>{" "}
-                      Mandatory
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Field Length:
-                      </span>{" "}
-                      255
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div className="border-b-2 py-4">
-                <div
-                  onClick={() => handleClick("payment_details")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["payment_details"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    payment_details{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      object
-                    </span>
-                  </p>
-                </div>
-                {openSections["payment_details"] && (
-                  <div className="py-3">
-                    <div className="pb-4">
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Description:
-                        </span>{" "}
-                        A JSON object that contains payload about successfully
-                        beginning the payment process.
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic font-cabin">
-                          Requirement:
-                        </span>{" "}
-                        Conditional
-                      </p>
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("id_response")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["id_response"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          id{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["id_response"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Unique PW transaction receipt.
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Conditional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 255
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("transaction_id")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["transaction_id"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          transaction_id{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["transaction_id"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Merchant's unique transaction id/ order number
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Conditional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            1 - 50
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("amount_response")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["amount_response"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          amount{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            string
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["amount_response"] && (
-                        <div className="py-3">
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Description:
-                            </span>{" "}
-                            Total amonut of the transaction including fees, tax,
-                            and tip
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Requirement:
-                            </span>{" "}
-                            Conditional
-                          </p>
-                          <p className="py-2">
-                            <span className="font-semibold not-italic font-cabin">
-                              Field Length:
-                            </span>{" "}
-                            8, 2
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("fees_response")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["fees_response"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          fees{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["fees_response"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:
-                              </span>{" "}
-                              Total amonut of the transaction including fees,
-                              tax, and tip
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Conditional
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("total_response")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["total_response"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                total{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["total_response"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Total amount of for the transaction
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("card_processing_response")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["card_processing_response"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                card_processing{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["card_processing_response"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Fees associated with processing cards
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("crypto_processing_response")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["crypto_processing_response"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                crypto_processing{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["crypto_processing_response"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Fees associated with processing crypto
-                                  payments
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("platform_processing_response")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["platform_processing_response"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                platform_processing{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["platform_processing_response"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Fees associated with processing, including
-                                  wallet-to-wallet optional fraud checks on via
-                                  the PW platform
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("agent_processing_response")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["agent_processing_response"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                agent_processing{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["agent_processing_response"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Fees associated with processing a transaction
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() =>
-                                handleClick("convenience_response")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["convenience_response"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                convenience{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["convenience_response"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Additional fees charged by the Merchant
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("payers_response")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["payers_response"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          payers{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["payers_response"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:
-                              </span>{" "}
-                              JSON array of payers contributing to the
-                              transaction.
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Conditional
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("mobile_number_response_payers")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_response_payers"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                mobile_number{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["mobile_number_response_payers"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Payer's mobile number.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  12
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("amount_response_payers")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["amount_response_payers"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                amount{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["amount_response_payers"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Total amount paid by the payer in TTD.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Mandatory
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  8, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("fee_response_payers")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["fee_response_payers"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                fee{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["fee_response_payers"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Wherever applicable, total fee amount paid by
-                                  the payer.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("tip_response_payers")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["tip_response_payers"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                tip{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["tip_response_payers"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Tip amount paid by the payer, if applicable
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("status_response_payers")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["status_response_payers"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                status{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["status_response_payers"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Payment request status for payer. Enum =
-                                  pending, completed, failed, rejected
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  6 - 9
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() =>
-                                handleClick("metadata_response_payers")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_response_payers"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                metadata{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  object
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["metadata_response_payers"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Key-value pairs for additional payer details.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="border-b-2 px-2 py-4">
-                      <div
-                        onClick={() => handleClick("payees_response")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["payees_response"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          payees{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["payees_response"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:
-                              </span>{" "}
-                              JSON array of payees receiving split payments.
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Conditional
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("mobile_number_response_payees")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number_response_payees"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                mobile_number{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["mobile_number_response_payees"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Payee's mobile number.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Mandatory
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  12
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("amount_response_payees")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["amount_response_payees"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                amount{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["amount_response_payees"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Total amount received by the payee.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Mandatory
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  8, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("fee_response_payees")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["fee_response_payees"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                fee{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["fee_response_payees"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Wherever applicable, total fee amount paid by
-                                  the payee.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  7, 2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() =>
-                                handleClick("delay_days_response_payees")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["delay_days_response_payees"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                delay_days{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  integer
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["delay_days_response_payees"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Number of days before the payment is disbursed
-                                  to the payee.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  2
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() =>
-                                handleClick("metadata_response_payees")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["metadata_response_payees"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                metadata{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  object
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["metadata_response_payees"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Key-value pairs for additional payee details.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="px-2 pt-4">
-                      <div
-                        onClick={() => handleClick("qr_code_response")}
-                        className="flex flex-row gap-2 items-center cursor-pointer"
-                      >
-                        <svg
-                          className={`cursor-pointer transition-transform duration-150 ${rotations["qr_code_response"]}`}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 192 336"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 24L168 168L24 312"
-                            stroke="#536374"
-                            strokeWidth="48"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <p className="font-semibold">
-                          qr_code{" "}
-                          <span className="font-cabin text-[#8D9298] font-normal">
-                            object
-                          </span>
-                        </p>
-                      </div>
-                      {openSections["qr_code_response"] && (
-                        <div className="py-3">
-                          <div className="pb-4">
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Description:
-                              </span>{" "}
-                              JSON object capturing the QR code data for this
-                              payer.
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Requirement:
-                              </span>{" "}
-                              Optional
-                            </p>
-                            <p className="py-2">
-                              <span className="font-semibold not-italic font-cabin">
-                                Field Length:
-                              </span>{" "}
-                              1 - 255
-                            </p>
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("data_response_qr")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["data_response_qr"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                data{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["data_response_qr"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  QR code returned as data.
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Optional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  2 - 255
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="border-b-2 px-2 py-4">
-                            <div
-                              onClick={() => handleClick("url_response_qr")}
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["url_response_qr"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                url{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["url_response_qr"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  Payment URL such as hosted QR codes or payment
-                                  URL
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  1 - 255
-                                </p>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="px-2 pt-4">
-                            <div
-                              onClick={() =>
-                                handleClick("expire_time_response_qr")
-                              }
-                              className="flex flex-row gap-2 items-center cursor-pointer"
-                            >
-                              <svg
-                                className={`cursor-pointer transition-transform duration-150 ${rotations["expire_time_response_qr"]}`}
-                                width="14"
-                                height="14"
-                                viewBox="0 0 192 336"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M24 24L168 168L24 312"
-                                  stroke="#536374"
-                                  strokeWidth="48"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                              <p className="font-semibold">
-                                expire_time{" "}
-                                <span className="font-cabin text-[#8D9298] font-normal">
-                                  string
-                                </span>
-                              </p>
-                            </div>
-                            {openSections["expire_time_response_qr"] && (
-                              <div className="py-3">
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Description:
-                                  </span>{" "}
-                                  The expiration time for the payment request (for example: Wallet, QR codes and payment links). Format = YYYY-MM-DD HH:MI:SS
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Requirement:
-                                  </span>{" "}
-                                  Conditional
-                                </p>
-                                <p className="py-2">
-                                  <span className="font-semibold not-italic font-cabin">
-                                    Field Length:
-                                  </span>{" "}
-                                  11 - 19
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="pt-4">
-                <div
-                  onClick={() => handleClick("fraud_check_status_response")}
-                  className="flex flex-row gap-2 items-center cursor-pointer"
-                >
-                  <svg
-                    className={`cursor-pointer transition-transform duration-150 ${rotations["fraud_check_status_response"]}`}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 192 336"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M24 24L168 168L24 312"
-                      stroke="#536374"
-                      strokeWidth="48"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <p className="font-semibold">
-                    fraud_check_status{" "}
-                    <span className="font-cabin text-[#8D9298] font-normal">
-                      string
-                    </span>
-                  </p>
-                </div>
-                {openSections["fraud_check_status_response"] && (
-                  <div className="py-3">
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Description:
-                      </span>{" "}
-                      "Outcome of the fraud detection check.{" "}
-                      {`Enum = { "passed", "failed", "skipped" }.`}
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Requirement:
-                      </span>{" "}
-                      Conditional
-                    </p>
-                    <p className="py-2">
-                      <span className="font-semibold not-italic font-cabin">
-                        Field Length:
-                      </span>{" "}
-                      6 - 8
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
         <div className="lg:w-2/4 w-full sticky top-0">
           <Reques_Example />

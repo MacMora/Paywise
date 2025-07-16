@@ -1,21 +1,22 @@
 "use client";
 // Importamos useState desde React
-import { useState } from 'react';
-import { useLanguage } from '../../LenguageContext';
-import { Copy, Check } from 'lucide-react';
+import { useState } from "react";
+import { useLanguage } from "../../LenguageContext";
+import { Copy, Check } from "lucide-react";
+import ParameterItem from "@/components/ParameterItem";
 
 // Datos de lenguajes de programación
 const languageData = {
-    Bash: {
-        description: `
+  Bash: {
+    description: `
 curl -X GET "https://devapi.paywise.co/account/transaction_history?mobile_number=%2B18681234567&start_date=2024-01-01&end_date=2024-11-25&version=2024-11-25"
 -H "PW_subscription_key: eed0d85c530c4b26a91d09b7"
 -H "PW_origin_country: TT"
 -H "PW_request_date: 2024-11-25 12:00:00"
-    `
-    },
-    Ruby: {
-        description: `
+    `,
+  },
+  Ruby: {
+    description: `
 require 'net/http'
 require 'uri'
 require 'json'
@@ -43,10 +44,10 @@ if response.code == "200"
 else
   puts "Error: #{response.code} - #{response.message}"
 end
-    `
-    },
-    PHP: {
-        description: `
+    `,
+  },
+  PHP: {
+    description: `
 <?php
 $base_url = "https://devapi.paywise.co/account/transaction_history";
 $mobile_number = "+18681234567"; // Example mobile number
@@ -73,10 +74,10 @@ if (curl_errno($ch)) {
 }
 curl_close($ch);
 ?>
-    `
-    },
-    JavaScript: {
-        description: `
+    `,
+  },
+  JavaScript: {
+    description: `
 const axios = require('axios');
 
 const baseURL = "https://api.paywise.co/account/transaction_history";
@@ -98,10 +99,10 @@ axios.get(url, { headers })
     .catch(error => {
         console.error("Error:", error.message);
     });
-    `
-    },
-    Python: {
-        description: `
+    `,
+  },
+  Python: {
+    description: `
 import requests
 
 url = "https://devapi.paywise.co/account/transaction_history"
@@ -118,26 +119,26 @@ params = {
 }
 response = requests.get(url, headers=headers, params=params)
 print(response.json())
-    `
-    },
+    `,
+  },
 };
 
 const Reques_Example = () => {
-    const { selectedLanguage, setSelectedLanguage } = useLanguage();
-    const [copiedRequest, setCopiedRequest] = useState(false);
-    const [copiedResponse, setCopiedResponse] = useState(false);
+  const { selectedLanguage, setSelectedLanguage } = useLanguage();
+  const [copiedRequest, setCopiedRequest] = useState(false);
+  const [copiedResponse, setCopiedResponse] = useState(false);
 
-    const handleCopy = async (text, setCopied) => {
-        try {
-            await navigator.clipboard.writeText(text);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-            console.error('Failed to copy text: ', err);
-        }
-    };
+  const handleCopy = async (text, setCopied) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
 
-    const responseExample = `{
+  const responseExample = `{
   "status": "success",
   "code": 200,
   "message": "Transaction history retrieved successfully",
@@ -183,485 +184,338 @@ const Reques_Example = () => {
     "message": " Account not found"
 }`;
 
-
-    return (
-        <div>
-            <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-                <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
-                    <div className='w-2/4 py-2 sm:px-2'>
-                        <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
-                    </div>
-                    <div className='w-2/6 flex justify-center items-center gap-2'>
-                        <select
-                            className='bg-[#699EC7] rounded text-[#F2F2F2] p-1'
-                            value={selectedLanguage}
-                            onChange={(e) => setSelectedLanguage(e.target.value)}
-                        >
-                            {Object.keys(languageData).map((lang) => (
-                                <option key={lang} value={lang}>{lang}</option>
-                            ))}
-                        </select>
-                        <button
-                            onClick={() => handleCopy(languageData[selectedLanguage]?.description, setCopiedRequest)}
-                            className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-                        >
-                            {copiedRequest ? (
-                                <Check className="h-4 w-4 text-green-500" />
-                            ) : (
-                                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-                            )}
-                        </button>
-                    </div>
-                </div>
-                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre>
-                        {languageData[selectedLanguage]?.description}
-                    </pre>
-                </div>
-            </div>
-            <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-                <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
-                    <div className='w-2/4 py-2 sm:px-2'>
-                        <h2 className='text-sm text-[#F2F2F2]'>Response example:</h2>
-                    </div>
-                    <div className='w-2/6 flex justify-center items-center gap-2'>
-                        <select
-                            className='bg-[#699EC7] rounded text-[#F2F2F2] p-1'
-                            value={selectedLanguage}
-                            onChange={(e) => setSelectedLanguage(e.target.value)}
-                        >
-                            {Object.keys(languageData).map((lang) => (
-                                <option key={lang} value={lang}>{lang}</option>
-                            ))}
-                        </select>
-                        <button
-                            onClick={() => handleCopy(responseExample, setCopiedResponse)}
-                            className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-                        >
-                            {copiedResponse ? (
-                                <Check className="h-4 w-4 text-green-500" />
-                            ) : (
-                                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-                            )}
-                        </button>
-                    </div>
-                </div>
-                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre>
-                        {responseExample}
-                    </pre>
-                </div>
-            </div>
+  return (
+    <div>
+      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
+        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
+          <div className="w-2/4 py-2 sm:px-2">
+            <h2 className="text-sm text-[#F2F2F2]">Request example:</h2>
+          </div>
+          <div className="w-2/6 flex justify-center items-center gap-2">
+            <select
+              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+            >
+              {Object.keys(languageData).map((lang) => (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() =>
+                handleCopy(
+                  languageData[selectedLanguage]?.description,
+                  setCopiedRequest
+                )
+              }
+              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+            >
+              {copiedRequest ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Copy className="h-4 w-4 text-[#F2F2F2]" />
+              )}
+            </button>
+          </div>
         </div>
-    );
+        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
+          <pre>{languageData[selectedLanguage]?.description}</pre>
+        </div>
+      </div>
+      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
+        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
+          <div className="w-2/4 py-2 sm:px-2">
+            <h2 className="text-sm text-[#F2F2F2]">Response example:</h2>
+          </div>
+          <div className="w-2/6 flex justify-center items-center gap-2">
+            <select
+              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+            >
+              {Object.keys(languageData).map((lang) => (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() => handleCopy(responseExample, setCopiedResponse)}
+              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+            >
+              {copiedResponse ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Copy className="h-4 w-4 text-[#F2F2F2]" />
+              )}
+            </button>
+          </div>
+        </div>
+        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
+          <pre>{responseExample}</pre>
+        </div>
+      </div>
+    </div>
+  );
 };
 
+const historyAccountParameters = [
+  {
+    key: "version",
+    label: "version",
+    type: "string",
+    description:
+      "For version control. Format = YYYY-MM-DD. Defaults to the latest version",
+    requirement: "Mandatory",
+    length: "10",
+    section: "Request Parameters",
+  },
+  {
+    key: "mobile_number",
+    label: "mobile_number",
+    type: "string",
+    description: "Full mobile number of account holder. Example: +18681234567.",
+    requirement: "Mandatory",
+    length: "12",
+    section: "Request Parameters",
+  },
+  {
+    key: "start_date",
+    label: "start_date",
+    type: "string",
+    description:
+      "The starting date to capture the account period. Defaults to 7 days prior to end date. If end_date is set and is earlier to start_date, this default will kick in. Format = YYYY-MM-DD",
+    requirement: "Conditional",
+    length: "10",
+    section: "Request Parameters",
+  },
+  {
+    key: "end_date",
+    label: "end_date",
+    type: "string",
+    description:
+      "The end date for the capture of the user's account information. Defaults to today. Format = YYYY-MM-DD",
+    requirement: "Optional",
+    length: "10",
+    section: "Request Parameters",
+  },
+  {
+    key: "status",
+    label: "status",
+    type: "string",
+    description: "Returns the API call status. Enum = {success, error}",
+    requirement: "Mandatory",
+    length: "10",
+    section: "Response Parameters",
+  },
+  {
+    key: "code",
+    label: "code",
+    type: "integer",
+    description: "HTTP return code.",
+    requirement: "Mandatory",
+    length: "3",
+    section: "Response Parameters",
+  },
+  {
+    key: "message",
+    label: "message",
+    type: "string",
+    description:
+      "Message is conditional. Messages will show based on condition applied. Added one example only. Example: Account is in good standing with a balance of [$balance].",
+    requirement: "Mandatory",
+    length: "255",
+    section: "Response Parameters",
+  },
+  {
+    key: "transactions",
+    label: "transactions",
+    type: "object",
+    description: "An array of transaction record objects.",
+    requirement: "Mandatory",
+    section: "Response Parameters",
+    children: [
+      {
+        key: "transaction",
+        label: "transaction",
+        type: "object",
+        description:
+          "A JSON object that contains information about the transaction record",
+        requirement: "Mandatory",
+        children: [
+          {
+            key: "id",
+            label: "id",
+            type: "string",
+            description: "The transaction ID",
+            requirement: "Mandatory",
+            length: "0-60",
+          },
+          {
+            key: "type",
+            label: "type",
+            type: "string",
+            description: "The transaction type. Enum = {credit, debit}",
+            requirement: "Mandatory",
+            length: "6",
+          },
+          {
+            key: "amount",
+            label: "amount",
+            type: "string",
+            description:
+              "Total transaction amount in TTD with precision of 2 decimal places. Includes any fees.",
+            requirement: "Mandatory",
+            length: "8, 2",
+          },
+          {
+            key: "fees",
+            label: "fees",
+            type: "string",
+            description:
+              "Total amount (in TTD with precision of 2 decimal places) of fees associated with the transaction.",
+            requirement: "Mandatory",
+            length: "8, 2",
+          },
+          {
+            key: "cleared_date",
+            label: "cleared_date",
+            type: "string",
+            description: "Date transaction has cleared. Format = YYYY-MM-DD",
+            requirement: "Mandatory",
+            length: "10",
+          },
+          {
+            key: "posted_date",
+            label: "posted_date",
+            type: "string",
+            description: "Date transaction submitted. Format = YYYY-MM-DD",
+            requirement: "Mandatory",
+            length: "10",
+          },
+          {
+            key: "description",
+            label: "description",
+            type: "string",
+            description:
+              "Transaction description detailing any notes about the transaction",
+            requirement: "Mandatory",
+            length: "255",
+          },
+          {
+            key: "transaction_status",
+            label: "status",
+            type: "string",
+            description:
+              "Transaction status. Enum = {pending, cancelled, completed, failed}",
+            requirement: "Mandatory",
+            length: "10",
+          },
+          {
+            key: "source",
+            label: "source",
+            type: "string",
+            description:
+              "Source of the transaction funds. Enum = {wallet, agent, thirdparty}",
+            requirement: "Mandatory",
+            length: "10",
+          },
+          {
+            key: "transaction_method",
+            label: "transaction_method",
+            type: "string",
+            description:
+              "Transaction method. Enum = {wallet_transfer, card, cash_at_agent, bank_transfer, international_transfer, internal_transfer}",
+            requirement: "Mandatory",
+            length: "10-30",
+          },
+          {
+            key: "parent_mobile_number",
+            label: "parent_mobile_number",
+            type: "string",
+            description:
+              "Full mobile number of account holder of the parent account. Example: +18681234567.",
+            requirement: "Optional",
+            length: "12",
+          },
+          {
+            key: "metadata",
+            label: "metadata",
+            type: "string",
+            description: "Additional data about the particular transaction",
+            requirement: "Optional",
+            length: "1-255",
+          },
+          {
+            key: "balance",
+            label: "balance",
+            type: "string",
+            description:
+              "Returns the account balance after the transaction. (Not available in production.)",
+            requirement: "Conditional",
+            length: "10, 2",
+          },
+        ],
+      },
+    ],
+  },
+];
+
 const History_Account = () => {
+  // Estado para controlar la visibilidad del div que contiene el <p>
+  const [openSections, setOpenSections] = useState({});
+  const [rotations, setRotations] = useState({});
 
-    // Estado para controlar la visibilidad del div que contiene el <p>
-    const [openSections, setOpenSections] = useState({});
-    const [rotations, setRotations] = useState({});
+  const sections = [
+    "Request Parameters",
+    "Body Parameters",
+    "Response Parameters",
+  ];
 
-    // Función para alternar la visibilidad de una sección específica
-    const toggleVisibility = (id) => {
-        setOpenSections((prev) => ({
-            ...prev,
-            [id]: !prev[id], // Alterna el estado de la sección específica
-        }));
-    };
+  return (
+    <div
+      id="history_account"
+      className="flex flex-col lg:flex-row justify-between items-start py-12 border-b-2"
+    >
+      <div className="lg:w-2/5 w-full">
+        <span className="py-5 font-semibold">account_history</span>
+        <p className="py-5 text-sm">
+          The <span className="text-[#6FA43A]">account_history</span> endpoint
+          retrieves the transaction history of a given PayWise account.{" "}
+          <span className="font-bold">
+            N.B. This endpoint is for development and testing purposes and only
+            works on the Developer portal.
+          </span>
+        </p>
 
-    const toggleRotation = (key) => {
-        setRotations(prevState => ({
-            ...prevState,
-            [key]: prevState[key] ? '' : 'rotate-90'
-        }));
-    };
-
-    const handleClick = (key) => {
-        toggleRotation(key);
-        toggleVisibility(key);
-    };
-
-    return (
-        <div id="history_account" className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
-            <div className='lg:w-2/5 w-full'>
-                <span className='py-5 font-semibold'>account_history</span>
-                <p className='py-5 text-sm'>
-                    The <span className='text-[#6FA43A]'>account_history</span> endpoint retrieves the transaction history of a given PayWise account. <span className='font-bold'>N.B. This endpoint is for development and testing purposes and only works on the Developer portal.</span>
-                </p>
-
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Request Parameters:</h3>
-                    <div className='font-code text-sm italic text-[#495059] py-2'>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("version")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["version"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>version <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["version"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("mobile_number")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>mobile_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["mobile_number"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Full mobile number of account holder. Example: "+18681234567".</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 12</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("start_date")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["start_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>start_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["start_date"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The starting date to capture the account period. Defaults to 7 days prior to end date. If end_date is set and is earlier to start_date, this default will kick in. Format = "YYYY-MM-DD"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Conditional</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("end_date")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["end_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>end_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["end_date"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The end date for the capture of the user's account information. Defaults to today. Format = "YYYY-MM-DD"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Body Parameters:</h3>
-                </div>
-
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
-                    <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("status")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["status"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("code")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["code"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>code <span className='font-cabin text-[#8D9298] font-normal'>integer</span></p>
-                            </div>
-                            {openSections["code"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> HTTP return code.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 3</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("message")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["message"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Account is in good standing with a balance of [$balance]."</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("transactions")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["transactions"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>transactions <span className='font-cabin text-[#8D9298] font-normal'>object</span></p>
-                            </div>
-                            {openSections["transactions"] && (
-                                <div className='py-3'>
-                                    <div className='pb-4'>
-                                        <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> An array of transaction record objects.</p>
-                                        <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    </div>
-
-                                    <div className="px-2 pt-4">
-                                        <div onClick={() => handleClick("transaction")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["transaction"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                            <p className='font-semibold'>transaction <span className='font-cabin text-[#8D9298] font-normal'>object</span></p>
-                                        </div>
-                                        {openSections["transaction"] && (
-                                            <div className='py-3'>
-                                                <div className='pb-4'>
-                                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> A JSON object that contains information about the transaction record</p>
-                                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("id")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["id"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["id"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> PayWise friendly transaction id.</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 30-60</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("type")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["type"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>type <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["type"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Transaction type. Enum = {`{debit, credit}`}</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 6</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("amount")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["amount"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>amount <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["amount"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Total transaction amount in TTD with precision of 2 decimal places. Includes any fees.</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 8, 2</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("fees")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["fees"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>fees <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["fees"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Total amount (in TTD with precision of 2 decimal places) of fees associated with the transaction.</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 8, 2</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("cleared_date")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["cleared_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>cleared_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["cleared_date"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Date transaction has cleared. Format = "YYYY-MM-DD"</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("posted_date")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["posted_date"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>posted_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["posted_date"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Date transaction submitted. Format = "YYYY-MM-DD"</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("description")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["description"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>description <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["description"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Transaction description detailing any notes about the transaction</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("status")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["status"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Transaction status. Enum = {`{pending, cancelled, completed, failed}`}</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("source")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["source"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>source <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["source"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Source of the transaction funds. Enum = {`{wallet, agent, thirdparty}`}</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("transaction_method")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["transaction_method"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>transaction_method <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["transaction_method"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Transaction status. Enum = {`{pending, cancelled, completed, failed}`}</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("parent_mobile_number")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["parent_mobile_number"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>parent_mobile_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["parent_mobile_number"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Full mobile number of account holder of the parent account. Example: "+18681234567".</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 12</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 border-b-2 py-4">
-                                                    <div onClick={() => handleClick("metadata")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["metadata"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>metadata <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["metadata"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Transaction status. Enum = {`{pending, cancelled, completed, failed}`}</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="px-2 pt-4">
-                                                    <div onClick={() => handleClick("bless_balance")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                                        <svg className={`cursor-pointer transition-transform duration-150 ${rotations["bless_balance"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className='font-semibold'>balance <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                                                    </div>
-                                                    {openSections["bless_balance"] && (
-                                                        <div className='py-3'>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the account balance of the recipient.</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                                            <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10, 2</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                            </div>
-                                        )}
-                                    </div>
-
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+        {sections.map((section) => (
+          <div key={section} className="border-b border-[#6FA43A] py-4">
+            <h3 className="text-[#1E64A7] font-semibold py-3">{section}:</h3>
+            <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
+              {historyAccountParameters
+                .filter((param) => param.section === section)
+                .map((param, idx, arr) => (
+                  <ParameterItem
+                    key={param.key}
+                    param={param}
+                    openSections={openSections}
+                    setOpenSections={setOpenSections}
+                    rotations={rotations}
+                    setRotations={setRotations}
+                    isLast={idx === arr.length - 1}
+                  />
+                ))}
             </div>
-            <div className='lg:w-2/4 w-full sticky top-0'>
-                <Reques_Example />
-            </div>
-        </div>
-    )
-}
+          </div>
+        ))}
+      </div>
+      <div className="lg:w-2/4 w-full sticky top-0">
+        <Reques_Example />
+      </div>
+    </div>
+  );
+};
 
 export default History_Account;

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useLanguage } from '../../LenguageContext';
 import { Copy, Check } from 'lucide-react';
+import ParameterItem from '@/components/ParameterItem';
+//import { accountParameters } from './ParameterItem';
 
 // Datos de lenguajes de programación
 const languageData = {
@@ -143,6 +145,129 @@ print(response.json())
     },
 };
 
+const accountParameters = [
+    // Request Parameters
+    {
+      key: "version",
+      label: "version",
+      type: "string",
+      section: "Request Parameters",
+      description: 'For version control. Format = "YYYY-MM-DD". Defaults to the latest version',
+      requirement: 'mandatory',
+      length: '10',
+    },
+    {
+      key: "mobile_number",
+      label: "mobile_number",
+      type: "string",
+      section: "Request Parameters",
+      description: 'Full mobile number of account holder. Example: "+18681234567"',
+      requirement: 'mandatory',
+      length: '12',
+    },
+    {
+      key: "institution_name",
+      label: "institution_name",
+      type: "string",
+      section: "Request Parameters",
+      description: 'Name of party who requested this api.',
+      requirement: 'mandatory',
+      length: '255',
+    },
+    {
+      key: "first_name",
+      label: "first_name",
+      type: "string",
+      section: "Request Parameters",
+      description: 'First name of the account holder as registered with PayWise. This should be the complete name as per the KYC document provided during the registration process.',
+      requirement: 'mandatory',
+      length: '1 - 50',
+    },
+    {
+      key: "last_name",
+      label: "last_name",
+      type: "string",
+      section: "Request Parameters",
+      description: 'Last name of the account holder as registered with PayWise. This should be the complete name as per the KYC document provided during the registration process.',
+      requirement: 'mandatory',
+      length: '1 - 75',
+    },
+    {
+      key: "sender_first_name",
+      label: "sender_first_name",
+      type: "string",
+      section: "Request Parameters",
+      description: 'First name of the sender as registered with the sender partner. This should be the complete name as per the KYC document provided during the registration process.',
+      requirement: 'optional',
+      length: '1 - 50',
+    },
+    {
+      key: "sender_last_name",
+      label: "sender_last_name",
+      type: "string",
+      section: "Request Parameters",
+      description: 'Last name of the sender as registered with the sender partner. This should be the complete name as per the KYC document provided during the registration process.',
+      requirement: 'optional',
+      length: '1 - 75',
+    },
+    {
+      key: "email",
+      label: "email",
+      type: "string",
+      section: "Request Parameters",
+      description: 'Email verification to take place on the email of the PayWise account holder',
+      requirement: 'optional',
+      length: '5 - 200',
+    },
+  
+    // Response Parameters
+    {
+      key: "status",
+      label: "status",
+      type: "string",
+      section: "Response Parameters",
+      description: 'Returns the API call status. Enum = { "success", "error" }',
+      requirement: 'mandatory',
+      length: '10',
+    },
+    {
+      key: "code",
+      label: "code",
+      type: "integer",
+      section: "Response Parameters",
+      description: 'HTTP return code.',
+      requirement: 'mandatory',
+      length: '3',
+    },
+    {
+      key: "message",
+      label: "message",
+      type: "string",
+      section: "Response Parameters",
+      description: 'Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Registration request sent"',
+      requirement: 'mandatory',
+      length: '255',
+    },
+    {
+      key: "account_status",
+      label: "account_status",
+      type: "string",
+      section: "Response Parameters",
+      description: 'Returns the status of the user. Enum = {available, unavailable, unknown}',
+      requirement: 'mandatory',
+      length: '8 - 11',
+    },
+    {
+      key: "session_token",
+      label: "session_token",
+      type: "string",
+      section: "Response Parameters",
+      description: 'Unencrypted session_token passed to be encrypted using shared keys with Institution.',
+      requirement: 'mandatory',
+      length: '10 - 20',
+    },
+  ];
+
 const Reques_Example = () => {
     const { selectedLanguage, setSelectedLanguage } = useLanguage();
     const [copiedRequest, setCopiedRequest] = useState(false);
@@ -245,266 +370,50 @@ const Reques_Example = () => {
     );
 };
 
+
+
 const Account = () => {
+  const [openSections, setOpenSections] = useState({});
+  const [rotations, setRotations] = useState({});
 
-    // Estado para controlar la visibilidad del div que contiene el <p>
-    const [openSections, setOpenSections] = useState({});
-    const [rotations, setRotations] = useState({});
+  // Agrupar parámetros por sección
+  const sections = [
+    'Request Parameters',
+    'Body Parameters',
+    'Response Parameters',
+  ];
 
-    // Función para alternar la visibilidad de una sección específica
-    const toggleVisibility = (id) => {
-        setOpenSections((prev) => ({
-            ...prev,
-            [id]: !prev[id], // Alterna el estado de la sección específica
-        }));
-    };
-
-    const toggleRotation = (key) => {
-        setRotations(prevState => ({
-            ...prevState,
-            [key]: prevState[key] ? '' : 'rotate-90'
-        }));
-    };
-
-    const handleClick = (key) => {
-        toggleRotation(key);
-        toggleVisibility(key);
-    };
-
-    return (
-        <div id="dev_account" className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
-            <div className='lg:w-2/5 w-full'>
-                <span className='py-5 font-semibold'>account:</span>
-                <p className='py-5 text-sm'>
-                    The <span className='text-[#6FA43A]'>account</span> endpoint retrieves the status of a PayWise account. It checks whether the account is in good standing and available for receiving or sending funds. This ensures that the account can actively participate in transactions, providing peace of mind for both the institution and the user.
-                </p>
-
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Request Parameters:</h3>
-                    <div className='font-code text-sm italic text-[#495059] py-2'>
-                        <div onClick={() => handleClick("version_account")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["version_account"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <p className='font-semibold'>version <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                        </div>
-                        {openSections["version_account"] && (
-                            <div className='py-3'>
-                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
-                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Body Parameters:</h3>
-                    <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("mobile_number")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["mobile_number"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>mobile_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["mobile_number"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Full mobile number of account holder. Example: "+18681234567"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 12</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("account_institution_name")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_institution_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>institution_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["account_institution_name"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Name of party who requested this api.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("first_name")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["first_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>first_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["first_name"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> First name of the account holder as registered with PayWise. This should match the KYC document provided during registration.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1 - 50</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("last_name")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["last_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>last_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["last_name"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Last name of the account holder as registered with PayWise. This should match the KYC document provided during registration.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1 - 75</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("sender_first_name")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["sender_first_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>sender_first_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["sender_first_name"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> First name of the sender as registered with the sender partner. This should match the KYC document provided during registration process.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1 - 50</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("sender_last_name")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["sender_last_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>sender_last_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["sender_last_name"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Last name of the sender as registered with the sender partner. This should match the KYC document provided during registration process.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Optional</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 1 - 75</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("email")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["email"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>email <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["email"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Email verification to take place on the email of the PayWise account holder</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 5 - 255</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
-                    <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("acc_status")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["acc_status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["acc_status"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("account_code")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_code"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>code <span className='font-cabin text-[#8D9298] font-normal'>integer</span></p>
-                            </div>
-                            {openSections["account_code"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> HTTP return code.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 3</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("account_message")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_message"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["account_message"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Registration request sent"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("account_status")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["account_status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>account_status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["account_status"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the status of the user. Enum = {`{available, unavailable, unknown}`}</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 8 - 11</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("session_token")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["session_token"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>session_token <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["session_token"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Unencrypted session_token passed to be encrypted using shared keys with Institution.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10 - 20</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div id="dev_account" className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
+      <div className='lg:w-2/5 w-full'>
+        <span className='py-5 font-semibold'>account:</span>
+        <p className='py-5 text-sm'>
+          The <span className='text-[#6FA43A]'>account</span> endpoint retrieves the status of a PayWise account. It checks whether the account is in good standing and available for receiving or sending funds. This ensures that the account can actively participate in transactions, providing peace of mind for both the institution and the user.
+        </p>
+        {sections.map((section) => (
+          <div key={section} className='border-b border-[#6FA43A] py-4'>
+            <h3 className='text-[#1E64A7] font-semibold py-3'>{section}:</h3>
+            <div className={`flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2`}>
+              {accountParameters.filter((param) => param.section === section).map((param, idx, arr) => (
+                <ParameterItem
+                  key={param.key}
+                  param={param}
+                  openSections={openSections}
+                  setOpenSections={setOpenSections}
+                  rotations={rotations}
+                  setRotations={setRotations}
+                  isLast={idx === arr.length - 1}
+                />
+              ))}
             </div>
-            <div className='lg:w-2/4 w-full sticky top-0'>
-                <Reques_Example />
-            </div>
-        </div>
-    )
-}
+          </div>
+        ))}
+      </div>
+      <div className='lg:w-2/4 w-full sticky top-0'>
+        <Reques_Example />
+      </div>
+    </div>
+  );
+};
 
 export default Account;

@@ -1,52 +1,53 @@
 "use client";
-import { useState } from 'react';
-import { useLanguage } from '../../LenguageContext';
-import { Copy, Check } from 'lucide-react';
+import { useState } from "react";
+import { useLanguage } from "../../LenguageContext";
+import { Copy, Check } from "lucide-react";
+import ParameterItem from "@/components/ParameterItem";
 
 const languageData = {
-    Bash: {
-        description: `
+  Bash: {
+    description: `
 curl -X GET "https://devapi.paywise.co/quote/{quote_id}?version=2024-10-20" 
-    `
-    },
-    Ruby: {
-        description: `
+    `,
+  },
+  Ruby: {
+    description: `
 require 'net/http'
-    `
-    },
-    PHP: {
-        description: `
+    `,
+  },
+  PHP: {
+    description: `
 $curl = curl_init();
-    `
-    },
-    JavaScript: {
-        description: `
+    `,
+  },
+  JavaScript: {
+    description: `
 const url = "https://devapi.paywise.co/quote/{quote_id}?version=2024-10-20";
-    `
-    },
-    Python: {
-        description: `
+    `,
+  },
+  Python: {
+    description: `
 import requests
-    `
-    },
+    `,
+  },
 };
 
 const Reques_Example = () => {
-    const { selectedLanguage, setSelectedLanguage } = useLanguage();
-    const [copiedRequest, setCopiedRequest] = useState(false);
-    const [copiedResponse, setCopiedResponse] = useState(false);
+  const { selectedLanguage, setSelectedLanguage } = useLanguage();
+  const [copiedRequest, setCopiedRequest] = useState(false);
+  const [copiedResponse, setCopiedResponse] = useState(false);
 
-    const handleCopy = async (text, setCopied) => {
-        try {
-            await navigator.clipboard.writeText(text);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-            console.error('Failed to copy text: ', err);
-        }
-    };
+  const handleCopy = async (text, setCopied) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
 
-    const responseExample = `{
+  const responseExample = `{
     "status": "success",
     "code": 200,
     "message": "Quote generated successfully",
@@ -63,301 +64,244 @@ const Reques_Example = () => {
     "message": "Error: Exceeds user limits."
 }`;
 
-    return (
-        <div>
-            <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-                <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
-                    <div className='w-2/4 py-2 sm:px-2'>
-                        <h2 className='text-sm text-[#F2F2F2]'>Request example:</h2>
-                    </div>
-                    <div className='w-2/6 flex justify-center items-center gap-2'>
-                        <select
-                            className='bg-[#699EC7] rounded text-[#F2F2F2] p-1'
-                            value={selectedLanguage}
-                            onChange={(e) => setSelectedLanguage(e.target.value)}
-                        >
-                            {Object.keys(languageData).map((lang) => (
-                                <option key={lang} value={lang}>{lang}</option>
-                            ))}
-                        </select>
-                        <button
-                            onClick={() => handleCopy(languageData[selectedLanguage]?.description, setCopiedRequest)}
-                            className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-                        >
-                            {copiedRequest ? (
-                                <Check className="h-4 w-4 text-green-500" />
-                            ) : (
-                                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-                            )}
-                        </button>
-                    </div>
-                </div>
-                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre>
-                        {languageData[selectedLanguage]?.description}
-                    </pre>
-                </div>
-            </div>
-            <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-                <div className='bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t'>
-                    <div className='w-2/4 py-2 sm:px-2'>
-                        <h2 className='text-sm text-[#F2F2F2]'>Response example:</h2>
-                    </div>
-                    <div className='w-2/6 flex justify-center items-center gap-2'>
-                        <select
-                            className='bg-[#699EC7] rounded text-[#F2F2F2] p-1'
-                            value={selectedLanguage}
-                            onChange={(e) => setSelectedLanguage(e.target.value)}
-                        >
-                            {Object.keys(languageData).map((lang) => (
-                                <option key={lang} value={lang}>{lang}</option>
-                            ))}
-                        </select>
-                        <button
-                            onClick={() => handleCopy(responseExample, setCopiedResponse)}
-                            className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-                        >
-                            {copiedResponse ? (
-                                <Check className="h-4 w-4 text-green-500" />
-                            ) : (
-                                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-                            )}
-                        </button>
-                    </div>
-                </div>
-                <div className='overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]'>
-                    <pre>
-                        {responseExample}
-                    </pre>
-                </div>
-            </div>
+  return (
+    <div>
+      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
+        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
+          <div className="w-2/4 py-2 sm:px-2">
+            <h2 className="text-sm text-[#F2F2F2]">Request example:</h2>
+          </div>
+          <div className="w-2/6 flex justify-center items-center gap-2">
+            <select
+              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+            >
+              {Object.keys(languageData).map((lang) => (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() =>
+                handleCopy(
+                  languageData[selectedLanguage]?.description,
+                  setCopiedRequest
+                )
+              }
+              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+            >
+              {copiedRequest ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Copy className="h-4 w-4 text-[#F2F2F2]" />
+              )}
+            </button>
+          </div>
         </div>
-    );
+        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
+          <pre>{languageData[selectedLanguage]?.description}</pre>
+        </div>
+      </div>
+      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
+        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
+          <div className="w-2/4 py-2 sm:px-2">
+            <h2 className="text-sm text-[#F2F2F2]">Response example:</h2>
+          </div>
+          <div className="w-2/6 flex justify-center items-center gap-2">
+            <select
+              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+            >
+              {Object.keys(languageData).map((lang) => (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() => handleCopy(responseExample, setCopiedResponse)}
+              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
+            >
+              {copiedResponse ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Copy className="h-4 w-4 text-[#F2F2F2]" />
+              )}
+            </button>
+          </div>
+        </div>
+        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
+          <pre>{responseExample}</pre>
+        </div>
+      </div>
+    </div>
+  );
 };
 
+const quoteIdInstitutionParameters = [
+  {
+    key: "version",
+    label: "version",
+    type: "string",
+    section: "Request Parameters",
+    description:
+      "For version control. Format = YYYY-MM-DD. Defaults to the latest version",
+    requirement: "Mandatory",
+    length: "10",
+  },
+  {
+    key: "quote_id",
+    label: "quote_id",
+    type: "string",
+    section: "Request Parameters",
+    description: "Unique identifier of the quote",
+    requirement: "Mandatory",
+    length: "20-40",
+  },
+  {
+    key: "institution_name",
+    label: "institution_name",
+    type: "string",
+    section: "Request Parameters",
+    description: "Name of party who requested this api.",
+    requirement: "Mandatory",
+    length: "255",
+  },
+  {
+    key: "status",
+    label: "status",
+    type: "string",
+    section: "Response Parameters",
+    description: "Returns the API call status. Enum = {success, error}",
+    requirement: "Mandatory",
+    length: "10",
+  },
+  {
+    key: "code",
+    label: "code",
+    type: "integer",
+    section: "Response Parameters",
+    description: "HTTP return code.",
+    requirement: "Mandatory",
+    length: "3",
+  },
+  {
+    key: "message",
+    label: "message",
+    type: "string",
+    section: "Response Parameters",
+    description:
+      "Message is conditional. Messages will show based on condition applied. Added one example only. Example: Error: Exceeds user limits.",
+    requirement: "Mandatory",
+    length: "255",
+  },
+  {
+    key: "rate",
+    label: "rate",
+    type: "string",
+    section: "Response Parameters",
+    description:
+      "The TTD equivalent for 1 dollar of the currency pair. Precision of up to 4 decimal points.",
+    requirement: "Conditional",
+    length: "8, 4",
+  },
+  {
+    key: "request_date",
+    label: "request_date",
+    type: "string",
+    section: "Response Parameters",
+    description:
+      "Date of the currency rate from the CBTT source. Format = YYYY-MM-DD",
+    requirement: "Conditional",
+    length: "10",
+  },
+  {
+    key: "quote_date",
+    label: "quote_date",
+    type: "string",
+    section: "Response Parameters",
+    description:
+      "Date and time to the quote was created. Format = YYYY-MM-DD HH:mi:ss",
+    requirement: "Conditional",
+    length: "19",
+  },
+  {
+    key: "amount_quoted",
+    label: "amount_quoted",
+    type: "string",
+    section: "Response Parameters",
+    description:
+      "Amount quoted for the transaction. Precision of up to 2 decimal points.",
+    requirement: "Conditional",
+    length: "8, 2",
+  },
+  {
+    key: "expire_date",
+    label: "expire_date",
+    type: "string",
+    section: "Response Parameters",
+    description:
+      "Date and time when this quote and currency rate is no longer be valid. Format YYYY-MM-DD HH:mi:ss",
+    requirement: "Conditional",
+    length: "19",
+  },
+];
 
 const Quote_Id_Institutions = () => {
+  // Estado para controlar la visibilidad del div que contiene el <p>
+  const [openSections, setOpenSections] = useState({});
+  const [rotations, setRotations] = useState({});
 
-    // Estado para controlar la visibilidad del div que contiene el <p>
-    const [openSections, setOpenSections] = useState({});
-    const [rotations, setRotations] = useState({});
+  const sections = [
+    "Request Parameters",
+    "Body Parameters",
+    "Response Parameters",
+  ];
 
-    // Función para alternar la visibilidad de una sección específica
-    const toggleVisibility = (id) => {
-        setOpenSections((prev) => ({
-            ...prev,
-            [id]: !prev[id], // Alterna el estado de la sección específica
-        }));
-    };
+  return (
+    <div
+      id="quote_get"
+      className="flex flex-col lg:flex-row justify-between items-start py-12 border-b-2"
+    >
+      <div className="lg:w-2/5 w-full">
+        <span className="py-5 font-semibold">quote/{`{quote_id}`}:</span>
+        <p className="py-5 text-sm">
+          The <span className="text-[#6FA43A]">quote/{`{quote_id}`} </span>{" "}
+          endpoint retrieves the details of a previously generated quote. This
+          allows institutions to check the terms of the quote, such as the
+          conversion rate and the expiry period, ensuring that they have the
+          necessary information before proceeding with the transaction.
+        </p>
 
-    const toggleRotation = (key) => {
-        setRotations(prevState => ({
-            ...prevState,
-            [key]: prevState[key] ? '' : 'rotate-90'
-        }));
-    };
-
-    const handleClick = (key) => {
-        toggleRotation(key);
-        toggleVisibility(key);
-    };
-
-    return (
-        <div id='quote_get' className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
-            <div className='lg:w-2/5 w-full'>
-
-                <span className='py-5 font-semibold'>quote/{`{quote_id}`}:</span>
-                <p className='py-5 text-sm'>
-                    The <span className='text-[#6FA43A]'>quote/{`{quote_id}`} </span> endpoint retrieves the details of a previously generated quote. This allows institutions to check the terms of the quote, such as the conversion rate and the expiry period, ensuring that they have the necessary information before proceeding with the transaction.
-                </p>
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Request Parameters:</h3>
-                    <div className='font-code text-sm italic text-[#495059] py-2'>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("version_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["version_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>version <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["version_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("quote_id_quote_get")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["quote_id_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>quote_id <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["quote_id_quote_get"] && (
-                                <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Unique identifier of the quote</p>
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 20 - 40</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("institution_name")} className="flex flex-row gap-2 items-center cursor-pointer">
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["institution_name"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>institution_name <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["institution_name"] && (
-                                <div className="py-3">
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Description:</span> Name of party who requested this api.</p>
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Requirement:</span> Mandatory</p>
-                                    <p className="py-2"><span className="font-semibold not-italic font-cabin">Field Length:</span> 255</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Body Parameters:</h3>
-                    <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
-
-                    </div>
-                </div>
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
-                    <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("status_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["status_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["status_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("code_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["code_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>code <span className='font-cabin text-[#8D9298] font-normal'>integer</span></p>
-                            </div>
-                            {openSections["code_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> HTTP return code.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 3</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("message_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["message_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Error: Exceeds user limits."</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("rate_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["rate_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>rate <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["rate_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The TTD equivalent for 1 dollar of the currency pair. Precision of up to 4 decimal points.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 8 , 4</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("request_date_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["request_date_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>request_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["request_date_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Date of the currency rate from the CBTT source. Format "YYYY-MM-DD"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("quote_date_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["quote_date_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>quote_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["quote_date_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Date and time to the quote was created. Format "YYYY-MM-DD HH:mi:ss"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> optional</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 19</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("amount_quoted_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["amount_quoted_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>amount_quoted <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["amount_quoted_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> The quote amount. Precision of up to 2 decimal places</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> optional</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10 , 2</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("expire_date_quote_get")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["expire_date_quote_get"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>expire_date <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["expire_date_quote_get"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Date and time when this quote and currency rate is no longer be valid. Format "YYYY-MM-DD HH:mi:ss"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 19</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+        {sections.map((section) => (
+          <div key={section} className="border-b border-[#6FA43A] py-4">
+            <h3 className="text-[#1E64A7] font-semibold py-3">{section}:</h3>
+            <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
+              {quoteIdInstitutionParameters
+                .filter((param) => param.section === section)
+                .map((param, idx, arr) => (
+                  <ParameterItem
+                    key={param.key}
+                    param={param}
+                    openSections={openSections}
+                    setOpenSections={setOpenSections}
+                    rotations={rotations}
+                    setRotations={setRotations}
+                    isLast={idx === arr.length - 1}
+                  />
+                ))}
             </div>
-            <div className='lg:w-2/4 w-full sticky top-0'>
-                <Reques_Example />
-            </div>
-        </div>
-    )
-}
+          </div>
+        ))}
+      </div>
+      <div className="lg:w-2/4 w-full sticky top-0">
+        <Reques_Example />
+      </div>
+    </div>
+  );
+};
 
 export default Quote_Id_Institutions;

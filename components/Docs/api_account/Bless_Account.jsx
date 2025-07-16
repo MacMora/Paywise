@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useLanguage } from '../../LenguageContext';
 import { Copy, Check } from 'lucide-react';
+import ParameterItem from '@/components/ParameterItem';
 
 // Datos de lenguajes de programación
 const languageData = {
@@ -228,31 +229,83 @@ const Reques_Example = () => {
     );
 };
 
+const blessAccountParameters = [
+    {
+        key: "version",
+        label: "version",
+        type: "string",
+        section: "Request Parameters",
+        description: "For version control. Format = YYYY-MM-DD. Defaults to the latest version",
+        requirement: "Mandatory",
+        length: "10",
+    },
+    {
+        key: "amount",
+        label: "amount",
+        type: "string",
+        section: "Body Parameters", 
+        description: "Amount payable to beneficiary in TTD with precision of 2 decimal places. Default $500.",
+        requirement: "Mandatory",
+        length: "8, 2",
+    },
+    {
+        key: "mobile_number",
+        label: "mobile_number",
+        type: "string",
+        section: "Body Parameters",
+        description: "Full mobile number of account holder. Example: +18681234567.",
+        requirement: "Mandatory",
+        length: "12",
+    },
+    {
+        key: "status",
+        label: "status",
+        type: "string",
+        section: "Response Parameters",
+        description: "Returns the API call status. Enum = {success, error}",
+        requirement: "Mandatory",
+        length: "10",
+    },
+    {
+        key: "code",
+        label: "code",
+        type: "integer",
+        section: "Response Parameters",
+        description: "HTTP return code.",
+        requirement: "Mandatory",
+        length: "3",
+    },
+    {
+        key: "message",
+        label: "message",
+        type: "string",
+        section: "Response Parameters",
+        description: "Message is conditional. Messages will show based on condition applied. Added one example only. Example: Funds credited successfully",
+        requirement: "Mandatory",
+        length: "255",
+    },
+    {
+        key: "balance",
+        label: "balance",
+        type: "string",
+        section: "Response Parameters",
+        description: "Returns the account balance.",
+        requirement: "Mandatory",
+        length: "10, 2",
+    }
+]
+
 const Bless_Account = () => {
 
     // Estado para controlar la visibilidad del div que contiene el <p>
     const [openSections, setOpenSections] = useState({});
     const [rotations, setRotations] = useState({});
 
-    // Función para alternar la visibilidad de una sección específica
-    const toggleVisibility = (id) => {
-        setOpenSections((prev) => ({
-            ...prev,
-            [id]: !prev[id], // Alterna el estado de la sección específica
-        }));
-    };
-
-    const toggleRotation = (key) => {
-        setRotations(prevState => ({
-            ...prevState,
-            [key]: prevState[key] ? '' : 'rotate-90'
-        }));
-    };
-
-    const handleClick = (key) => {
-        toggleRotation(key);
-        toggleVisibility(key);
-    };
+    const sections = [
+        "Request Parameters",
+        "Body Parameters",
+        "Response Parameters",
+    ];
 
     return (
         <div id="bless_account" className='flex flex-col lg:flex-row justify-between items-start py-12 border-b-2'>
@@ -262,130 +315,27 @@ const Bless_Account = () => {
                     The <span className='text-[#6FA43A]'>bless_account</span> endpoint is designed to add credit to a specified account. It simulates funding an account and can be used for testing in the sandbox environment. This functionality is useful for validating scenarios where accounts are credited as part of a transaction flow, helping to ensure the reliability of payment processes. <span className='font-bold'>N.B. This endpoint is for development and testing purposes and only works on the Developer portal.</span>
                 </p>
 
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Request Parameters:</h3>
-                    <div className='font-code text-sm italic text-[#495059] py-2'>
-                        <div onClick={() => handleClick("version")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                            <svg className={`cursor-pointer transition-transform duration-150 ${rotations["version"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            <p className='font-semibold'>version <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                        </div>
-                        {openSections["version"] && (
-                            <div className='py-3'>
-                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> For version control. Format = "YYYY-MM-DD". Defaults to the latest version</p>
-                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                {sections.map((section) => (
+          <div key={section} className="border-b border-[#6FA43A] py-4">
+            <h3 className="text-[#1E64A7] font-semibold py-3">{section}:</h3>
+            <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
+              {blessAccountParameters
+                .filter((param) => param.section === section)
+                .map((param, idx, arr) => (
+                  <ParameterItem
+                    key={param.key}
+                    param={param}
+                    openSections={openSections}
+                    setOpenSections={setOpenSections}
+                    rotations={rotations}
+                    setRotations={setRotations}
+                    isLast={idx === arr.length - 1}
+                  />
+                ))}
+            </div>
+          </div>
+        ))}
 
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Body Parameters:</h3>
-                    <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("bless_amount")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["bless_amount"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>amount <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["bless_amount"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Amount payable to beneficiary in TTD with precision of 2 decimal places. Default $500.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 8, 2</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("bless_mobile_number")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["bless_mobile_number"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>mobile_number <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["bless_mobile_number"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Full mobile number of account holder. Example: "+18681234567".</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 12</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className='border-b border-[#6FA43A] py-4'>
-                    <h3 className='text-[#1E64A7] font-semibold py-3'>Response Parameters:</h3>
-                    <div className='flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2'>
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("status")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["status"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>status <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["status"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the API call status. Enum = {`{ "success", "error" }`}</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("code")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["code"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>code <span className='font-cabin text-[#8D9298] font-normal'>integer</span></p>
-                            </div>
-                            {openSections["code"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> HTTP return code.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 3</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="border-b-2 py-4">
-                            <div onClick={() => handleClick("message")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["message"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>message <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["message"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Registration request sent"</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 255</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="pt-4">
-                            <div onClick={() => handleClick("bless_balance")} className='flex flex-row gap-2 items-center cursor-pointer'>
-                                <svg className={`cursor-pointer transition-transform duration-150 ${rotations["bless_balance"]}`} width="14" height="14" viewBox="0 0 192 336" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 24L168 168L24 312" stroke="#536374" strokeWidth="48" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className='font-semibold'>balance <span className='font-cabin text-[#8D9298] font-normal'>string</span></p>
-                            </div>
-                            {openSections["bless_balance"] && (
-                                <div className='py-3'>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Description:</span> Returns the account balance.</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Requirement:</span> Mandatory</p>
-                                    <p className='py-2'><span className='font-semibold not-italic font-cabin'>Field Length:</span> 10, 2</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
             </div>
             <div className='lg:w-2/4 w-full sticky top-0'>
                 <Reques_Example />
