@@ -1,11 +1,9 @@
 "use client";
-// Importamos useState desde React
 import { useState } from "react";
-import { useLanguage } from "../../LenguageContext";
-import { Copy, Check } from "lucide-react";
+import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
 
-// Datos de lenguajes de programación
+// Language data
 const languageData = {
   Bash: {
     description: `
@@ -34,118 +32,29 @@ import requests
   },
 };
 
-const Reques_Example = () => {
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
-  const [copiedRequest, setCopiedRequest] = useState(false);
-  const [copiedResponse, setCopiedResponse] = useState(false);
-
-  const handleCopy = async (text, setCopied) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
-
-  const responseExample = `{
-    "status": "success",
-    "code": 200,
-    "message": "Registration request sent",
-    "institution_receipt_id": "PW-9876543210"
+// Response example
+const responseExample = `{
+  "status": "success",
+  "code": 200,
+  "message": "Registration request sent",
+  "institution_receipt_id": "PW-9876543210"
 }
 #if there is an error, the response may look like:
 {
-    "status": "error",
-    "code": 400,
-    "message": "Invalid registration request"
+  "status": "error",
+  "code": 400,
+  "message": "Invalid registration request"
 }`;
 
-  return (
-    <div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Request example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() =>
-                handleCopy(
-                  languageData[selectedLanguage]?.description,
-                  setCopiedRequest
-                )
-              }
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedRequest ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{languageData[selectedLanguage]?.description}</pre>
-        </div>
-      </div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Response example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => handleCopy(responseExample, setCopiedResponse)}
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedResponse ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{responseExample}</pre>
-        </div>
-      </div>
-    </div>
-  );
-};
-
+// Parameters
 const transactionInstitutionParameters = [
   // Request Parameters
   {
     key: "version",
     label: "version",
     type: "string",
-    description: "For version control. Format = \"YYYY-MM-DD\". Defaults to the latest version",
+    description:
+      'For version control. Format = "YYYY-MM-DD". Defaults to the latest version',
     requirement: "Mandatory",
     length: "10",
     section: "Request Parameters",
@@ -155,7 +64,8 @@ const transactionInstitutionParameters = [
     key: "session_token",
     label: "session_token",
     type: "string",
-    description: "Encrypted session_token. Institution encrypts the session_token sent using shared key.",
+    description:
+      "Encrypted session_token. Institution encrypts the session_token sent using shared key.",
     requirement: "Mandatory",
     length: "20 - 40",
     section: "Body Parameters",
@@ -164,7 +74,8 @@ const transactionInstitutionParameters = [
     key: "transaction_id",
     label: "transaction_id",
     type: "string",
-    description: "Unique transaction id / number generated by Institution to uniquely identify this transaction.",
+    description:
+      "Unique transaction id / number generated by Institution to uniquely identify this transaction.",
     requirement: "Mandatory",
     length: "1 - 200",
     section: "Body Parameters",
@@ -173,7 +84,8 @@ const transactionInstitutionParameters = [
     key: "transaction_date",
     label: "transaction_date",
     type: "string",
-    description: "The created date and time of the transaction. Format 'YYYY-MM-DD HH:mm:ss'",
+    description:
+      "The created date and time of the transaction. Format 'YYYY-MM-DD HH:mm:ss'",
     requirement: "Mandatory",
     length: "19",
     section: "Body Parameters",
@@ -182,7 +94,8 @@ const transactionInstitutionParameters = [
     key: "amount",
     label: "amount",
     type: "string",
-    description: "Amount payable to beneficiary in TTD with precision of 2 decimal places",
+    description:
+      "Amount payable to beneficiary in TTD with precision of 2 decimal places",
     requirement: "Mandatory",
     length: "8, 2",
     section: "Body Parameters",
@@ -243,7 +156,8 @@ const transactionInstitutionParameters = [
     key: "sender_amount",
     label: "sender_amount",
     type: "string",
-    description: "PayWise will record this amount for their own reconciliation. This amount may not be made visible to account holder. Precision of 2 decimal places",
+    description:
+      "PayWise will record this amount for their own reconciliation. This amount may not be made visible to account holder. Precision of 2 decimal places",
     requirement: "Mandatory",
     length: "8, 2",
     section: "Body Parameters",
@@ -252,7 +166,8 @@ const transactionInstitutionParameters = [
     key: "description",
     label: "description",
     type: "string",
-    description: "Freeform text description of the transaction provided by the client.",
+    description:
+      "Freeform text description of the transaction provided by the client.",
     requirement: "Optional",
     length: "1 - 256",
     section: "Body Parameters",
@@ -270,7 +185,8 @@ const transactionInstitutionParameters = [
     key: "debit_party",
     label: "debit_party",
     type: "object",
-    description: "An object that contains information about the debit participant.",
+    description:
+      "An object that contains information about the debit participant.",
     requirement: "Conditional",
     length: "n/a",
     section: "Body Parameters",
@@ -279,7 +195,8 @@ const transactionInstitutionParameters = [
         key: "debit_mobile_number",
         label: "mobile_number",
         type: "string",
-        description: "Full number of the debit participant. Example: '+18681234567'.",
+        description:
+          "Full number of the debit participant. Example: '+18681234567'.",
         requirement: "Mandatory",
         length: "10 - 18",
       },
@@ -287,7 +204,8 @@ const transactionInstitutionParameters = [
         key: "debit_organization_id",
         label: "organization_id",
         type: "string",
-        description: "Full name of the sending organization. Example: 'PayWise'",
+        description:
+          "Full name of the sending organization. Example: 'PayWise'",
         requirement: "Optional",
         length: "30",
       },
@@ -295,7 +213,8 @@ const transactionInstitutionParameters = [
         key: "debit_account_number",
         label: "account_number",
         type: "string",
-        description: "Wallet account (or Bank account or IBAN number or card number) of the debit party.",
+        description:
+          "Wallet account (or Bank account or IBAN number or card number) of the debit party.",
         requirement: "Optional",
         length: "5 - 50",
       },
@@ -329,7 +248,8 @@ const transactionInstitutionParameters = [
     key: "credit_party",
     label: "credit_party",
     type: "object",
-    description: "An object that contains information about the credit participant.",
+    description:
+      "An object that contains information about the credit participant.",
     requirement: "Conditional",
     length: "n/a",
     section: "Body Parameters",
@@ -338,7 +258,8 @@ const transactionInstitutionParameters = [
         key: "credit_mobile_number",
         label: "mobile_number",
         type: "string",
-        description: "Full number of the credit participant. Example: '+18681234567'.",
+        description:
+          "Full number of the credit participant. Example: '+18681234567'.",
         requirement: "Mandatory",
         length: "10 - 18",
       },
@@ -346,7 +267,8 @@ const transactionInstitutionParameters = [
         key: "credit_organization_id",
         label: "organization_id",
         type: "string",
-        description: "Full name of the receiving organization. Example: 'PayWise'",
+        description:
+          "Full name of the receiving organization. Example: 'PayWise'",
         requirement: "Optional",
         length: "30",
       },
@@ -354,7 +276,8 @@ const transactionInstitutionParameters = [
         key: "credit_account_number",
         label: "account_number",
         type: "string",
-        description: "Wallet account (or Bank account or IBAN number) of the credit party.",
+        description:
+          "Wallet account (or Bank account or IBAN number) of the credit party.",
         requirement: "Optional",
         length: "5 - 50",
       },
@@ -388,7 +311,8 @@ const transactionInstitutionParameters = [
     key: "sender_kyc",
     label: "sender_kyc",
     type: "object",
-    description: "A JSON object that contains information about the sender's KYC.",
+    description:
+      "A JSON object that contains information about the sender's KYC.",
     requirement: "Mandatory",
     length: "n/a",
     section: "Body Parameters",
@@ -429,7 +353,8 @@ const transactionInstitutionParameters = [
         key: "sender_id_document",
         label: "id_document",
         type: "object",
-        description: "A JSON object that contains KYC document information for the Sender.",
+        description:
+          "A JSON object that contains KYC document information for the Sender.",
         requirement: "Mandatory",
         length: "n/a",
         children: [
@@ -437,7 +362,8 @@ const transactionInstitutionParameters = [
             key: "sender_type",
             label: "type",
             type: "string",
-            description: "ID document type of account holder used in sign up. Enum = NationalIdCard, Passport, DriversPermit, SSN, SIN, Other. Example: 'Passport'",
+            description:
+              "ID document type of account holder used in sign up. Enum = NationalIdCard, Passport, DriversPermit, SSN, SIN, Other. Example: 'Passport'",
             requirement: "Mandatory",
             length: "1 - 20",
           },
@@ -469,7 +395,8 @@ const transactionInstitutionParameters = [
             key: "sender_issued_country",
             label: "issued_country",
             type: "string",
-            description: "Country where the ID document was issued in ISO Alpha-2 format.",
+            description:
+              "Country where the ID document was issued in ISO Alpha-2 format.",
             requirement: "Optional",
             length: "2",
           },
@@ -479,7 +406,8 @@ const transactionInstitutionParameters = [
         key: "sender_address",
         label: "address",
         type: "object",
-        description: "JSON object that contains address information for the person associated with the business",
+        description:
+          "JSON object that contains address information for the person associated with the business",
         requirement: "Mandatory",
         children: [
           {
@@ -544,7 +472,8 @@ const transactionInstitutionParameters = [
         key: "sender_subject_name",
         label: "subject_name",
         type: "object",
-        description: "A JSON object that contains KYC name information for the Sender.",
+        description:
+          "A JSON object that contains KYC name information for the Sender.",
         requirement: "Mandatory",
         length: "n/a",
         children: [
@@ -596,7 +525,8 @@ const transactionInstitutionParameters = [
     key: "recipient_kyc",
     label: "recipient_kyc",
     type: "object",
-    description: "A JSON object that contains information about the Recipient's kyc",
+    description:
+      "A JSON object that contains information about the Recipient's kyc",
     requirement: "Mandatory",
     length: "n/a",
     section: "Body Parameters",
@@ -637,7 +567,8 @@ const transactionInstitutionParameters = [
         key: "recipient_id_document",
         label: "id_document",
         type: "object",
-        description: "A JSON object that contains KYC document information for the Recipient.",
+        description:
+          "A JSON object that contains KYC document information for the Recipient.",
         requirement: "Mandatory",
         length: "n/a",
         children: [
@@ -645,7 +576,8 @@ const transactionInstitutionParameters = [
             key: "recipient_type",
             label: "type",
             type: "string",
-            description: "ID document type of account holder used in sign up. Enum = NationalIdCard, Passport, DriversPermit, Other.",
+            description:
+              "ID document type of account holder used in sign up. Enum = NationalIdCard, Passport, DriversPermit, Other.",
             requirement: "Mandatory",
             length: "1 - 20",
           },
@@ -677,7 +609,8 @@ const transactionInstitutionParameters = [
             key: "recipient_issued_country",
             label: "issued_country",
             type: "string",
-            description: "Country where the ID document was issued in ISO Alpha-2 format.",
+            description:
+              "Country where the ID document was issued in ISO Alpha-2 format.",
             requirement: "Optional",
             length: "2",
           },
@@ -687,7 +620,8 @@ const transactionInstitutionParameters = [
         key: "recipient_address",
         label: "address",
         type: "object",
-        description: "JSON object that contains address information for the person associated with the business",
+        description:
+          "JSON object that contains address information for the person associated with the business",
         requirement: "Mandatory",
         children: [
           {
@@ -752,7 +686,8 @@ const transactionInstitutionParameters = [
         key: "recipient_subject_name",
         label: "subject_name",
         type: "object",
-        description: "A JSON object that contains KYC name information for the Recipient.",
+        description:
+          "A JSON object that contains KYC name information for the Recipient.",
         requirement: "Mandatory",
         length: "n/a",
         children: [
@@ -804,7 +739,8 @@ const transactionInstitutionParameters = [
     key: "transfer_information",
     label: "transfer_information",
     type: "object",
-    description: "A JSON object that contains associated data to the transaction that provides auxiliary information and additional security information.",
+    description:
+      "A JSON object that contains associated data to the transaction that provides auxiliary information and additional security information.",
     requirement: "Mandatory",
     length: "N/A",
     section: "Body Parameters",
@@ -813,7 +749,8 @@ const transactionInstitutionParameters = [
         key: "quote_id",
         label: "quote_id",
         type: "string",
-        description: "The specific quoteId to be used for the transaction. This quoteId is generated when a quotation is created and it is returned on the quotation response.",
+        description:
+          "The specific quoteId to be used for the transaction. This quoteId is generated when a quotation is created and it is returned on the quotation response.",
         requirement: "Conditional",
         length: "16-20",
       },
@@ -829,7 +766,8 @@ const transactionInstitutionParameters = [
         key: "receiving_country",
         label: "receiving_country",
         type: "string",
-        description: "Destination country where the payout is to be made. To be specified in ISO Alpha 2 format. Example 'TT'.",
+        description:
+          "Destination country where the payout is to be made. To be specified in ISO Alpha 2 format. Example 'TT'.",
         requirement: "Mandatory",
         length: "2",
       },
@@ -845,7 +783,8 @@ const transactionInstitutionParameters = [
         key: "source_of_funds",
         label: "source_of_funds",
         type: "string",
-        description: "Source of funds. Please click here for accepted values. Enum = {values}.",
+        description:
+          "Source of funds. Please click here for accepted values. Enum = {values}.",
         requirement: "Mandatory",
         length: "4 - 17",
       },
@@ -853,7 +792,8 @@ const transactionInstitutionParameters = [
         key: "relationship_recipient",
         label: "relationship_recipient",
         type: "string",
-        description: "The relation between the Recipient and the beneficiary. Enum = {values}.",
+        description:
+          "The relation between the Recipient and the beneficiary. Enum = {values}.",
         requirement: "Mandatory",
         length: "3 - 11",
       },
@@ -882,7 +822,8 @@ const transactionInstitutionParameters = [
     key: "message",
     label: "message",
     type: "string",
-    description: "Message is conditional. Messages will show based on condition applied. Added one example only. Example: Registration request sent",
+    description:
+      "Message is conditional. Messages will show based on condition applied. Added one example only. Example: Registration request sent",
     requirement: "Mandatory",
     length: "255",
     section: "Response Parameters",
@@ -891,7 +832,8 @@ const transactionInstitutionParameters = [
     key: "institution_receipt_id",
     label: "institution_receipt_id",
     type: "string",
-    description: "The unique PayWise ID returned once the transaction has been posted.",
+    description:
+      "The unique PayWise ID returned once the transaction has been posted.",
     requirement: "Conditional",
     length: "10-40",
     section: "Response Parameters",
@@ -899,7 +841,6 @@ const transactionInstitutionParameters = [
 ];
 
 const Transaction_Institutions = () => {
-  // Estado para controlar la visibilidad del div que contiene el <p>
   const [openSections, setOpenSections] = useState({});
   const [rotations, setRotations] = useState({});
 
@@ -1065,31 +1006,35 @@ const Transaction_Institutions = () => {
             ensures that funds are securely moved between accounts with detailed
             tracking of the transaction.
           </p>
-          
-          {sections.map((section) => (
-          <div key={section} className="border-b border-[#6FA43A] py-4">
-            <h3 className="text-[#1E64A7] font-semibold py-3">{section}:</h3>
-            <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
-              {transactionInstitutionParameters
-                .filter((param) => param.section === section)
-                .map((param, idx, arr) => (
-                  <ParameterItem
-                    key={param.key}
-                    param={param}
-                    openSections={openSections}
-                    setOpenSections={setOpenSections}
-                    rotations={rotations}
-                    setRotations={setRotations}
-                    isLast={idx === arr.length - 1}
-                  />
-                ))}
-            </div>
-          </div>
-        ))}
 
+          {sections.map((section) => (
+            <div key={section} className="border-b border-[#6FA43A] py-4">
+              <h3 className="text-[#1E64A7] font-semibold py-3">{section}:</h3>
+              <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
+                {transactionInstitutionParameters
+                  .filter((param) => param.section === section)
+                  .map((param, idx, arr) => (
+                    <ParameterItem
+                      key={param.key}
+                      param={param}
+                      openSections={openSections}
+                      setOpenSections={setOpenSections}
+                      rotations={rotations}
+                      setRotations={setRotations}
+                      isLast={idx === arr.length - 1}
+                    />
+                  ))}
+              </div>
+            </div>
+          ))}
         </div>
         <div className="lg:w-2/4 w-full sticky top-0">
-          <Reques_Example />
+          <CodeExampleBox title="Request example" languageData={languageData} />
+          <CodeExampleBox
+            title="Response example"
+            content={responseExample}
+            showLanguageSelector={false}
+          />
         </div>
       </div>
     </div>

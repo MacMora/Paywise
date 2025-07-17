@@ -1,6 +1,56 @@
 "use client"; // This is a client component
 import React, { useState } from "react";
 import App from "@/components/App";
+import ParameterItem from "@/components/ParameterItem";
+
+//Header Parameters
+const headerParameters = [
+  {
+    key: "PW-subscription-key",
+    label: "PW-subscription-key",
+    type: "string",
+    description:
+      "Developer key will be available upon registration on the portal. Production key will be shared upon request.",
+    requirement: "Mandatory",
+    length: "32",
+  },
+  {
+    key: "PW-origin-country",
+    label: "PW-origin-country",
+    type: "string",
+    description:
+      "Country Code in which the transaction is created. ISO Alpha 2 standard",
+    requirement: "Mandatory",
+    length: "2",
+  },
+  {
+    key: "PW-request-date",
+    label: "PW-request-date",
+    type: "string",
+    description:
+      "Current timestamp of the request. Format: 'YYYY-MM-DD HH:mm:ss'",
+    requirement: "Mandatory",
+    length: "19",
+  },
+  {
+    key: "PW-ip-address",
+    label: "PW-ip-address",
+    type: "string",
+    description:
+      "Fixed IP for Institution, used in the 'PW-Institution' & 'PW-Account' products",
+    requirement: "Conditional",
+    length: "8-16",
+  },
+  {
+    key: "User-Agent",
+    label: "User-Agent",
+    type: "string",
+    description:
+      "In a programmable environment, this avoids running into Cloudflare issues",
+    requirement: "Mandatory",
+    length: "255",
+  },
+];
 
 const Codes = () => {
   // Estado para controlar la visibilidad del div que contiene el <p>
@@ -600,219 +650,22 @@ const Codes = () => {
                 </span>
               </div>
 
-              <div className="border-b py-4">
-                <div className="font-cabin text-sm italic text-[#495059] py-2">
-                  <div
-                    onClick={() => handleClick("pw-subscription-key")}
-                    className="flex flex-row gap-2 items-center cursor-pointer"
-                  >
-                    <svg
-                      className={`transition-transform duration-150 ${rotations["pw-subscription-key"]}`}
-                      width="14"
-                      height="14"
-                      viewBox="0 0 192 336"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M24 24L168 168L24 312"
-                        stroke="#536374"
-                        strokeWidth="48"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <p>
-                      <span className="font-semibold">PW-subscription-key</span>{" "}
-                      string
-                    </p>
-                  </div>
-                  {openSections["pw-subscription-key"] && (
-                    <div className="py-3">
-                      <p className="py-2">
-                        This key is provided upon registration in the{" "}
-                        <a href="#developers_portal">
-                          Developers&rsquo; Portal
-                        </a>
-                        . It is used to authenticate the caller and ensure they
-                        have access to the API. A production key will be shared
-                        after the necessary verification and approval process.
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Requirement:
-                        </span>{" "}
-                        Mandatory
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Field Length:
-                        </span>{" "}
-                        32
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="border-b py-4">
-                <div className="font-cabin text-sm italic text-[#495059] py-2">
-                  <div
-                    onClick={() => handleClick("pw-origin-country")}
-                    className="flex flex-row gap-2 items-center cursor-pointer"
-                  >
-                    <svg
-                      className={`transition-transform duration-150 ${rotations["pw-origin-country"]}`}
-                      width="14"
-                      height="14"
-                      viewBox="0 0 192 336"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M24 24L168 168L24 312"
-                        stroke="#536374"
-                        strokeWidth="48"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <p>
-                      <span className="font-semibold">PW-origin-country</span>{" "}
-                      string
-                    </p>
-                  </div>
-                  {openSections["pw-origin-country"] && (
-                    <div className="py-3">
-                      <p className="py-2">
-                        This is a two-character ISO Alpha-2 country code that
-                        indicates the country in which the transaction
-                        originated. It is important for compliance and auditing
-                        purposes.
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Requirement:
-                        </span>{" "}
-                        Mandatory
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Field Length:
-                        </span>{" "}
-                        2
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="border-b py-4">
-                <div className="font-cabin text-sm italic text-[#495059] py-2">
-                  <div
-                    onClick={() => handleClick("pw-request-date")}
-                    className="flex flex-row gap-2 items-center cursor-pointer"
-                  >
-                    <svg
-                      className={`transition-transform duration-150 ${rotations["pw-request-date"]}`}
-                      width="14"
-                      height="14"
-                      viewBox="0 0 192 336"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M24 24L168 168L24 312"
-                        stroke="#536374"
-                        strokeWidth="48"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <p>
-                      <span className="font-semibold">PW-request-date</span>{" "}
-                      string
-                    </p>
-                  </div>
-                  {openSections["pw-request-date"] && (
-                    <div className="py-3">
-                      <p className="py-2">
-                        This timestamp represents the exact time the API request
-                        is made. It helps maintain time-sensitive processes and
-                        ensure that requests are processed within the required
-                        timeframes.
-                        <br />
-                        <br />
-                        Current timestamp of the request. Format: "YYYY-MM-DD
-                        HH:mm:ss
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Requirement:
-                        </span>{" "}
-                        Mandatory
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Field Length:
-                        </span>{" "}
-                        19
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <div className="font-cabin text-sm italic text-[#495059] py-2">
-                  <div
-                    onClick={() => handleClick("pw-ip-address")}
-                    className="flex flex-row gap-2 items-center cursor-pointer"
-                  >
-                    <svg
-                      className={`transition-transform duration-150 ${rotations["pw-ip-address"]}`}
-                      width="14"
-                      height="14"
-                      viewBox="0 0 192 336"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M24 24L168 168L24 312"
-                        stroke="#536374"
-                        strokeWidth="48"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <p>
-                      <span className="font-semibold">PW-ip-address</span>{" "}
-                      string
-                    </p>
-                  </div>
-                  {openSections["pw-ip-address"] && (
-                    <div className="py-3">
-                      <p className="py-2">
-                        Fixed IP for Institution, used in the "PW-Institution" &
-                        "PW-Account" products
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Requirement:
-                        </span>{" "}
-                        Conditional
-                      </p>
-                      <p className="py-2">
-                        <span className="font-semibold not-italic">
-                          Field Length:
-                        </span>{" "}
-                        8-16
-                      </p>
-                    </div>
-                  )}
-                </div>
+              {/* Map PW-subscription-key */}
+              <div className="flex flex-col gap-2 font-code text-sm italic text-[#495059] py-2">
+                {headerParameters.map((param, idx, arr) => (
+                  <ParameterItem
+                    key={param.key}
+                    param={param}
+                    openSections={openSections}
+                    setOpenSections={setOpenSections}
+                    rotations={rotations}
+                    setRotations={setRotations}
+                    isLast={idx === arr.length - 1}
+                  />
+                ))}
               </div>
             </div>
+            {/* Example */}
             <div className="lg:w-2/4 w-full sticky top-0">
               <div className="bg-[#F5F6F8] overflow-hidden font-code rounded">
                 <div className="bg-[#EBEEF1] p-4 flex flex-col max-md:gap-4 md:flex-row border md:items-center">
@@ -853,6 +706,16 @@ const Codes = () => {
                   </div>
                   <div className="md:basis-3/5">
                     <p className="text-xs">255.255.255.255</p>
+                  </div>
+                </div>
+                <div className="p-4 flex flex-col max-md:gap-4 md:flex-row border md:items-center">
+                  <div className="md:basis-2/5">
+                    <p className="text-xs">User-Agent</p>
+                  </div>
+                  <div className="md:basis-3/5">
+                    <p className="text-xs">
+                      Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+                    </p>
                   </div>
                 </div>
               </div>

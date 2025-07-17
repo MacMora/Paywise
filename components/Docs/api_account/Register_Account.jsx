@@ -1,11 +1,9 @@
 "use client";
-// Importamos useState desde React
 import { useState } from "react";
-import { useLanguage } from "../../LenguageContext";
-import { Copy, Check } from "lucide-react";
+import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
 
-// Datos de lenguajes de programación
+// Language data
 const languageData = {
   Bash: {
     description: `
@@ -154,112 +152,20 @@ print(response.json())
   },
 };
 
-const Reques_Example = () => {
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
-
-  const [copiedRequest, setCopiedRequest] = useState(false);
-  const [copiedResponse, setCopiedResponse] = useState(false);
-
-  const handleCopy = async (text, setCopied) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
-
-  const responseExample = `{
-    "status": "success",
-    "code": 200,
-    "message": "Registration request sent"
+// Response example
+const responseExample = `{
+  "status": "success",
+  "code": 200,
+  "message": "Registration request sent"
 }
 #if there is an error, the response may look like:
 {
-    "status": "error",
-    "code": 400,
-    "message": "Invalid mobile number format"
+  "status": "error",
+  "code": 400,
+  "message": "Invalid mobile number format"
 }`;
 
-  return (
-    <div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Request example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() =>
-                handleCopy(
-                  languageData[selectedLanguage]?.description,
-                  setCopiedRequest
-                )
-              }
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedRequest ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{languageData[selectedLanguage]?.description}</pre>
-        </div>
-      </div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Response example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => handleCopy(responseExample, setCopiedResponse)}
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedResponse ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{responseExample}</pre>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Estructura de parámetros escalable y jerárquica para Register_Account
+// Parameters
 const registerAccountParameters = [
   // Request Parameters
   {
@@ -347,7 +253,7 @@ const registerAccountParameters = [
     key: "post_authorisation_token",
     label: "authorisation_token",
     type: "string",
-    section: "POST Callback URL",
+    section: "Header POST Callback URL",
     description: "PW encrypts the Institution authorisation_token.",
     requirement: "mandatory",
     length: "0 - 255",
@@ -356,7 +262,7 @@ const registerAccountParameters = [
     key: "pw-signature",
     label: "pw-signature",
     type: "string",
-    section: "POST Callback URL",
+    section: "Header POST Callback URL",
     description: "Digitally signed by PayWise",
     requirement: "mandatory",
     length: "0 - 255",
@@ -365,7 +271,7 @@ const registerAccountParameters = [
     key: "mobile_number",
     label: "mobile_number",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description:
       'Full mobile number of account holder. Example: "+18681234567"',
     requirement: "mandatory",
@@ -375,7 +281,7 @@ const registerAccountParameters = [
     key: "first_name",
     label: "first_name",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description: "First name of the account holder as registered with PayWise.",
     requirement: "mandatory",
     length: "1 - 50",
@@ -384,7 +290,7 @@ const registerAccountParameters = [
     key: "last_name",
     label: "last_name",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description: "Last name of the account holder as registered with PayWise.",
     requirement: "mandatory",
     length: "1 - 75",
@@ -393,7 +299,7 @@ const registerAccountParameters = [
     key: "business_name",
     label: "business_name",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description:
       "Wherever applicable, the Business name of the account holder as registered with PayWise.",
     requirement: "optional",
@@ -403,7 +309,7 @@ const registerAccountParameters = [
     key: "version",
     label: "version",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description:
       'For version control. Format = "YYYY-MM-DD". Defaults to the latest version',
     requirement: "mandatory",
@@ -413,7 +319,7 @@ const registerAccountParameters = [
     key: "request_timestamp",
     label: "request_timestamp",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description:
       'Current timestamp from the request. Format: "YYYY-MM-DD HH:mm:ss" Example: 2014-10-08 16:01:31',
     requirement: "mandatory",
@@ -423,7 +329,7 @@ const registerAccountParameters = [
     key: "request_id",
     label: "request_id",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description: "The request_id that is traceable from the PW side",
     requirement: "mandatory",
     length: "1 - 200",
@@ -432,7 +338,7 @@ const registerAccountParameters = [
     key: "institution_name",
     label: "institution_name",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description: "Name of party who requested this api.",
     requirement: "mandatory",
     length: "255",
@@ -441,7 +347,7 @@ const registerAccountParameters = [
     key: "request_status",
     label: "request_status",
     type: "string",
-    section: "POST Callback URL",
+    section: "Body POST Callback URL",
     description:
       'Returns the API call status. Enum = { "approved" , "rejected" }',
     requirement: "mandatory",
@@ -485,7 +391,8 @@ const Register_Account = () => {
   const sections = [
     "Request Parameters",
     "Body Parameters",
-    "POST Callback URL",
+    "Header POST Callback URL",
+    "Body POST Callback URL",
     "Response Parameters",
   ];
 
@@ -690,7 +597,12 @@ const Register_Account = () => {
           ))}
         </div>
         <div className="lg:w-2/4 w-full sticky top-0">
-          <Reques_Example />
+          <CodeExampleBox title="Request example" languageData={languageData} />
+          <CodeExampleBox
+            title="Response example"
+            content={responseExample}
+            showLanguageSelector={false}
+          />
         </div>
       </div>
     </div>

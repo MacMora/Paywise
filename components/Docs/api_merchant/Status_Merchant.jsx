@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { useLanguage } from "../../LenguageContext";
-import { Copy, Check } from "lucide-react";
+import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
 
+// Language data
 const languageData = {
   Bash: {
     description: `
@@ -32,160 +32,69 @@ import requests
   },
 };
 
-const Reques_Example = () => {
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
-  const [copiedRequest, setCopiedRequest] = useState(false);
-  const [copiedResponse, setCopiedResponse] = useState(false);
-
-  const handleCopy = async (text, setCopied) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
-
-  const responseExample = `{
-    "status": "success",
-    "code": 200,
-    "message": "Payment successful",
-    "payment_details": {
-        "id": "PW-1234567890",
-        "transaction_id": "ORD-987654321",
-        "amount": "150.00",
-        "tax": "10.00",
-        "fees": {
-            "total": "5.00",
-            "card_processing": "2.00",
-            "platform_processing": "1.50",
-            "agent_processing": "0.50",
-            "payer_pays": "3.00",
-            "payee_pays": "2.00"
-        },
-        "currency": "TTD",
-        "payments_status": {
-            "paid": "100.00",
-            "remaining": "50.00"
-        },
-        "timestamps": {
-            "created_time": "2024-10-23 12:00:00",
-            "updated_time": "2024-10-23 12:05:00",
-            "expire_time": "2024-10-23 12:30:00"
-        },
-        "payers": [
-            {
-                "mobile_number": "1234567890",
-                "amount": "100.00",
-                "fee": "3.00",
-                "tip": "2.00",
-                "payment_method": "card",
-                "status": "completed"
-            }
-        ],
-        "payees": [
-            {
-                "mobile_number": "0987654321",
-                "amount": "97.00",
-                "fee": "2.00",
-                "payment_date": "2024-10-23 12:10:00",
-                "delay_days": 2,
-                "status": "pending",
-                "payments_status": {
-                    "paid": "50.00",
-                    "remaining": "47.00"
-                }
-            }
-        ]
-    },
-    "fraud_check_status": "passed"
+// Response example
+const responseExample = `{
+  "status": "success",
+  "code": 200,
+  "message": "Payment successful",
+  "payment_details": {
+      "id": "PW-1234567890",
+      "transaction_id": "ORD-987654321",
+      "amount": "150.00",
+      "tax": "10.00",
+      "fees": {
+          "total": "5.00",
+          "card_processing": "2.00",
+          "platform_processing": "1.50",
+          "agent_processing": "0.50",
+          "payer_pays": "3.00",
+          "payee_pays": "2.00"
+      },
+      "currency": "TTD",
+      "payments_status": {
+          "paid": "100.00",
+          "remaining": "50.00"
+      },
+      "timestamps": {
+          "created_time": "2024-10-23 12:00:00",
+          "updated_time": "2024-10-23 12:05:00",
+          "expire_time": "2024-10-23 12:30:00"
+      },
+      "payers": [
+          {
+              "mobile_number": "1234567890",
+              "amount": "100.00",
+              "fee": "3.00",
+              "tip": "2.00",
+              "payment_method": "card",
+              "status": "completed"
+          }
+      ],
+      "payees": [
+          {
+              "mobile_number": "0987654321",
+              "amount": "97.00",
+              "fee": "2.00",
+              "payment_date": "2024-10-23 12:10:00",
+              "delay_days": 2,
+              "status": "pending",
+              "payments_status": {
+                  "paid": "50.00",
+                  "remaining": "47.00"
+              }
+          }
+      ]
+  },
+  "fraud_check_status": "passed"
 }
 #if there is an error, the response may look like:
 {
-    "status": "error",
-    "code": 404,
-    "message": "Payment request not found"
+  "status": "error",
+  "code": 404,
+  "message": "Payment request not found"
 }`;
 
-  return (
-    <div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Request example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() =>
-                handleCopy(
-                  languageData[selectedLanguage]?.description,
-                  setCopiedRequest
-                )
-              }
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedRequest ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{languageData[selectedLanguage]?.description}</pre>
-        </div>
-      </div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Response example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => handleCopy(responseExample, setCopiedResponse)}
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedResponse ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{responseExample}</pre>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Parámetros de la API Status Merchant
+// Parameters
 const statusMerchantParameters = [
   // Request Parameters
   {
@@ -513,6 +422,22 @@ const statusMerchantParameters = [
             length: "11 - 19",
           },
           {
+            key: "url_payers",
+            label: "url",
+            type: "string",
+            description: "Hosted URL for the payer to pay",
+            requirement: "Conditional",
+            length: "1 - 255",
+          },
+          {
+            key: "expire_date_time_payers",
+            label: "expire_date_time",
+            type: "string",
+            description: "Datetime, the link will expire",
+            requirement: "Conditional",
+            length: "19",
+          },
+          {
             key: "metadata_payers",
             label: "metadata",
             type: "object",
@@ -643,7 +568,6 @@ const statusMerchantParameters = [
 ];
 
 const Status_Merchant = () => {
-  // Estado para controlar la visibilidad del div que contiene el <p>
   const [openSections, setOpenSections] = useState({});
   const [rotations, setRotations] = useState({});
 
@@ -690,7 +614,12 @@ const Status_Merchant = () => {
         ))}
       </div>
       <div className="lg:w-2/4 w-full sticky top-0">
-        <Reques_Example />
+        <CodeExampleBox title="Request example" languageData={languageData} />
+        <CodeExampleBox
+          title="Response example"
+          content={responseExample}
+          showLanguageSelector={false}
+        />
       </div>
     </div>
   );

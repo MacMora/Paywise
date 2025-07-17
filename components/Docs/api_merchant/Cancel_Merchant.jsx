@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useLanguage } from "../../LenguageContext";
-import { Copy, Check } from "lucide-react";
+import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
 
 const languageData = {
@@ -32,124 +31,34 @@ import requests
   },
 };
 
-const Reques_Example = () => {
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
-  const [copiedRequest, setCopiedRequest] = useState(false);
-  const [copiedResponse, setCopiedResponse] = useState(false);
-
-  const handleCopy = async (text, setCopied) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
-
-  const responseExample = `{
-    "status": "success",
-    "code": 200,
-    "message": "Payment successful",
-    "payment_details": {
-        "id": "PW-1234567890",
-        "transaction_id": "ORD-987654321",
-        "status": "completed",
-        "cancellation_time": null
-    }
+// Response example
+const responseExample = `{
+  "status": "success",
+  "code": 200,
+  "message": "Payment successful",
+  "payment_details": {
+      "id": "PW-1234567890",
+      "transaction_id": "ORD-987654321",
+      "status": "completed",
+      "cancellation_time": null
+  }
 }
 #if there is an error, the response may look like:
 {
-    "status": "error",
-    "code": 404,
-    "message": "Payment request not found"
+  "status": "error",
+  "code": 404,
+  "message": "Payment request not found"
 }`;
 
-  return (
-    <div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Request example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() =>
-                handleCopy(
-                  languageData[selectedLanguage]?.description,
-                  setCopiedRequest
-                )
-              }
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedRequest ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{languageData[selectedLanguage]?.description}</pre>
-        </div>
-      </div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Response example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => handleCopy(responseExample, setCopiedResponse)}
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedResponse ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{responseExample}</pre>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Parámetros de la API Cancel Merchant
+// Parameters
 const cancelMerchantParameters = [
   // Request Parameters
   {
     key: "version",
     label: "version",
     type: "string",
-    description: "For version control. Format = \"YYYY-MM-DD\". Defaults to the latest version",
+    description:
+      'For version control. Format = "YYYY-MM-DD". Defaults to the latest version',
     requirement: "mandatory",
     length: "10",
     section: "Request Parameters",
@@ -187,7 +96,7 @@ const cancelMerchantParameters = [
     key: "status",
     label: "status",
     type: "string",
-    description: "Returns the API call status. Enum = { \"success\", \"error\" }",
+    description: 'Returns the API call status. Enum = { "success", "error" }',
     requirement: "Mandatory",
     length: "10",
     section: "Response Parameters",
@@ -205,7 +114,8 @@ const cancelMerchantParameters = [
     key: "message",
     label: "message",
     type: "string",
-    description: "Message is conditional. Messages will show based on condition applied. Added one example only. Example: \"Payment successful\".",
+    description:
+      'Message is conditional. Messages will show based on condition applied. Added one example only. Example: "Payment successful".',
     requirement: "Mandatory",
     length: "255",
     section: "Response Parameters",
@@ -214,7 +124,8 @@ const cancelMerchantParameters = [
     key: "payment_details",
     label: "payment_details",
     type: "object",
-    description: "A JSON object that contains payload about successfully beginning the payment process.",
+    description:
+      "A JSON object that contains payload about successfully beginning the payment process.",
     requirement: "Conditional",
     section: "Response Parameters",
     children: [
@@ -238,7 +149,8 @@ const cancelMerchantParameters = [
         key: "status_details",
         label: "status",
         type: "string",
-        description: "Payment status. Enum = pending, completed, failed, rejected",
+        description:
+          "Payment status. Enum = pending, completed, failed, rejected",
         requirement: "Conditional",
         length: "6 - 9",
       },
@@ -246,7 +158,8 @@ const cancelMerchantParameters = [
         key: "cancellation_time",
         label: "cancellation_time",
         type: "string",
-        description: "The cancellation time for the payment request. Format = YYYY-MM-DD HH:MI:SS",
+        description:
+          "The cancellation time for the payment request. Format = YYYY-MM-DD HH:MI:SS",
         requirement: "Conditional",
         length: "11 - 19",
       },
@@ -255,7 +168,6 @@ const cancelMerchantParameters = [
 ];
 
 const Cancel_Merchant = () => {
-  // Estado para controlar la visibilidad del div que contiene el <p>
   const [openSections, setOpenSections] = useState({});
   const [rotations, setRotations] = useState({});
 
@@ -304,10 +216,14 @@ const Cancel_Merchant = () => {
             </div>
           </div>
         ))}
-
       </div>
       <div className="lg:w-2/4 w-full sticky top-0">
-        <Reques_Example />
+        <CodeExampleBox title="Request example" languageData={languageData} />
+        <CodeExampleBox
+          title="Response example"
+          content={responseExample}
+          showLanguageSelector={false}
+        />
       </div>
     </div>
   );

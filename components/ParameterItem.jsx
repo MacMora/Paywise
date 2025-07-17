@@ -28,7 +28,7 @@ const ParameterItem = ({ param, openSections, setOpenSections, rotations, setRot
       <div
         onClick={() => handleClick(param.key)}
         className='flex flex-row gap-2 items-center cursor-pointer'
-        style={{ marginLeft: level > 1 ? (level - 1) * 16 : 0 }}
+        style={{ marginLeft: level > 1 ? (level - 1) * 5 : 0 }}
       >
         <ChevronRightIcon className={`text-[#536374] cursor-pointer transition-transform duration-150 ${rotations[param.key]}`} />
         <p className='font-semibold'>
@@ -36,7 +36,7 @@ const ParameterItem = ({ param, openSections, setOpenSections, rotations, setRot
         </p>
       </div>
       {openSections[param.key] && (
-        <div className='py-3'>
+        <div className='py-3' style={{ marginLeft: level > 1 ? (level - 1) * 5 : 0 }}>
           {param.description && (
             <p className='py-2'>
               <span className='font-semibold not-italic font-cabin'>Description:</span> {param.description}

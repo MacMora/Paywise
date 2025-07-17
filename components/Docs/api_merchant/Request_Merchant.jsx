@@ -1,11 +1,9 @@
 "use client";
-// Importamos useState desde React
 import { useState } from "react";
-import { useLanguage } from "../../LenguageContext";
-import { Copy, Check } from "lucide-react";
+import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
 
-// Datos de lenguajes de programación
+// Language data
 const languageData = {
   Bash: {
     description: `
@@ -34,154 +32,63 @@ import requests
   },
 };
 
-const Reques_Example = () => {
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
-  const [copiedRequest, setCopiedRequest] = useState(false);
-  const [copiedResponse, setCopiedResponse] = useState(false);
-
-  const handleCopy = async (text, setCopied) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
-
-  const responseExample = `{
-    "status": "success",
-    "code": 200,
-    "message": "Payment request successful",
-    "payment_details": {
-        "id": "PW123456789",
-        "transaction_id": "ORD987654321",
-        "amount": "500.00",
-        "fees": {
-            "total": "10.00",
-            "card_processing": "5.00",
-            "crypto_processing": "0.00",
-            "platform_processing": "3.00",
-            "agent_processing": "2.00",
-            "convenience": "0.00"
-        },
-        "payers": [
-            {
-                "mobile_number": "+18681234567",
-                "amount": "500.00",
-                "fee": "10.00",
-                "tip": "5.00",
-                "status": "completed",
-                "metadata": {
-                    "customer_type": "VIP",
-                    "payment_method": "credit_card"
-                }
-            }
-        ],
-        "payees": [
-            {
-                "mobile_number": "+18689876543",
-                "amount": "490.00",
-                "fee": "10.00",
-                "delay_days": 1,
-                "metadata": {
-                    "merchant_id": "M12345"
-                },
-                "qr_code": {
-                    "data": "QR123456789",
-                    "url": "https://paywise.co/payment/QR123456789",
-                    "expire_time": "2024-10-23 15:30:00"
-                }
-            }
-        ]
-    },
-    "fraud_check_status": "passed"
+// Response example
+const responseExample = `{
+  "status": "success",
+  "code": 200,
+  "message": "Payment request successful",
+  "payment_details": {
+      "id": "PW123456789",
+      "transaction_id": "ORD987654321",
+      "amount": "500.00",
+      "fees": {
+          "total": "10.00",
+          "card_processing": "5.00",
+          "crypto_processing": "0.00",
+          "platform_processing": "3.00",
+          "agent_processing": "2.00",
+          "convenience": "0.00"
+      },
+      "payers": [
+          {
+              "mobile_number": "+18681234567",
+              "amount": "500.00",
+              "fee": "10.00",
+              "tip": "5.00",
+              "status": "completed",
+              "metadata": {
+                  "customer_type": "VIP",
+                  "payment_method": "credit_card"
+              }
+          }
+      ],
+      "payees": [
+          {
+              "mobile_number": "+18689876543",
+              "amount": "490.00",
+              "fee": "10.00",
+              "delay_days": 1,
+              "metadata": {
+                  "merchant_id": "M12345"
+              },
+              "qr_code": {
+                  "data": "QR123456789",
+                  "url": "https://paywise.co/payment/QR123456789",
+                  "expire_time": "2024-10-23 15:30:00"
+              }
+          }
+      ]
+  },
+  "fraud_check_status": "passed"
 }
 #if there is an error, the response may look like:
 {
-    "status": "error",
-    "code": 404,
-    "message": "Payment request not found"
+  "status": "error",
+  "code": 404,
+  "message": "Payment request not found"
 }`;
 
-  return (
-    <div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Request example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() =>
-                handleCopy(
-                  languageData[selectedLanguage]?.description,
-                  setCopiedRequest
-                )
-              }
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedRequest ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{languageData[selectedLanguage]?.description}</pre>
-        </div>
-      </div>
-      <div className="bg-[#699EC7] rounded my-8 md:mb-4">
-        <div className="bg-[#136AB7] flex flex-row justify-around sm:justify-between items-center rounded-t">
-          <div className="w-2/4 py-2 sm:px-2">
-            <h2 className="text-sm text-[#F2F2F2]">Response example:</h2>
-          </div>
-          <div className="w-2/6 flex justify-center items-center gap-2">
-            <select
-              className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-            >
-              {Object.keys(languageData).map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => handleCopy(responseExample, setCopiedResponse)}
-              className="p-1 hover:bg-[#699EC7] rounded transition-colors duration-200"
-            >
-              {copiedResponse ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4 text-[#F2F2F2]" />
-              )}
-            </button>
-          </div>
-        </div>
-        <div className="overflow-x-auto code-scrollbar px-4 py-2 flex text-sm text-[#F2F2F2]">
-          <pre>{responseExample}</pre>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Parámetros de la API Request Merchant
+// Parameters
 const requestMerchantParameters = [
   // Request Parameters
   {
@@ -506,7 +413,7 @@ const requestMerchantParameters = [
         label: "amount",
         type: "string",
         description:
-          "Amount payable to Merchant by this payer in TTD with precision of 2 decimal places.",
+          "Amount paid by Payer/ source by the payer in TTD with precision of 2 decimal places - it ignores fees deductable.",
         requirement: "Mandatory",
         length: "8, 2",
       },
@@ -912,7 +819,6 @@ const requestMerchantParameters = [
 ];
 
 const Request_Merchant = () => {
-  // Estado para controlar la visibilidad del div que contiene el <p>
   const [openSections, setOpenSections] = useState({});
   const [rotations, setRotations] = useState({});
 
@@ -1037,34 +943,6 @@ const Request_Merchant = () => {
               </p>
             </div>
           </div>
-          {/*<div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
-                        <div className='basis-[10%] text-base'>
-                            <p>POST</p>
-                        </div>
-                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
-                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
-                        </div>
-                        <div className='basis-[50%] md:basis-[20%] font-bold'>
-                            <a href='#quote_post'>/quote</a>
-                        </div>
-                        <div className='full xl:basis-[50%]'>
-                            <p>Post a quote to understand what the TTD amount will be and the period of time to keep it valid</p>
-                        </div>
-                    </div>
-                    <div className='py-4 px-2 border flex flex-row max-xl:flex-wrap max-xl:gap-6 text-sm items-center'>
-                        <div className='basis-[10%] text-base'>
-                            <p>GET</p>
-                        </div>
-                        <div className='md:basis-[43%] xl:basis-[20%] font-bold'>
-                            <p className='text-[#1e64a7] font-semibold'>https://devapi.paywise.co</p>
-                        </div>
-                        <div className='basis-[50%] md:basis-[20%] font-bold'>
-                            <a href='#balance_account'>/quote/{`{quote_id}`}</a>
-                        </div>
-                        <div className='full xl:basis-[50%]'>
-                            <p>Retrieves the quoted payload</p>
-                        </div>
-                    </div>*/}
         </div>
       </div>
 
@@ -1107,7 +985,12 @@ const Request_Merchant = () => {
           ))}
         </div>
         <div className="lg:w-2/4 w-full sticky top-0">
-          <Reques_Example />
+          <CodeExampleBox title="Request example" languageData={languageData} />
+          <CodeExampleBox
+            title="Response example"
+            content={responseExample}
+            showLanguageSelector={false}
+          />
         </div>
       </div>
     </div>
