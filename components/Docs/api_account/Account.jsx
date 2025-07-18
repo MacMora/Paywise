@@ -2,161 +2,281 @@
 import { useState } from "react";
 import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
+import { ResponseExampleBox } from '../../ResponseExampleBox';
 
 // Language data
 const languageData = {
   Bash: {
     description: `
-curl -X POST "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith"
--H "PW-subscription-key: eed0d85c530c4b26a91d09b783d8fab3"
--H "PW-origin-country: TT"
--H "PW-request-date: 2024-10-20 15:30:00" 
--d '{
-    "mobile_number": "+18681234567",
-    "institution_name": "PayWise Institution",
-    "first_name": "John",
-    "last_name": "Doe",
-    "sender_first_name": "Jane",
-    "sender_last_name": "Smith"
-}'  
+FIRST_NAME="Dino"
+LAST_NAME="Lewis"
+SENDER_FIRST_NAME="asd"
+SENDER_LAST_NAME="das"
+MOBILE_NUMBER="18685634000"
+INSTITUTION_NAME="Reaby"
+API_KEY="acdb459a0f384b7c8fc2205e13c09036"
+ORIGIN_COUNTRY="TT"
+
+REQUEST_DATE=$(date +"%Y-%m-%d %H:%M:%S")
+VERSION="2024-10-01"
+BASE_URL="https://devapi.paywise.co/account/account"
+
+QUERY_STRING="?version=$\{VERSION}&mobile_number=$\{MOBILE_NUMBER}&institution_name=$\{INSTITUTION_NAME}&first_name=$\{FIRST_NAME}&last_name=$\{LAST_NAME}&sender_first_name=$\{SENDER_FIRST_NAME}&sender_last_name=$\{SENDER_LAST_NAME}"
+
+curl -X GET "$\{BASE_URL}$\{QUERY_STRING}" 
+  -H "Content-Type: application/json" 
+  -H "pw-origin-country: \${ORIGIN_COUNTRY}" 
+  -H "pw-subscription-key: \${API_KEY}" 
+  -H "pw-request-date: \${REQUEST_DATE}"
     `,
   },
   Ruby: {
     description: `
 require 'net/http'
-require 'json'
+require 'uri'
+require 'time'
 
-url = URI("https://devapi.paywise.co/account/account?version=2024-10-20")
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
+first_name = "Dino"
+last_name = "Lewis"
+sender_first_name = "asd"
+sender_last_name = "das"
+mobile_number = "18685634000"
+institution_name = "Reaby"
+version = "2024-10-01"
+api_key = "acdb459a0f384b7c8fc2205e13c09036"
 
-headers = {
-  'PW-subscription-key' => 'eed0d85c530c4b26a91d09b783d8fab3',
-  'PW-origin-country' => 'TT',
-  'PW-request-date' => '2024-10-20 15:30:00',
-  'Content-Type' => 'application/json'
+request_date = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+
+params = {
+  version: version,
+  mobile_number: mobile_number,
+  institution_name: institution_name,
+  first_name: first_name,
+  last_name: last_name,
+  sender_first_name: sender_first_name,
+  sender_last_name: sender_last_name
 }
 
-body = {
-  "mobile_number" => "+18681234567",
-  "institution_name" => "PayWise Institution",
-  "first_name" => "John",
-  "last_name" => "Doe",
-  "sender_first_name" => "Jane",
-  "sender_last_name" => "Smith"
-}
+uri = URI("https://devapi.paywise.co/account/account")
+uri.query = URI.encode_www_form(params)
 
-request = Net::HTTP::Post.new(url, headers)
-request.body = body.to_json
+req = Net::HTTP::Get.new(uri)
+req["Content-Type"] = "application/json"
+req["pw-origin-country"] = "TT"
+req["pw-subscription-key"] = api_key
+req["pw-request-date"] = request_date
 
-response = http.request(request)
-puts response.read_body
+res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+  http.request(req)
+end
+
+puts "HTTP Status: #{res.code}"
+puts "Response: #{res.body}"
     `,
   },
   PHP: {
     description: `
-<?php 
-$curl = curl_init();
+<?php
 
-curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => array(
-        "PW-subscription-key: eed0d85c530c4b26a91d09b783d8fab3",
-        "PW-origin-country: TT",
-        "PW-request-date: 2024-10-20 15:30:00",
-        "Content-Type: application/json"
-    ),
-    CURLOPT_POSTFIELDS => json_encode(array(
-        "mobile_number" => "+18681234567",
-        "institution_name" => "PayWise Institution",
-        "first_name" => "John",
-        "last_name" => "Doe",
-        "sender_first_name" => "Jane",
-        "sender_last_name" => "Smith"
-    )),
-));
+$first_name = "Dino";
+$last_name = "Lewis";
+$sender_first_name = "asd";
+$sender_last_name = "das";
+$mobile_number = "18685634000";
+$institution_name = "Reaby";
+$version = "2024-10-01";
 
-$response = curl_exec($curl);
-curl_close($curl);
-echo $response;
-?>
+$request_date = date("Y-m-d H:i:s");
+$api_key = "acdb459a0f384b7c8fc2205e13c09036";
+
+$query = http_build_query([
+    "version" => $version,
+    "mobile_number" => $mobile_number,
+    "institution_name" => $institution_name,
+    "first_name" => $first_name,
+    "last_name" => $last_name,
+    "sender_first_name" => $sender_first_name,
+    "sender_last_name" => $sender_last_name
+]);
+
+$url = "https://devapi.paywise.co/account/account?" . $query;
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Content-Type: application/json",
+    "pw-origin-country: TT",
+    "pw-subscription-key: $api_key",
+    "pw-request-date: $request_date"
+]);
+
+$response = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+echo "HTTP Status: $http_code\n";
+echo "Response:\n$response\n";
     `,
   },
   JavaScript: {
     description: `
-const url = "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith";
+const axios = require('axios');
+
+const params = {
+  version: "2024-10-01",
+  mobile_number: "18685634000",
+  institution_name: "Reaby",
+  first_name: "Dino",
+  last_name: "Lewis",
+  sender_first_name: "asd",
+  sender_last_name: "das"
+};
+
 const headers = {
-    "PW-subscription-key": "eed0d85c530c4b26a91d09b783d8fab3",
-    "PW-origin-country": "TT",
-    "PW-request-date": "2024-10-20 15:30:00",
-    "Content-Type": "application/json"
+  "Content-Type": "application/json",
+  "pw-origin-country": "TT",
+  "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+  "pw-request-date": new Date().toISOString().slice(0, 19).replace("T", " ")
 };
 
-const body = {
-    "mobile_number": "+18681234567",
-    "institution_name": "PayWise Institution",
-    "first_name": "John",
-    "last_name": "Doe",
-    "sender_first_name": "Jane",
-    "sender_last_name": "Smith"
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(body)
+axios.get("https://devapi.paywise.co/account/account", {
+  params,
+  headers
 })
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error("Error:", error));
+.then(response => {
+  console.log("Status:", response.status);
+  console.log("Data:", response.data);
+})
+.catch(error => {
+  console.error("Error:", error.response?.data || error.message);
+});
     `,
   },
   Python: {
     description: `
 import requests
-
-url = "https://devapi.paywise.co/account/account?version=2024-10-20&mobile_number=+18681234567&institution_name=PayWise&first_name=John&last_name=Doe&sender_first_name=Jane&sender_last_name=Smith"
-headers = {
-    "PW-subscription-key": "eed0d85c530c4b26a91d09b783d8fab3",
-    "PW-origin-country": "TT",
-    "PW-request-date": "2024-10-20 15:30:00"
-}
+from datetime import datetime
 
 params = {
-    "version": "2024-10-20"
+    "first_name": "Dino",
+    "last_name": "Lewis",
+    "sender_first_name": "asd",
+    "sender_last_name": "das",
+    "mobile_number": "18685634000",
+    "institution_name": "Reaby",
+    "version": "2024-10-01"
 }
 
-data = {
-    "mobile_number": "+18681234567",
-    "institution_name": "PayWise Institution",
-    "first_name": "John",
-    "last_name": "Doe",
-    "sender_first_name": "Jane",
-    "sender_last_name": "Smith"
+headers = {
+    "Content-Type": "application/json",
+    "pw-origin-country": "TT",
+    "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+    "pw-request-date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 }
 
-response = requests.get(url, headers=headers, params=params, json=data)
-print(response.json())
+url = "https://devapi.paywise.co/account/account"
+response = requests.get(url, params=params, headers=headers)
+
+print("Status:", response.status_code)
+print("Response:", response.text)
     `,
   },
 };
 
-// Response example
-const responseExample = `{
+const responseExamples = {
+  success: {
+    label: "Success",
+    description: "Successful response from the API.",
+    response: `{
   "status": "success",
   "code": 200,
   "message": "Registration request sent",
   "account_status": "available",
   "session_token": "abcd1234xyz"
-}
-#if there is an error, the response may look like:
-{
-  "status": "error",
+}`
+  },
+  missingSubscriptionKey: {
+    label: "Missing pw-subscription-key header",
+    description: "Omit the 'pw-subscription-key' header entirely.",
+    response: `{
   "code": 400,
-  "message": "Invalid mobile number format"
-}
-`;
+  "status": "error",
+  "message": "Missing required header: pw-subscription-key"
+}`
+  },
+  missingRequestDate: {
+    label: "Missing pw-request-date header",
+    description: "Omit the 'pw-request-date' header entirely.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-request-date"
+}`
+  },
+  missingOriginCountry: {
+    label: "Missing pw-origin-country header",
+    description: "Omit the 'pw-origin-country' header entirely.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-origin-country"
+}`
+  },
+  invalidRequestDateFormat: {
+    label: "Invalid pw-request-date format",
+    description: "Use '2024/11/12 12:12:00' instead of the correct 'YYYY-MM-DD HH:MM:SS'.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Invalid format for pw-request-date. Expected format is YYYY-MM-DD HH:MI:SS"
+}`
+  },
+  invalidOriginCountryLength: {
+    label: "Invalid pw-origin-country length",
+    description: "Use 'TTO' instead of a 2-character ISO Alpha-2 code.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Invalid value for pw-origin-country. ISO Alpha 2 standard: Must be a 2-character country code"
+}`
+  },
+  invalidSubscriptionKeyLength: {
+    label: "Invalid pw-subscription-key length",
+    description: "Use a short or long value instead of a 32-character key.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The 'pw-subscription-key' header must be exactly 32 characters long."
+}`
+  },
+  missingVersionParam: {
+    label: "Missing version query param",
+    description: "Omit the 'version' query string parameter.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The query string parameter 'version' is required in the format 'YYYY-MM-DD'."
+}`
+  },
+  malformedVersionParam: {
+    label: "Malformed version param format",
+    description: "Use 'v1' or '01-10-2024' instead of 'YYYY-MM-DD'.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The query string parameter 'version' must be in the format 'YYYY-MM-DD'."
+}`
+  },
+  nonexistentEndpoint: {
+    label: "Nonexistent endpoint fallback",
+    description: "Make a request to '/account/doesnotexist' to trigger fallback.",
+    response: `{
+  "code": 404,
+  "status": "error",
+  "message": "The requested endpoint does not exist or is not formatted as expected. Please check the URL or refer to our API documentation https://docs.paywise.co ."
+}`
+  }
+};
 
 // Parameters
 const accountParameters = [
@@ -342,10 +462,10 @@ const Account = () => {
       </div>
       <div className="lg:w-2/4 w-full sticky top-0">
         <CodeExampleBox title="Request example" languageData={languageData} />
-        <CodeExampleBox
-          title="Response example"
-          content={responseExample}
-          showLanguageSelector={false}
+        <ResponseExampleBox
+          title="Response Example"
+          examples={responseExamples}
+          defaultKey="success"
         />
       </div>
     </div>

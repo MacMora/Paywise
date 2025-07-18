@@ -2,38 +2,149 @@
 import { useState } from "react";
 import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
+import { ResponseExampleBox } from '../../ResponseExampleBox';
 
 // Language data
 const languageData = {
   Bash: {
     description: `
-curl -X GET "https://devapi.paywise.co/transaction/{transaction_id}?version=2024-10-20" 
+VERSION="2024-10-01"
+TRANSACTION_ID="Reaby"
+INSTITUTION_NAME="Reaby"
+API_KEY="acdb459a0f384b7c8fc2205e13c09036"
+REQUEST_DATE=$(date +"%Y-%m-%d %H:%M:%S")
+ORIGIN_COUNTRY="TT"
+IP_ADDRESS="192.0.2.1"
+
+URL="https://devapi.paywise.co/institution/transaction?version=$\{VERSION}&transaction_id=$\{TRANSACTION_ID}&institution_name=$\{INSTITUTION_NAME}"
+
+curl -X GET "$URL" 
+  -H "Content-Type: application/json" 
+  -H "pw-origin-country: \${ORIGIN_COUNTRY}" 
+  -H "pw-subscription-key: \${API_KEY}" 
+  -H "pw-request-date: \${REQUEST_DATE}" 
+  -H "pw-ip-address: \${IP_ADDRESS}"
     `,
   },
   Ruby: {
     description: `
 require 'net/http'
+require 'uri'
+require 'time'
+
+params = {
+  version: "2024-10-01",
+  transaction_id: "Reaby",
+  institution_name: "Reaby"
+}
+
+uri = URI("https://devapi.paywise.co/institution/transaction")
+uri.query = URI.encode_www_form(params)
+
+headers = {
+  "Content-Type" => "application/json",
+  "pw-origin-country" => "TT",
+  "pw-subscription-key" => "acdb459a0f384b7c8fc2205e13c09036",
+  "pw-request-date" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
+  "pw-ip-address" => "192.0.2.1"
+}
+
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
+request = Net::HTTP::Get.new(uri, headers)
+
+response = http.request(request)
+puts "Status: #{response.code}"
+puts "Response: #{response.body}"
     `,
   },
   PHP: {
     description: `
-$curl = curl_init();
+<?php
+
+$url = "https://devapi.paywise.co/institution/transaction?" . http_build_query([
+    "version" => "2024-10-01",
+    "transaction_id" => "Reaby",
+    "institution_name" => "Reaby"
+]);
+
+$headers = [
+    "Content-Type: application/json",
+    "pw-origin-country: TT",
+    "pw-subscription-key: acdb459a0f384b7c8fc2205e13c09036",
+    "pw-request-date: " . date("Y-m-d H:i:s"),
+    "pw-ip-address: 192.0.2.1"
+];
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo "Response:\n$response\n";
     `,
   },
   JavaScript: {
     description: `
-const url = "https://devapi.paywise.co/transaction/{transaction_id}?version=2024-10-20";
+const axios = require('axios');
+
+const params = {
+  version: "2024-10-01",
+  transaction_id: "Reaby",
+  institution_name: "Reaby"
+};
+
+const headers = {
+  "Content-Type": "application/json",
+  "pw-origin-country": "TT",
+  "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+  "pw-request-date": new Date().toISOString().slice(0, 19).replace("T", " "),
+  "pw-ip-address": "192.0.2.1"
+};
+
+axios.get("https://devapi.paywise.co/institution/transaction", { params, headers })
+  .then(res => {
+    console.log("Status:", res.status);
+    console.log("Response:", res.data);
+  })
+  .catch(err => {
+    console.error("Error:", err.response?.data || err.message);
+  });
     `,
   },
   Python: {
     description: `
 import requests
+from datetime import datetime
+
+params = {
+    "version": "2024-10-01",
+    "transaction_id": "Reaby",
+    "institution_name": "Reaby"
+}
+
+headers = {
+    "Content-Type": "application/json",
+    "pw-origin-country": "TT",
+    "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+    "pw-request-date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "pw-ip-address": "192.0.2.1"
+}
+
+response = requests.get("https://devapi.paywise.co/institution/transaction", params=params, headers=headers)
+print("Status:", response.status_code)
+print("Response:", response.text)
     `,
   },
 };
 
-// Response example
-const responseExample = `{
+const responseExamples = {
+  success: {
+    label: "Success",
+    description: "Successful response from the API.",
+    response: `{
   "status": "success",
   "code": 200,
   "message": "Transaction completed successfully",
@@ -60,26 +171,99 @@ const responseExample = `{
       "quote_id": "QUOTE-987654321",
       "institution_receipt_id": "PW-6543210987"
   }
-}
-#if there is an error, the response may look like:
-{
-  "status": "error",
+}`
+  },
+  missingSubscriptionKey: {
+    label: "Missing pw-subscription-key header",
+    description: "Remove the 'pw-subscription-key' header.",
+    response: `{
   "code": 400,
-  "message": "Transaction failed due to insufficient funds",
-  "transaction": {
-      "id": "TXN-987654321",
-      "type": "debit",
-      "amount": "500.00",
-      "sender_full_name": "Alice Johnson",
-      "recipient_full_name": "Bob Williams",
-      "cleared_date": "2025-02-14",
-      "posted_date": "2025-02-14",
-      "description": "Subscription payment",
-      "status": "failed",
-      "source": "wallet",
-      "transaction_method": "wallet_transfer"
+  "status": "error",
+  "message": "Missing required header: pw-subscription-key"
+}`
+  },
+  missingRequestDate: {
+    label: "Missing pw-request-date header",
+    description: "Remove the 'pw-request-date' header.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-request-date"
+}`
+  },
+  missingOriginCountry: {
+    label: "Missing pw-origin-country header",
+    description: "Remove the 'pw-origin-country' header.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-origin-country"
+}`
+  },
+  missingIpAddress: {
+    label: "Missing pw-ip-address header",
+    description: "Omit 'pw-ip-address'; request rejected at application level.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-ip-address"
+}`
+  },
+  invalidRequestDateFormat: {
+    label: "Invalid pw-request-date format",
+    description: "Use '2024/11/12 12:12:00' instead of 'YYYY-MM-DD HH:mm:ss'.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Invalid format for pw-request-date. Expected format is YYYY-MM-DD HH:MI:SS"
+}`
+  },
+  invalidOriginCountryLength: {
+    label: "Invalid pw-origin-country length",
+    description: "Use 3 characters like 'TTO' for pw-origin-country.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Invalid value for pw-origin-country. ISO Alpha 2 standard: Must be a 2-character country code"
+}`
+  },
+  invalidSubscriptionKeyLength: {
+    label: "Invalid pw-subscription-key length",
+    description: "Use a 10-character string instead of 32.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The 'pw-subscription-key' header must be exactly 32 characters long."
+}`
+  },
+  missingVersionParam: {
+    label: "Missing version query parameter",
+    description: "Omit 'version' from the query string.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The query string parameter 'version' is required in the format 'YYYY-MM-DD'."
+}`
+  },
+  invalidVersionParam: {
+    label: "Invalid version query parameter format",
+    description: "Use '10-01-2024' instead of 'YYYY-MM-DD'.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The query string parameter 'version' must be in the format 'YYYY-MM-DD'."
+}`
+  },
+  nonexistentEndpoint: {
+    label: "Nonexistent endpoint",
+    description: "Use '/institution/transaction/badpath' instead of valid endpoint.",
+    response: `{
+  "code": 404,
+  "status": "error",
+  "message": "Endpoint not found: The requested endpoint does not exist. Please check the URL or refer to our API documentation."
+}`
   }
-}`;
+};
 
 // Parameters
 const transactionIdInstitutionParameters = [
@@ -385,10 +569,10 @@ const Transaction_Id_Institutions = () => {
       </div>
       <div className="lg:w-2/4 w-full sticky top-0">
         <CodeExampleBox title="Request example" languageData={languageData} />
-        <CodeExampleBox
-          title="Response example"
-          content={responseExample}
-          showLanguageSelector={false}
+        <ResponseExampleBox
+          title="Response Example"
+          examples={responseExamples}
+          defaultKey="success"
         />
       </div>
     </div>

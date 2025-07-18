@@ -2,49 +2,227 @@
 import { useState } from "react";
 import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
+import { ResponseExampleBox } from '../../ResponseExampleBox';
 
 // Language data
 const languageData = {
   Bash: {
     description: `
-curl -X GET "https://devapi.paywise.co/transaction?version=2024-10-20" 
+API_KEY="acdb459a0f384b7c8fc2205e13c09036"
+REQUEST_DATE=$(date +"%Y-%m-%d %H:%M:%S")
+VERSION="2024-10-01"
+IP_ADDRESS="192.0.2.1"
+
+curl -X POST "https://devapi.paywise.co/transactions?version=$\{VERSION}" 
+  -H "Content-Type: application/json" 
+  -H "pw-origin-country: TT" 
+  -H "pw-subscription-key: \${API_KEY}" 
+  -H "pw-request-date: \${REQUEST_DATE}" 
+  -H "pw-ip-address: \${IP_ADDRESS}" 
+  -d @transaction_payload.json
     `,
   },
   Ruby: {
     description: `
 require 'net/http'
+require 'json'
+require 'time'
+
+uri = URI("https://devapi.paywise.co/transactions?version=2024-10-01")
+headers = {
+  "Content-Type" => "application/json",
+  "pw-origin-country" => "TT",
+  "pw-subscription-key" => "acdb459a0f384b7c8fc2205e13c09036",
+  "pw-request-date" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
+  "pw-ip-address" => "192.0.2.1"
+}
+
+body = JSON.parse(File.read("transaction_payload.json"))
+
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
+request = Net::HTTP::Post.new(uri, headers)
+request.body = body.to_json
+
+response = http.request(request)
+puts "Status: #{response.code}"
+puts "Response: #{response.body}"
     `,
   },
   PHP: {
     description: `
-$curl = curl_init();
+<?php
+
+$url = "https://devapi.paywise.co/transactions?version=2024-10-01";
+$headers = [
+    "Content-Type: application/json",
+    "pw-origin-country: TT",
+    "pw-subscription-key: acdb459a0f384b7c8fc2205e13c09036",
+    "pw-request-date: " . date("Y-m-d H:i:s"),
+    "pw-ip-address: 192.0.2.1"
+];
+
+$payload = file_get_contents("transaction_payload.json");
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo "Response:\n$response\n";
     `,
   },
   JavaScript: {
     description: `
-const url = "https://devapi.paywise.co/transation?version=2024-10-20";
+const axios = require('axios');
+const fs = require('fs');
+
+const headers = {
+  "Content-Type": "application/json",
+  "pw-origin-country": "TT",
+  "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+  "pw-request-date": new Date().toISOString().slice(0, 19).replace("T", " "),
+  "pw-ip-address": "192.0.2.1"
+};
+
+const body = JSON.parse(fs.readFileSync("transaction_payload.json", "utf8"));
+
+axios.post("https://devapi.paywise.co/transactions?version=2024-10-01", body, { headers })
+  .then(res => console.log("Response:", res.data))
+  .catch(err => console.error("Error:", err.response?.data || err.message));
     `,
   },
   Python: {
     description: `
 import requests
+from datetime import datetime
+import json
+
+headers = {
+    "Content-Type": "application/json",
+    "pw-origin-country": "TT",
+    "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+    "pw-request-date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "pw-ip-address": "192.0.2.1"
+}
+
+with open("transaction_payload.json") as f:
+    data = json.load(f)
+
+url = "https://devapi.paywise.co/transactions?version=2024-10-01"
+response = requests.post(url, json=data, headers=headers)
+print("Status:", response.status_code)
+print("Response:", response.text)
     `,
   },
 };
 
-// Response example
-const responseExample = `{
+const responseExamples = {
+  success: {
+    label: "Success",
+    description: "Successful response from the API.",
+    response: `{
   "status": "success",
   "code": 200,
   "message": "Registration request sent",
   "institution_receipt_id": "PW-9876543210"
-}
-#if there is an error, the response may look like:
-{
-  "status": "error",
+}`
+  },
+  missingSubscriptionKey: {
+    label: "Missing pw-subscription-key header",
+    description: "Remove the 'pw-subscription-key' header.",
+    response: `{
   "code": 400,
-  "message": "Invalid registration request"
-}`;
+  "status": "error",
+  "message": "Missing required header: pw-subscription-key"
+}`
+  },
+  missingRequestDate: {
+    label: "Missing pw-request-date header",
+    description: "Remove the 'pw-request-date' header.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-request-date"
+}`
+  },
+  missingOriginCountry: {
+    label: "Missing pw-origin-country header",
+    description: "Remove the 'pw-origin-country' header.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-origin-country"
+}`
+  },
+  missingIpAddress: {
+    label: "Missing pw-ip-address header",
+    description: "Omit 'pw-ip-address'; application logic will reject the request.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Missing required header: pw-ip-address"
+}`
+  },
+  invalidRequestDateFormat: {
+    label: "Invalid pw-request-date format",
+    description: "Use '2024/11/12 12:12:00' instead of 'YYYY-MM-DD HH:mm:ss'.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Invalid format for pw-request-date. Expected format is YYYY-MM-DD HH:MI:SS"
+}`
+  },
+  invalidOriginCountryLength: {
+    label: "Invalid pw-origin-country length",
+    description: "Use a 3-character value like 'TTO' for 'pw-origin-country'.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "Invalid value for pw-origin-country. ISO Alpha 2 standard: Must be a 2-character country code"
+}`
+  },
+  invalidSubscriptionKeyLength: {
+    label: "Invalid pw-subscription-key length",
+    description: "Use a 10-character value for 'pw-subscription-key'.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The 'pw-subscription-key' header must be exactly 32 characters long."
+}`
+  },
+  missingVersionParam: {
+    label: "Missing version query parameter",
+    description: "Omit 'version=YYYY-MM-DD' from query string.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The query string parameter 'version' is required in the format 'YYYY-MM-DD'."
+}`
+  },
+  invalidVersionParam: {
+    label: "Invalid version query parameter format",
+    description: "Use 'v1' instead of 'YYYY-MM-DD' for version.",
+    response: `{
+  "code": 400,
+  "status": "error",
+  "message": "The query string parameter 'version' must be in the format 'YYYY-MM-DD'."
+}`
+  },
+  nonexistentEndpoint: {
+    label: "Nonexistent endpoint",
+    description: "POST to '/transactions/badpath' instead of '/transactions'.",
+    response: `{
+  "code": 404,
+  "status": "error",
+  "message": "Endpoint not found: The requested endpoint does not exist. Please check the URL or refer to our API documentation."
+}`
+  }
+};
 
 // Parameters
 const transactionInstitutionParameters = [
@@ -1030,10 +1208,10 @@ const Transaction_Institutions = () => {
         </div>
         <div className="lg:w-2/4 w-full sticky top-0">
           <CodeExampleBox title="Request example" languageData={languageData} />
-          <CodeExampleBox
-            title="Response example"
-            content={responseExample}
-            showLanguageSelector={false}
+          <ResponseExampleBox
+            title="Response Example"
+            examples={responseExamples}
+            defaultKey="success"
           />
         </div>
       </div>

@@ -593,6 +593,56 @@ const Codes = () => {
             </div>
           </div>
 
+          <div id="token_encryption_guide" className="py-10 border-b border-[#E4E4E4]">
+            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              Token Encryption Guide
+            </h2>
+            <p className="mb-6 text-base text-[#444]">
+              Some PayWise endpoints (such as <code className="bg-[#f5f6f8] px-1 rounded">/account</code>, <code className="bg-[#f5f6f8] px-1 rounded">/quote</code>, and <code className="bg-[#f5f6f8] px-1 rounded">/transaction</code>) require a valid <b>session_token</b> or <b>authorization_token</b>. These tokens must be <b>AES-encrypted</b> using a pre-shared encryption key provided by PayWise.
+            </p>
+            <hr className="my-6 border-none" />
+            <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+               Requirements
+            </h3>
+            <ul className="list-disc ml-6 mb-6 text-base">
+              <li>Receive a secure <b>encryption key</b> from PayWise</li>
+              <li>Use a <b>registered IP address</b> and <b>Azure APIM subscription key</b></li>
+              <li>Encrypt <code>session_token</code> / <code>authorization_token</code> using <b>AES-256-CBC with EVP_BytesToKey key derivation</b></li>
+            </ul>
+            <hr className="my-6 border-none" />
+            <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+              Sample Implementations
+            </h3>
+            <p className="mb-2 text-base">We currently offer encryption/decryption examples in the following languages:</p>
+            <ul className="list-disc ml-6 mb-4 text-base">
+              <li><a href="https://docs.paywise.co/secure/PWphp.zip" className="text-[#1e64a7] underline" target="_blank" rel="noopener noreferrer">✅ PHP Sample</a></li>
+              <li><a href="https://docs.paywise.co/secure/PWjava.zip" className="text-[#1e64a7] underline" target="_blank" rel="noopener noreferrer">✅ Java Sample</a></li>
+              <li><a href="https://docs.paywise.co/secure/PWts.zip" className="text-[#1e64a7] underline" target="_blank" rel="noopener noreferrer">✅ TypeScript Sample</a></li>
+            </ul>
+            <div className="mb-6 p-4 bg-[#f5f6f8] rounded text-[#444]">
+             <b>Need another language?</b><br />
+              Contact us at <a href="mailto:support@paywise.co" className="text-[#1e64a7] underline">support@paywise.co</a> and we'll generate a compatible sample in your preferred language.
+            </div>
+            <hr className="my-6 border-none" />
+            <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+              Security Notice
+            </h3>
+            <ul className="list-disc ml-6 mb-6 text-base">
+              <li>All tokens must be encrypted <i>just before the API request</i>.</li>
+              <li>The encryption algorithm must be <b>bit-for-bit compatible</b> with PayWise's backend.</li>
+              <li>Token structure is <code>{'{ ct, iv, s }'}</code>, Base64-wrapped JSON.</li>
+            </ul>
+            <hr className="my-6 border-none" />
+            <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+              Download & Integrate
+            </h3>
+            <ul className="list-disc ml-6 text-base">
+              <li>Always keep your encryption key secret</li>
+              <li>Never expose it client-side (e.g. frontend JavaScript)</li>
+              <li>Decryption only happens server-side by PayWise</li>
+            </ul>
+          </div>
+
           <div
             id="api_product"
             className="flex flex-col lg:flex-row justify-between items-start py-12 border-b-2"

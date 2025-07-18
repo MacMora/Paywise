@@ -278,24 +278,6 @@ const registerAccountParameters = [
     length: "12",
   },
   {
-    key: "first_name",
-    label: "first_name",
-    type: "string",
-    section: "Body POST Callback URL",
-    description: "First name of the account holder as registered with PayWise.",
-    requirement: "mandatory",
-    length: "1 - 50",
-  },
-  {
-    key: "last_name",
-    label: "last_name",
-    type: "string",
-    section: "Body POST Callback URL",
-    description: "Last name of the account holder as registered with PayWise.",
-    requirement: "mandatory",
-    length: "1 - 75",
-  },
-  {
     key: "business_name",
     label: "business_name",
     type: "string",
@@ -306,13 +288,13 @@ const registerAccountParameters = [
     length: "1 - 75",
   },
   {
-    key: "version",
-    label: "version",
+    key: "pw_version",
+    label: "pw_version",
     type: "string",
     section: "Body POST Callback URL",
     description:
       'For version control. Format = "YYYY-MM-DD". Defaults to the latest version',
-    requirement: "mandatory",
+    requirement: "optional",
     length: "10",
   },
   {

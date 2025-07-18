@@ -2,55 +2,424 @@
 import { useState } from "react";
 import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
+import { ResponseExampleBox } from '../../ResponseExampleBox';
 
 // Language data
 const languageData = {
   Bash: {
     description: `
-curl -X GET "https://devapi.paywise.co/quote?version=2024-10-20" 
+VERSION="2024-10-01"
+API_KEY="acdb459a0f384b7c8fc2205e13c09036"
+REQUEST_DATE=$(date +"%Y-%m-%d %H:%M:%S")
+ORIGIN_COUNTRY="TT"
+IP_ADDRESS="192.0.2.1"
+
+QUOTE_URL="https://devapi.paywise.co/quote?version=$\{VERSION}"
+
+curl -X POST "$QUOTE_URL" 
+  -H "Content-Type: application/json" 
+  -H "pw-origin-country: \${ORIGIN_COUNTRY}" 
+  -H "pw-subscription-key: \${API_KEY}" 
+  -H "pw-request-date: \${REQUEST_DATE}" 
+  -H "pw-ip-address: \${IP_ADDRESS}" 
+  -d '{
+    "session_token": "encrypted-session-token",
+    "institution_name": "PayWise",
+    "request_amount": "100.00",
+    "request_currency": "TTD",
+    "debit_party": {
+      "mobile_number": "+18681234567",
+      "currency": "USD",
+      "country": "US"
+    },
+    "credit_party": {
+      "mobile_number": "+18681234567",
+      "currency": "TTD",
+      "country": "TT"
+    }
+  }'
     `,
   },
   Ruby: {
     description: `
 require 'net/http'
+require 'json'
+require 'uri'
+
+uri = URI("https://devapi.paywise.co/quote?version=2024-10-01")
+
+headers = {
+  "Content-Type" => "application/json",
+  "pw-origin-country" => "TT",
+  "pw-subscription-key" => "acdb459a0f384b7c8fc2205e13c09036",
+  "pw-request-date" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
+  "pw-ip-address" => "192.0.2.1"
+}
+
+body = {
+  session_token: "encrypted-session-token",
+  institution_name: "PayWise",
+  request_amount: "100.00",
+  request_currency: "TTD",
+  debit_party: {
+    mobile_number: "+18681234567",
+    currency: "USD",
+    country: "US"
+  },
+  credit_party: {
+    mobile_number: "+18681234567",
+    currency: "TTD",
+    country: "TT"
+  }
+}
+
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
+request = Net::HTTP::Post.new(uri.path + "?" + uri.query, headers)
+request.body = body.to_json
+
+response = http.request(request)
+puts "Status: #{response.code}"
+puts "Body: #{response.body}"
     `,
   },
   PHP: {
     description: `
-$curl = curl_init();
+<?php
+
+$url = "https://devapi.paywise.co/quote?version=2024-10-01";
+$data = [
+    "session_token" => "encrypted-session-token",
+    "institution_name" => "PayWise",
+    "request_amount" => "100.00",
+    "request_currency" => "TTD",
+    "debit_party" => [
+        "mobile_number" => "+18681234567",
+        "currency" => "USD",
+        "country" => "US"
+    ],
+    "credit_party" => [
+        "mobile_number" => "+18681234567",
+        "currency" => "TTD",
+        "country" => "TT"
+    ]
+];
+
+$headers = [
+    "Content-Type: application/json",
+    "pw-origin-country: TT",
+    "pw-subscription-key: acdb459a0f384b7c8fc2205e13c09036",
+    "pw-request-date: " . date("Y-m-d H:i:s"),
+    "pw-ip-address: 192.0.2.1"
+];
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo "Response:\n$response\n";
     `,
   },
   JavaScript: {
     description: `
-const url = "https://devapi.paywise.co/quote?version=2024-10-20";
+const axios = require('axios');
+
+const headers = {
+  "Content-Type": "application/json",
+  "pw-origin-country": "TT",
+  "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+  "pw-request-date": new Date().toISOString().slice(0, 19).replace("T", " "),
+  "pw-ip-address": "192.0.2.1"
+};
+
+const body = {
+  session_token: "encrypted-session-token",
+  institution_name: "PayWise",
+  request_amount: "100.00",
+  request_currency: "TTD",
+  debit_party: {
+    mobile_number: "+18681234567",
+    currency: "USD",
+    country: "US"
+  },
+  credit_party: {
+    mobile_number: "+18681234567",
+    currency: "TTD",
+    country: "TT"
+  }
+};
+
+axios.post("https://devapi.paywise.co/quote?version=2024-10-01", body, { headers })
+  .then(res => {
+    console.log("Status:", res.status);
+    console.log("Response:", res.data);
+  })
+  .catch(err => {
+    console.error("Error:", err.response?.data || err.message);
+  });
     `,
   },
   Python: {
     description: `
 import requests
+from datetime import datetime
+
+headers = {
+    "Content-Type": "application/json",
+    "pw-origin-country": "TT",
+    "pw-subscription-key": "acdb459a0f384b7c8fc2205e13c09036",
+    "pw-request-date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "pw-ip-address": "192.0.2.1"
+}
+
+data = {
+    "session_token": "encrypted-session-token",
+    "institution_name": "PayWise",
+    "request_amount": "100.00",
+    "request_currency": "TTD",
+    "debit_party": {
+        "mobile_number": "+18681234567",
+        "currency": "USD",
+        "country": "US"
+    },
+    "credit_party": {
+        "mobile_number": "+18681234567",
+        "currency": "TTD",
+        "country": "TT"
+    }
+}
+
+url = "https://devapi.paywise.co/quote?version=2024-10-01"
+response = requests.post(url, json=data, headers=headers)
+print("Status:", response.status_code)
+print("Response:", response.text)
     `,
   },
 };
 
-// Response example
-const responseExample = `{
+const responseExamples = {
+  success: {
+    label: "Transaction completed",
+    description: "Transaction completed successfully.",
+    response: `{
   "status": "success",
   "code": 200,
-  "message": "Quote generated successfully",
-  "expire_date": "2025-02-15 12:30:00",
-  "quote_id": "Q12345678901234567890",
-  "rate": "6.7450",
-  "quote_date": "2025-02-14 12:00:00",
-  "amount_quoted": "1500.75"
-}
-#if there is an error, the response may look like:
-{
+  "message": "Transaction completed successfully",
+  "transaction": {
+    "status": "completed"
+  }
+}`
+  },
+  posted: {
+    label: "Transaction posted",
+    description: "Transaction posted.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Transaction posted",
+  "transaction": {
+    "status": "pending"
+  }
+}`
+  },
+  pendingApproval: {
+    label: "Transaction is pending approval",
+    description: "Transaction is pending approval.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Transaction is pending approval",
+  "transaction": {
+    "status": "pending"
+  }
+}`
+  },
+  cancelled: {
+    label: "Transaction is cancelled",
+    description: "Transaction is cancelled.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Transaction is cancelled",
+  "transaction": {
+    "status": "cancelled"
+  }
+}`
+  },
+  insufficientFunds: {
+    label: "Insufficient Funds",
+    description: "Transaction failed due to insufficient funds.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Transaction failed due to insufficient funds",
+  "transaction": {
+    "status": "failed"
+  }
+}`
+  },
+  serverError: {
+    label: "Server Error",
+    description: "Server Error.",
+    response: `{
+  "status": "error",
+  "code": 500,
+  "message": "Server Error"
+}`
+  },
+  missingHeader: {
+    label: "<header_parameter> request header is required",
+    description: "<header_parameter> request header is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "<header_parameter> request header is required"
+}`
+  },
+  invalidSubscriptionKey: {
+    label: "PW-subscription-key format invalid",
+    description: "PW-subscription-key format invalid. Expected 32 chars.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "PW-subscription-key format invalid. Expected 32 chars"
+}`
+  },
+  invalidOriginCountry: {
+    label: "PW-origin-country format invalid",
+    description: "PW-origin-country format invalid. Expected 2 chars.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "PW-origin-country format invalid. Expected 2 chars"
+}`
+  },
+  invalidRequestDate: {
+    label: "PW-request-date format invalid",
+    description: "PW-request-date format invalid. Expected “YYYY-MM-DD HH:mm:ss”.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "PW-request-date format invalid. Expected \`YYYY-MM-DD HH:mm:ss\`"
+}`
+  },
+  unauthorized: {
+    label: "Unauthorized access",
+    description: "Unauthorized access to this transaction.",
+    response: `{
   "status": "error",
   "code": 403,
-  "message": "Error: Exceeds user limits.",
-  "expire_date": "2025-02-15 12:30:00",
-  "quote_id": "Q12345678901234567890"
-}`;
+  "message": "Unauthorized access to this transaction"
+}`
+  },
+  missingGetParam: {
+    label: "<mandatory_get_parameter> is required",
+    description: "<mandatory_get_parameter> is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "<mandatory_get_parameter> is required"
+}`
+  },
+  missingTransactionId: {
+    label: "transaction_id is required",
+    description: "transaction_id is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_id is required"
+}`
+  },
+  missingInstitutionName: {
+    label: "institution_name is required",
+    description: "institution_name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "institution_name is required"
+}`
+  },
+  invalidVersion: {
+    label: "Invalid `version` format",
+    description: "Invalid `version` format. Expected “YYYY-MM-DD”.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Invalid \`version\` format. Expected \`YYYY-MM-DD\`"
+}`
+  },
+  invalidTransactionId: {
+    label: "transaction_id format invalid",
+    description: "transaction_id format invalid. Expected 1–200 chars.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_id format invalid. Expected 1–200 chars"
+}`
+  },
+  institutionNotRecognized: {
+    label: "institution_name not recognized",
+    description: "institution_name not recognized or not authorized.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "institution_name not recognized or not authorized"
+}`
+  },
+  transactionNotFound: {
+    label: "Transaction not found",
+    description: "Transaction not found.",
+    response: `{
+  "status": "error",
+  "code": 404,
+  "message": "Transaction not found"
+}`
+  },
+  missingHeader2: {
+    label: "header_parameter request header is missing",
+    description: "header_parameter request header is missing.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "header_parameter request header is missing"
+}`
+  },
+  invalidHeader: {
+    label: "{header_parameter} format invalid",
+    description: "{header_parameter} format invalid.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "{header_parameter} format invalid."
+}`
+  },
+  cancelledByUser: {
+    label: "Transaction was cancelled by user",
+    description: "Transaction was cancelled by user.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Transaction was cancelled by user",
+  "transaction": {
+    "status": "cancelled"
+  }
+}`
+  },
+  duplicateRequest: {
+    label: "Duplicate transaction request",
+    description: "Duplicate transaction request.",
+    response: `{
+  "status": "error",
+  "code": 409,
+  "message": "Duplicate transaction request"
+}`
+  }
+};
 
 // Parameters
 const quoteInstitutionParameters = [
@@ -374,10 +743,10 @@ const Quote_Institutions = () => {
       </div>
       <div className="lg:w-2/4 w-full sticky top-0">
         <CodeExampleBox title="Request example" languageData={languageData} />
-        <CodeExampleBox
-          title="Response example"
-          content={responseExample}
-          showLanguageSelector={false}
+        <ResponseExampleBox
+          title="Response Example"
+          examples={responseExamples}
+          defaultKey="success"
         />
       </div>
     </div>

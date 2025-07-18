@@ -1,103 +1,208 @@
 "use client";
 import React, { useState } from "react";
-import { FaSearch, FaTimes } from "react-icons/fa"; // Importar los íconos
+import { FaSearch, FaTimes } from "react-icons/fa";
 import { ChevronDownIcon } from 'lucide-react';
+
+// Estructura centralizada del menú, ahora con searchLabel para búsqueda
+const menuConfig = [
+  {
+    type: "section",
+    label: "About PayWise's API",
+    searchLabel: "About PayWise's API",
+    items: [
+      { type: "link", label: "About PayWise's API", searchLabel: "About PayWise's API", href: "#paywise_api" },
+      { type: "link", label: "Quick Start", searchLabel: "Quick Start", href: "#quick_start" },
+      { type: "link", label: "Environments", searchLabel: "Environments", href: "#environments" },
+      { type: "link", label: "Integrations", searchLabel: "Integrations", href: "#integrations" },
+    ],
+  },
+  {
+    type: "section",
+    label: "Developers Portal",
+    searchLabel: "Developers Portal",
+    items: [
+      { type: "link", label: "Installation", searchLabel: "Installation - Developers Portal", href: "#installation" },
+      { type: "link", label: "Registration", searchLabel: "Registration - Developers Portal", href: "#registration" },
+      { type: "link", label: "Token Encryption Guide", searchLabel: "Token Encryption Guide", href: "#token_encryption_guide" },
+      {
+        type: "submenu",
+        label: "API Products",
+        searchLabel: "API Product - Developers Portal",
+        key: "developers_portal",
+        items: [
+          { type: "link", label: "Headers", searchLabel: "Headers", href: "#headers" },
+          { type: "link", label: "Errors", searchLabel: "Errors", href: "#errors" },
+          {
+            type: "submenu",
+            label: "Account API",
+            searchLabel: "Account API - Developers Portal",
+            key: "account_api",
+            items: [
+              { type: "link", label: "register_account", searchLabel: "register_account", href: "#register_account" },
+              { type: "link", label: "account", searchLabel: "account", href: "#dev_account" },
+              { type: "link", label: "personal_account", searchLabel: "personal_account", href: "#personal_account" },
+              { type: "link", label: "business_account", searchLabel: "business_account", href: "#business_account" },
+              { type: "link", label: "balance", searchLabel: "balance", href: "#balance_account" },
+              { type: "link", label: "account_history", searchLabel: "account_history", href: "#history_account" },
+              { type: "link", label: "bless_account", searchLabel: "bless_account", href: "#bless_account" },
+            ],
+          },
+          {
+            type: "submenu",
+            label: "Institution API",
+            searchLabel: "Institution API - Developers Portal",
+            key: "institution_api",
+            items: [
+              { type: "link", label: "transaction", searchLabel: "transaction", href: "#institution_transaction" },
+              { type: "link", label: "transaction/{transaction_id}", searchLabel: "transaction/{transaction_id}", href: "#transaction_get" },
+              { type: "link", label: "exchange_rate_usd", searchLabel: "exchange_rate_usd", href: "#exchange_rate_usd" },
+              { type: "link", label: "quote", searchLabel: "quote", href: "#quote_post" },
+              { type: "link", label: "quote/{quote_id}", searchLabel: "quote/{quote_id}", href: "#quote_get" },
+            ],
+          },
+          {
+            type: "submenu",
+            label: "Merchant API",
+            searchLabel: "Merchant API - Developers Portal",
+            key: "merchant_api",
+            items: [
+              { type: "link", label: "request", searchLabel: "request", href: "#request_merchant" },
+              { type: "link", label: "cancel", searchLabel: "cancel", href: "#cancel_merchant" },
+              { type: "link", label: "status", searchLabel: "status", href: "#status_merchant" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: "section",
+    label: "Production Portal",
+    searchLabel: "Production Portal",
+    items: [
+      { type: "link", label: "Installation", searchLabel: "Installation - Production Portal", href: "#production_portal" },
+      { type: "link", label: "Registration", searchLabel: "Registration - Production Portal", href: "#production_registration" },
+      {
+        type: "submenu",
+        label: "API Products",
+        searchLabel: "API Product - Production Portal",
+        key: "production_portal",
+        items: [
+          { type: "link", label: "Production URL", searchLabel: "Production URL - Production Portal", href: "#production_url" },
+          { type: "link", label: "Account API", searchLabel: "Account API - Production Portal", href: "#production_account_api" },
+          { type: "link", label: "Institution API", searchLabel: "Institution API - Production Portal", href: "#production_institution_api" },
+        ],
+      },
+      { type: "link", label: "Look Up", searchLabel: "Look Up", href: "#look-up" },
+    ],
+  },
+];
+
+// Links externos y de navegación rápida (móviles)
+const externalLinks = [
+  { label: "Dev Portal", href: "https://devportal.paywise.co/" },
+  { label: "Docs", href: "#" },
+  { label: "API Products", href: "https://devportal.paywise.co/products" },
+  { label: "Plugins", href: "https://docs.paywise.co/plugins" },
+  { label: "PayWise.co", href: "https://pwapp.co/home" },
+];
+const authLinks = [
+  { label: "Sign in", href: "https://devportal.paywise.co/signin" },
+  { label: "Sign up", href: "https://devportal.paywise.co/signup" },
+];
+
+// Renderizado recursivo del menú
+const renderMenuItems = (items, openSections, rotations, handleClick, toggleSidebar, level = 0) => {
+  return (
+    <ul className="">
+      {items.map((item, idx) => {
+        if (item.type === "link") {
+          return (
+            <li key={item.label + idx} className={level > 0 ? "py-2 px-4" : "p-2"}>
+              <a href={item.href} onClick={toggleSidebar}>{item.label}</a>
+            </li>
+          );
+        }
+        if (item.type === "submenu") {
+          return (
+            <React.Fragment key={item.label + idx}>
+              <div
+                onClick={() => handleClick(item.key)}
+                className={`${level > 0 ? "py-2 px-4" : "p-2"} flex flex-row justify-between gap-6 items-center`}
+              >
+                <a href={`#${item.key}`}>{item.label}</a>
+                <ChevronDownIcon className={`text-[#536374] cursor-pointer transition-transform duration-150 ${rotations[item.key]}`} />
+              </div>
+              {openSections[item.key] && renderMenuItems(item.items, openSections, rotations, handleClick, toggleSidebar, level + 1)}
+            </React.Fragment>
+          );
+        }
+        if (item.type === "section") {
+          return (
+            <React.Fragment key={item.label + idx}>
+              <p className={`text-[#8D9298] font-semibold ${level === 0 ? "py-2 px-2 border-solid border-t border-[#d8dee4]" : "p-2"}`}>
+                <a href={`#${item.label.toLowerCase().replace(/\s+/g, "_")}`}>
+                  <small>{item.label}</small>
+                </a>
+              </p>
+              {renderMenuItems(item.items, openSections, rotations, handleClick, toggleSidebar, level + 1)}
+            </React.Fragment>
+          );
+        }
+        return null;
+      })}
+    </ul>
+  );
+};
+
+// Función recursiva para filtrar el menú según el término de búsqueda (usando searchLabel)
+const flattenMenuForSearch = (items) => {
+  let flat = [];
+  for (const item of items) {
+    if (item.type === "link") {
+      flat.push({ label: item.searchLabel || item.label, href: item.href });
+    } else if ((item.type === "submenu" || item.type === "section") && item.items) {
+      // El propio submenu/section también puede tener un searchLabel
+      if (item.searchLabel) {
+        flat.push({ label: item.searchLabel, href: `#${(item.key || item.label).toLowerCase().replace(/\s+/g, "_")}` });
+      }
+      flat = flat.concat(flattenMenuForSearch(item.items));
+    }
+  }
+  return flat;
+};
 
 const SideBar_Doc = ({ isOpen, toggleSidebar }) => {
   const [openSections, setOpenSections] = useState({});
   const [rotations, setRotations] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Función para alternar la visibilidad de una sección específica
   const toggleVisibility = (id) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [id]: !prev[id], // Alterna el estado de la sección específica
-    }));
+    setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }));
   };
-
   const toggleRotation = (key) => {
-    setRotations((prevState) => ({
-      ...prevState,
-      [key]: prevState[key] ? "" : "rotate-180",
-    }));
+    setRotations((prevState) => ({ ...prevState, [key]: prevState[key] ? "" : "rotate-180" }));
   };
-
   const handleClick = (key) => {
     toggleRotation(key);
     toggleVisibility(key);
     toggleSidebar(key);
   };
-
-  // Función para manejar el término de búsqueda
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
-
   const clearSearch = () => {
     setSearchTerm("");
   };
 
-  // Elementos del Sidebar
-  const sidebarItems = [
-    { label: "About PayWise's API", href: "#paywise_api" },
-    { label: "Quick Start", href: "#quick_start" },
-    { label: "Environments", href: "#environments" },
-    { label: "Integrations", href: "#integrations" },
-    { label: "Developers Portal", href: "#developers_portal" },
-    { label: "Installation - Developers Portal", href: "#installation" },
-    { label: "Registration - Developers Portal", href: "#registration" },
-    { label: "API Product - Developers Portal", href: "#api_product" },
-    { label: "Headers", href: "#headers" },
-    { label: "Errors", href: "#errors" },
-    { label: "Account API - Developers Portal", href: "#account_api" },
-    { label: "register_account", href: "#register_account" },
-    { label: "account", href: "#dev_account" },
-    { label: "personal_account", href: "#personal_account" },
-    { label: "business_account", href: "#business_account" },
-    { label: "balance", href: "#balance_account" },
-    { label: "account_history", href: "#history_account" },
-    { label: "bless_account", href: "#bless_account" },
-    { label: "Institution API - Developers Portal", href: "#institution_api" },
-    { label: "transaction", href: "#institution_transaction" },
-    { label: "transaction/{transaction_id}", href: "#transaction_get" },
-    { label: "exchange_rate_usd", href: "#exchange_rate_usd" },
-    { label: "quote", href: "#quote_post" },
-    { label: "quote/{quote_id}", href: "#quote_get" },
-    { label: "Merchant API - Developers Portal", href: "#merchant_api" },
-    { label: "request", href: "#request_merchant" },
-    { label: "cancel", href: "#cancel_merchant" },
-    { label: "status", href: "#status_merchant" },
-    { label: "Production Portal", href: "#production_portal" },
-    { label: "Installation - Production Portal", href: "#production_portal" },
-    {
-      label: "Registration - Production Portal",
-      href: "#production_registration",
-    },
-    {
-      label: "API Product - Production Portal",
-      href: "#production_api_products",
-    },
-    { label: "Production URL - Production Portal", href: "#production_url" },
-    {
-      label: "Account API - Production Portal",
-      href: "#production_account_api",
-    },
-    {
-      label: "Institution API - Production Portal",
-      href: "#production_institution_api",
-    },
-    { label: "Look Up", href: "#look-up" },
-  ];
-
   // Filtrar elementos en función del término de búsqueda
-  const filteredItems = sidebarItems.filter((item) =>
+  const allSearchItems = flattenMenuForSearch(menuConfig);
+  const filteredItems = allSearchItems.filter((item) =>
     item.label.toLowerCase().includes(searchTerm)
   );
 
   return (
     <div className="font-cabin">
-      {/* SideBar y Menú desplegable en pantallas pequeñas */}
       <div
         className={`z-10 text-sm fixed top-12 left-0 shadow-2xl h-screen lg:w-1/5 md:w-1/3 sm:w-2/3 w-full overflow-y-scroll overflow-hidden py-8 custom-scrollbar bg-white transition-transform transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
@@ -135,249 +240,19 @@ const SideBar_Doc = ({ isOpen, toggleSidebar }) => {
           )}
           <div className="lg:hidden mb-4 flex flex-col gap-y-6 py-5">
             <div className="flex flex-col gap-y-4 font-semibold px-2">
-              <a href="https://devportal.paywise.co/" className="">
-                Dev Portal
-              </a>
-              <a href="#" className="">
-                Docs
-              </a>
-              <a href="https://devportal.paywise.co/products" className="">
-                API Products
-              </a>
-              <a href="https://docs.paywise.co/plugins" className="">
-                Plugins
-              </a>
-              <a href="https://pwapp.co/home">PayWise.co</a>
+              {externalLinks.map((link) => (
+                <a key={link.label} href={link.href}>{link.label}</a>
+              ))}
             </div>
             <div className="flex flex-col gap-y-4 font-semibold px-2 border-solid border-t border-[#d8dee4]">
-              <a href="https://devportal.paywise.co/signin" className="pt-2">
-                Sign in
-              </a>
-              <a href="https://devportal.paywise.co/signup" className="">
-                Sign up
-              </a>
+              {authLinks.map((link) => (
+                <a key={link.label} href={link.href} className={link.label === "Sign in" ? "pt-2" : ""}>{link.label}</a>
+              ))}
             </div>
           </div>
-          {/* Contenido del Sidebar */}
-          <p className="text-[#8D9298] font-semibold py-2 px-2 border-solid border-t border-[#d8dee4]">
-            <a href="#paywise_api">
-              <small>About PayWise's API</small>
-            </a>
-          </p>
-          <ul className="">
-            <li className="p-2">
-              <a href="#quick_start" onClick={toggleSidebar}>
-                Quick Start
-              </a>
-            </li>
-            <li className="p-2">
-              <a href="#environments" onClick={toggleSidebar}>
-                Environments
-              </a>
-            </li>
-            <li className="p-2">
-              <a href="#integrations" onClick={toggleSidebar}>
-                Integrations
-              </a>
-            </li>
-          </ul>
-          <p className="text-[#8D9298] font-semibold p-2 border-solid border-t border-[#d8dee4]">
-            <a href="#developers_portal">
-              <small>Developers Portal</small>
-            </a>
-          </p>
-          <ul className="">
-            <li className="p-2">
-              <a href="#installation" onClick={toggleSidebar}>
-                Installation
-              </a>
-            </li>
-            <li className="p-2">
-              <a href="#registration" onClick={toggleSidebar}>
-                Registration
-              </a>
-            </li>
-            <div
-              onClick={() => handleClick("developers_portal")}
-              className="p-2 flex flex-row justify-between gap-6 items-center"
-            >
-              <a href="#api_product">API Products</a>
-              <ChevronDownIcon className={`text-[#536374] cursor-pointer transition-transform duration-150 ${rotations["developers_portal"]}`} />
-            </div>
-            {openSections["developers_portal"] && (
-              <ul className="">
-                <li className="py-2 px-4">
-                  <a href="#headers" onClick={toggleSidebar}>
-                    Headers
-                  </a>
-                </li>
-                <li className="py-2 px-4">
-                  <a href="#errors" onClick={toggleSidebar}>
-                    Errors
-                  </a>
-                </li>
-                <div
-                  onClick={() => handleClick("account_api")}
-                  className="py-2 px-4 flex flex-row justify-between gap-6 items-center"
-                >
-                  <a href="#account_api">Account API</a>
-                  <ChevronDownIcon className={`text-[#536374] cursor-pointer transition-transform duration-150 ${rotations["account_api"]}`} />
-                </div>
-                {openSections["account_api"] && (
-                  <ul className="">
-                    <li className="py-2 px-6">
-                      <a href="#register_account" onClick={toggleSidebar}>
-                        register_account
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#dev_account" onClick={toggleSidebar}>
-                        account
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#personal_account" onClick={toggleSidebar}>
-                        personal_account
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#business_account" onClick={toggleSidebar}>
-                        business_account
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#balance_account" onClick={toggleSidebar}>
-                        balance
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#history_account" onClick={toggleSidebar}>
-                        account_history
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#bless_account" onClick={toggleSidebar}>
-                        bless_account
-                      </a>
-                    </li>
-                  </ul>
-                )}
-                <div
-                  onClick={() => handleClick("institution_api")}
-                  className="py-2 px-4 flex flex-row justify-between gap-6 items-center"
-                >
-                  <a href="#institution_api">Institution API</a>
-                  <ChevronDownIcon className={`text-[#536374] cursor-pointer transition-transform duration-150 ${rotations["institution_api"]}`} />
-                </div>
-                {openSections["institution_api"] && (
-                  <ul className="">
-                    <li className="py-2 px-6">
-                      <a
-                        href="#institution_transaction"
-                        onClick={toggleSidebar}
-                      >
-                        transaction
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#transaction_get" onClick={toggleSidebar}>
-                        transaction/{`{transaction_id}`}
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#exchange_rate_usd" onClick={toggleSidebar}>
-                        exchange_rate_usd
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#quote_post" onClick={toggleSidebar}>
-                        quote
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#quote_get" onClick={toggleSidebar}>
-                        quote/{`{quote_id}`}
-                      </a>
-                    </li>
-                  </ul>
-                )}
-                <div
-                  onClick={() => handleClick("merchant_api")}
-                  className="py-2 px-4 flex flex-row justify-between gap-6 items-center"
-                >
-                  <a href="#merchant_api">Merchant API</a>
-                  <ChevronDownIcon className={`text-[#536374] cursor-pointer transition-transform duration-150 ${rotations["merchant_api"]}`} />
-                </div>
-                {openSections["merchant_api"] && (
-                  <ul className="">
-                    <li className="py-2 px-6">
-                      <a href="#request_merchant" onClick={toggleSidebar}>
-                        request
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#cancel_merchant" onClick={toggleSidebar}>
-                        cancel
-                      </a>
-                    </li>
-                    <li className="py-2 px-6">
-                      <a href="#status_merchant" onClick={toggleSidebar}>
-                        status
-                      </a>
-                    </li>
-                  </ul>
-                )}
-              </ul>
-            )}
-          </ul>
-          <p className="text-[#8D9298] font-semibold p-2 border-solid border-t border-[#d8dee4]">
-            <a href="#production_portal">
-              <small>Production Portal</small>
-            </a>
-          </p>
-          <ul className="">
-            <li className="p-2">
-              <a href="#production_portal" onClick={toggleSidebar}>
-                Installation
-              </a>
-            </li>
-            <li className="p-2">
-              <a href="#production_registration" onClick={toggleSidebar}>
-                Registration
-              </a>
-            </li>
-            <div
-              onClick={() => handleClick("production_portal")}
-              className="p-2 flex flex-row justify-between gap-6 items-center"
-            >
-              <a href="#production_api_products">API Products</a>
-              <ChevronDownIcon className={`text-[#536374] cursor-pointer transition-transform duration-150 ${rotations["production_portal"]}`} />
-            </div>
-            {openSections["production_portal"] && (
-              <ul className="">
-                <li className="py-2 px-4">
-                  <a href="#production_url" onClick={toggleSidebar}>
-                    Production URL
-                  </a>
-                </li>
-                <li className="py-2 px-4">
-                  <a href="#production_account_api" onClick={toggleSidebar}>
-                    Account API
-                  </a>
-                </li>
-                <li className="py-2 px-4">
-                  <a href="#production_institution_api" onClick={toggleSidebar}>
-                    Institution API
-                  </a>
-                </li>
-              </ul>
-            )}
-            <li className="p-2 border-t">
-              <a href="#look-up" onClick={toggleSidebar}>
-                Look Up
-              </a>
-            </li>
-          </ul>
+
+          {/* Renderizado del menú principal */}
+          {renderMenuItems(menuConfig, openSections, rotations, handleClick, toggleSidebar)}
         </div>
       </div>
     </div>
