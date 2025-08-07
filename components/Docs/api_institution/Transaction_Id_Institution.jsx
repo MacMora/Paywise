@@ -9,8 +9,8 @@ const languageData = {
   Bash: {
     description: `
 VERSION="2024-10-01"
-TRANSACTION_ID="Reaby"
-INSTITUTION_NAME="Reaby"
+TRANSACTION_ID="YourCompany"
+INSTITUTION_NAME="YourCompany"
 API_KEY="acdb459a0f384b7c8fc2205e13c09036"
 REQUEST_DATE=$(date +"%Y-%m-%d %H:%M:%S")
 ORIGIN_COUNTRY="TT"
@@ -34,8 +34,8 @@ require 'time'
 
 params = {
   version: "2024-10-01",
-  transaction_id: "Reaby",
-  institution_name: "Reaby"
+  transaction_id: "YourCompany",
+  institution_name: "YourCompany"
 }
 
 uri = URI("https://devapi.paywise.co/institution/transaction")
@@ -64,8 +64,8 @@ puts "Response: #{response.body}"
 
 $url = "https://devapi.paywise.co/institution/transaction?" . http_build_query([
     "version" => "2024-10-01",
-    "transaction_id" => "Reaby",
-    "institution_name" => "Reaby"
+    "transaction_id" => "YourCompany",
+    "institution_name" => "YourCompany"
 ]);
 
 $headers = [
@@ -92,8 +92,8 @@ const axios = require('axios');
 
 const params = {
   version: "2024-10-01",
-  transaction_id: "Reaby",
-  institution_name: "Reaby"
+  transaction_id: "YourCompany",
+  institution_name: "YourCompany"
 };
 
 const headers = {
@@ -121,8 +121,8 @@ from datetime import datetime
 
 params = {
     "version": "2024-10-01",
-    "transaction_id": "Reaby",
-    "institution_name": "Reaby"
+    "transaction_id": "YourCompany",
+    "institution_name": "YourCompany"
 }
 
 headers = {
@@ -141,126 +141,202 @@ print("Response:", response.text)
 };
 
 const responseExamples = {
-  success: {
-    label: "Success",
-    description: "Successful response from the API.",
+  successTransactionCompleted: {
+    label: "Success - Transaction Completed",
+    description: "Transaction completed successfully.",
     response: `{
   "status": "success",
   "code": 200,
   "message": "Transaction completed successfully",
-  "transaction": {
-      "id": "TXN-123456789",
-      "type": "credit",
-      "amount": "1500.00",
-      "fees": {
-          "total": "50.00",
-          "convenience": "10.00",
-          "sender_pays": "20.00",
-          "recipient_pays": "20.00"
-      },
-      "sender_full_name": "John Doe",
-      "recipient_full_name": "Jane Smith",
-      "cleared_date": "2025-02-14",
-      "posted_date": "2025-02-13",
-      "description": "Payment for services rendered",
-      "status": "completed",
-      "source": "wallet",
-      "transaction_method": "bank_transfer",
-      "parent_mobile_number": "+18681234567",
-      "metadata": "Urgent transaction",
-      "quote_id": "QUOTE-987654321",
-      "institution_receipt_id": "PW-6543210987"
-  }
 }`
   },
-  missingSubscriptionKey: {
-    label: "Missing pw-subscription-key header",
-    description: "Remove the 'pw-subscription-key' header.",
+  successTransactionPosted: {
+    label: "Success - Transaction Posted",
+    description: "Transaction posted successfully.",
     response: `{
-  "code": 400,
+  "status": "success",
+  "code": 200,
+  "message": "Transaction posted",
+}`
+  },
+  successTransactionPendingApproval: {
+    label: "Success - Transaction Pending Approval",
+    description: "Transaction is pending approval.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Transaction is pending approval",
+}`
+  },
+  successTransactionCancelled: {
+    label: "Success - Transaction Cancelled",
+    description: "Transaction is cancelled.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Transaction is cancelled",
+}`
+  },
+  errorInsufficientFunds: {
+    label: "Error - Insufficient Funds",
+    description: "Transaction failed due to insufficient funds.",
+    response: `{
   "status": "error",
-  "message": "Missing required header: pw-subscription-key"
-}`
-  },
-  missingRequestDate: {
-    label: "Missing pw-request-date header",
-    description: "Remove the 'pw-request-date' header.",
-    response: `{
   "code": 400,
-  "status": "error",
-  "message": "Missing required header: pw-request-date"
+  "message": "Transaction failed due to insufficient funds"
 }`
   },
-  missingOriginCountry: {
-    label: "Missing pw-origin-country header",
-    description: "Remove the 'pw-origin-country' header.",
+  errorServerError: {
+    label: "Error - Server Error",
+    description: "Internal server error occurred.",
     response: `{
+  "status": "error",
+  "code": 500,
+  "message": "Server Error"
+}`
+  },
+  errorHeaderParameterRequired: {
+    label: "Error - Header Parameter Required",
+    description: "Header parameter request header is required.",
+    response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Missing required header: pw-origin-country"
+  "message": "\`<header_parameter>\` request header is required"
 }`
   },
-  missingIpAddress: {
-    label: "Missing pw-ip-address header",
-    description: "Omit 'pw-ip-address'; request rejected at application level.",
+  errorSubscriptionKeyFormatInvalid: {
+    label: "Error - Subscription Key Format Invalid",
+    description: "PW-subscription-key format invalid. Expected 32 characters.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Missing required header: pw-ip-address"
+  "message": "\`PW-subscription-key\` format invalid. Expected 32 chars"
 }`
   },
-  invalidRequestDateFormat: {
-    label: "Invalid pw-request-date format",
-    description: "Use '2024/11/12 12:12:00' instead of 'YYYY-MM-DD HH:mm:ss'.",
+  errorOriginCountryFormatInvalid: {
+    label: "Error - Origin Country Format Invalid",
+    description: "PW-origin-country format invalid. Expected 2 characters.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Invalid format for pw-request-date. Expected format is YYYY-MM-DD HH:MI:SS"
+  "message": "\`PW-origin-country\` format invalid. Expected 2 chars"
 }`
   },
-  invalidOriginCountryLength: {
-    label: "Invalid pw-origin-country length",
-    description: "Use 3 characters like 'TTO' for pw-origin-country.",
+  errorRequestDateFormatInvalid: {
+    label: "Error - Request Date Format Invalid",
+    description: "PW-request-date format invalid. Expected YYYY-MM-DD HH:mm:ss format.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Invalid value for pw-origin-country. ISO Alpha 2 standard: Must be a 2-character country code"
+  "message": "\`PW-request-date\` format invalid. Expected \"YYYY-MM-DD HH:mm:ss\""
 }`
   },
-  invalidSubscriptionKeyLength: {
-    label: "Invalid pw-subscription-key length",
-    description: "Use a 10-character string instead of 32.",
+  errorUnauthorizedAccess: {
+    label: "Error - Unauthorized Access",
+    description: "Unauthorized access to this transaction.",
     response: `{
+  "status": "error",
+  "code": 403,
+  "message": "Unauthorized access to this transaction"
+}`
+  },
+  errorMandatoryGetParameterRequired: {
+    label: "Error - Mandatory GET Parameter Required",
+    description: "Mandatory GET parameter is required.",
+    response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "The 'pw-subscription-key' header must be exactly 32 characters long."
+  "message": "\`<mandatory_get_parameter>\` is required"
 }`
   },
-  missingVersionParam: {
-    label: "Missing version query parameter",
-    description: "Omit 'version' from the query string.",
+  errorTransactionIdRequired: {
+    label: "Error - Transaction ID Required",
+    description: "Transaction ID is required.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "The query string parameter 'version' is required in the format 'YYYY-MM-DD'."
+  "message": "\`transaction_id\` is required"
 }`
   },
-  invalidVersionParam: {
-    label: "Invalid version query parameter format",
-    description: "Use '10-01-2024' instead of 'YYYY-MM-DD'.",
+  errorInstitutionNameRequired: {
+    label: "Error - Institution Name Required",
+    description: "Institution name is required.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "The query string parameter 'version' must be in the format 'YYYY-MM-DD'."
+  "message": "\`institution_name\` is required"
 }`
   },
-  nonexistentEndpoint: {
-    label: "Nonexistent endpoint",
-    description: "Use '/institution/transaction/badpath' instead of valid endpoint.",
+  errorInvalidVersionFormat: {
+    label: "Error - Invalid Version Format",
+    description: "Invalid version format. Expected YYYY-MM-DD format.",
     response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Invalid \`version\` format. Expected \"YYYY-MM-DD\""
+}`
+  },
+  errorTransactionIdFormatInvalid: {
+    label: "Error - Transaction ID Format Invalid",
+    description: "Transaction ID format invalid. Expected 1-200 characters.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "\`transaction_id\` format invalid. Expected 1–200 chars"
+}`
+  },
+  errorInstitutionNotRecognized: {
+    label: "Error - Institution Not Recognized",
+    description: "Institution name not recognized or not authorized.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "\`institution_name\` not recognized or not authorized"
+}`
+  },
+  errorTransactionNotFound: {
+    label: "Error - Transaction Not Found",
+    description: "Transaction not found.",
+    response: `{
+  "status": "error",
   "code": 404,
+  "message": "Transaction not found"
+}`
+  },
+  errorHeaderParameterMissing: {
+    label: "Error - Header Parameter Missing",
+    description: "Header parameter request header is missing.",
+    response: `{
   "status": "error",
-  "message": "Endpoint not found: The requested endpoint does not exist. Please check the URL or refer to our API documentation."
+  "code": 400,
+  "message": "header_parameter request header is missing"
+}`
+  },
+  errorHeaderParameterFormatInvalid: {
+    label: "Error - Header Parameter Format Invalid",
+    description: "Header parameter format invalid.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "{header_parameter} format invalid."
+}`
+  },
+  errorTransactionCancelledByUser: {
+    label: "Error - Transaction Cancelled by User",
+    description: "Transaction was cancelled by user.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Transaction was cancelled by user"
+}`
+  },
+  errorDuplicateTransactionRequest: {
+    label: "Error - Duplicate Transaction Request",
+    description: "Duplicate transaction request.",
+    response: `{
+  "status": "error",
+  "code": 409,
+  "message": "Duplicate transaction request"
 }`
   }
 };
@@ -572,7 +648,7 @@ const Transaction_Id_Institutions = () => {
         <ResponseExampleBox
           title="Response Example"
           examples={responseExamples}
-          defaultKey="success"
+          defaultKey="successTransactionCompleted"
         />
       </div>
     </div>

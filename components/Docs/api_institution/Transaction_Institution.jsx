@@ -122,104 +122,656 @@ print("Response:", response.text)
 };
 
 const responseExamples = {
-  success: {
-    label: "Success",
-    description: "Successful response from the API.",
+  successAmountDebited: {
+    label: "Success - Amount Debited",
+    description: "Successful transaction with amount debited.",
     response: `{
   "status": "success",
   "code": 200,
-  "message": "Registration request sent",
-  "institution_receipt_id": "PW-9876543210"
+  "message": "Amount Debited",
+  "institution_receipt_id": "<generated_receipt_id>"
 }`
   },
-  missingSubscriptionKey: {
-    label: "Missing pw-subscription-key header",
-    description: "Remove the 'pw-subscription-key' header.",
+  successAmountCredited: {
+    label: "Success - Amount Credited",
+    description: "Successful transaction with amount credited.",
     response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Amount Credited",
+  "institution_receipt_id": "<generated_receipt_id>"
+}`
+  },
+  successTransactionCompleted: {
+    label: "Success - Transaction Completed",
+    description: "Transaction completed successfully.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Transaction completed successfully",
+  "institution_receipt_id": "<generated_receipt_id>"
+}`
+  },
+  errorAmountRequired: {
+    label: "Error - Amount Required",
+    description: "Amount is required and must be a positive number with 2 decimal places.",
+    response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Missing required header: pw-subscription-key"
+  "message": "amount is required and must be a positive number with 2 decimal places"
 }`
   },
-  missingRequestDate: {
-    label: "Missing pw-request-date header",
-    description: "Remove the 'pw-request-date' header.",
+  errorAuthorisationTokenRequired: {
+    label: "Error - Authorisation Token Required",
+    description: "Authorisation token is required.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Missing required header: pw-request-date"
+  "message": "authorisation_token is required"
 }`
   },
-  missingOriginCountry: {
-    label: "Missing pw-origin-country header",
-    description: "Remove the 'pw-origin-country' header.",
+  errorConflictingFeeConfiguration: {
+    label: "Error - Conflicting Fee Configuration",
+    description: "Cannot post transaction — conflicting fee configuration or missing fee definition.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Missing required header: pw-origin-country"
+  "message": "Cannot post transaction — conflicting fee configuration or missing fee definition"
 }`
   },
-  missingIpAddress: {
-    label: "Missing pw-ip-address header",
-    description: "Omit 'pw-ip-address'; application logic will reject the request.",
+  errorCreditPartyCurrencyRequired: {
+    label: "Error - Credit Party Currency Required",
+    description: "Credit party currency is required and must be ISO 4217.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Missing required header: pw-ip-address"
+  "message": "credit_party.currency is required and must be ISO 4217"
 }`
   },
-  invalidRequestDateFormat: {
-    label: "Invalid pw-request-date format",
-    description: "Use '2024/11/12 12:12:00' instead of 'YYYY-MM-DD HH:mm:ss'.",
+  errorCreditPartyMobileRequired: {
+    label: "Error - Credit Party Mobile Required",
+    description: "Credit party mobile number is required.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Invalid format for pw-request-date. Expected format is YYYY-MM-DD HH:MI:SS"
+  "message": "credit_party.mobile_number is required"
 }`
   },
-  invalidOriginCountryLength: {
-    label: "Invalid pw-origin-country length",
-    description: "Use a 3-character value like 'TTO' for 'pw-origin-country'.",
+  errorCurrencyRequired: {
+    label: "Error - Currency Required",
+    description: "Currency is required and must follow ISO 4217 format (e.g., \"TTD\", \"USD\").",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "Invalid value for pw-origin-country. ISO Alpha 2 standard: Must be a 2-character country code"
+  "message": "currency is required and must follow ISO 4217 format (e.g., \"TTD\", \"USD\")"
 }`
   },
-  invalidSubscriptionKeyLength: {
-    label: "Invalid pw-subscription-key length",
-    description: "Use a 10-character value for 'pw-subscription-key'.",
+  errorDebitPartyCurrencyRequired: {
+    label: "Error - Debit Party Currency Required",
+    description: "Debit party currency is required and must be ISO 4217.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "The 'pw-subscription-key' header must be exactly 32 characters long."
+  "message": "debit_party.currency is required and must be ISO 4217"
 }`
   },
-  missingVersionParam: {
-    label: "Missing version query parameter",
-    description: "Omit 'version=YYYY-MM-DD' from query string.",
+  errorDebitPartyMobileRequired: {
+    label: "Error - Debit Party Mobile Required",
+    description: "Debit party mobile number is required.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "The query string parameter 'version' is required in the format 'YYYY-MM-DD'."
+  "message": "debit_party.mobile_number is required"
 }`
   },
-  invalidVersionParam: {
-    label: "Invalid version query parameter format",
-    description: "Use 'v1' instead of 'YYYY-MM-DD' for version.",
+  errorFeesTotalMismatch: {
+    label: "Error - Fees Total Mismatch",
+    description: "Fees total does not match sum of fee components.",
     response: `{
+  "status": "error",
   "code": 400,
-  "status": "error",
-  "message": "The query string parameter 'version' must be in the format 'YYYY-MM-DD'."
+  "message": "fees.total does not match sum of fee components"
 }`
   },
-  nonexistentEndpoint: {
-    label: "Nonexistent endpoint",
-    description: "POST to '/transactions/badpath' instead of '/transactions'.",
+  errorInternationalTransferType: {
+    label: "Error - International Transfer Type",
+    description: "For international transfers, transaction_type must be inttransfer.",
     response: `{
-  "code": 404,
   "status": "error",
-  "message": "Endpoint not found: The requested endpoint does not exist. Please check the URL or refer to our API documentation."
+  "code": 400,
+  "message": "For international transfers, transaction_type must be inttransfer"
+}`
+  },
+  errorInstitutionNameRequired: {
+    label: "Error - Institution Name Required",
+    description: "Institution name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "\`institution_name\` is required"
+}`
+  },
+  errorInvalidJsonStructure: {
+    label: "Error - Invalid JSON Structure",
+    description: "JSON structure is invalid or malformed.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "JSON structure is invalid or malformed"
+}`
+  },
+  errorInsufficientBalance: {
+    label: "Error - Insufficient Balance",
+    description: "Sender has insufficient balance.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Sender has insufficient balance"
+}`
+  },
+  errorMobileNumberRequired: {
+    label: "Error - Mobile Number Required",
+    description: "Mobile number is required and must be in international format (e.g. +18681234567).",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "mobile_number is required and must be in international format (e.g. +18681234567)"
+}`
+  },
+  errorQuoteIdExpired: {
+    label: "Error - Quote ID Expired",
+    description: "Quote ID is expired or already used.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "\`quote_id\` is expired or already used"
+}`
+  },
+  errorQuoteIdRequired: {
+    label: "Error - Quote ID Required",
+    description: "Quote ID is required for this institution and missing in request.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "\`quote_id\` is required for this institution and missing in request"
+}`
+  },
+  errorRecipientKycAddressLine1Required: {
+    label: "Error - Recipient KYC Address Line 1 Required",
+    description: "Recipient KYC address line 1 is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.address.address_line1 is required"
+}`
+  },
+  errorRecipientKycCityRequired: {
+    label: "Error - Recipient KYC City Required",
+    description: "Recipient KYC city is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.address.city is required"
+}`
+  },
+  errorRecipientKycCountryRequired: {
+    label: "Error - Recipient KYC Country Required",
+    description: "Recipient KYC country is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.address.country is required"
+}`
+  },
+  errorRecipientKycDateOfBirthRequired: {
+    label: "Error - Recipient KYC Date of Birth Required",
+    description: "Recipient KYC date of birth is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.date_of_birth is required"
+}`
+  },
+  errorRecipientKycIdDocumentExpireDateRequired: {
+    label: "Error - Recipient KYC ID Document Expire Date Required",
+    description: "Recipient KYC ID document expire date is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.id_document.expire_date is required"
+}`
+  },
+  errorRecipientKycIdDocumentNumberRequired: {
+    label: "Error - Recipient KYC ID Document Number Required",
+    description: "Recipient KYC ID document number is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.id_document.number is required"
+}`
+  },
+  errorRecipientKycIdDocumentTypeRequired: {
+    label: "Error - Recipient KYC ID Document Type Required",
+    description: "Recipient KYC ID document type is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.id_document.type is required"
+}`
+  },
+  errorRecipientKycNationalityRequired: {
+    label: "Error - Recipient KYC Nationality Required",
+    description: "Recipient KYC nationality is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.nationality is required"
+}`
+  },
+  errorRecipientKycFirstNameRequired: {
+    label: "Error - Recipient KYC First Name Required",
+    description: "Recipient KYC first name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.subject_name.first_name is required"
+}`
+  },
+  errorRecipientKycLastNameRequired: {
+    label: "Error - Recipient KYC Last Name Required",
+    description: "Recipient KYC last name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "recipient_kyc.subject_name.last_name is required"
+}`
+  },
+  errorRelationshipSenderRequired: {
+    label: "Error - Relationship Sender Required",
+    description: "Relationship sender must be one of: family, friend, spouse, etc.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "relationship_sender must be one of: family, friend, spouse, etc."
+}`
+  },
+  errorSenderAmountRequired: {
+    label: "Error - Sender Amount Required",
+    description: "Sender amount is required and must be numeric.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_amount is required and must be numeric"
+}`
+  },
+  errorSenderCurrencyRequired: {
+    label: "Error - Sender Currency Required",
+    description: "Sender currency is required and must be ISO 4217.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_currency is required and must be ISO 4217"
+}`
+  },
+  errorSenderKycAddressLine1Required: {
+    label: "Error - Sender KYC Address Line 1 Required",
+    description: "Sender KYC address line 1 is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.address.address_line1 is required"
+}`
+  },
+  errorSenderKycCityRequired: {
+    label: "Error - Sender KYC City Required",
+    description: "Sender KYC city is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.address.city is required"
+}`
+  },
+  errorSenderKycCountryRequired: {
+    label: "Error - Sender KYC Country Required",
+    description: "Sender KYC country is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.address.country is required"
+}`
+  },
+  errorSenderKycDateOfBirthRequired: {
+    label: "Error - Sender KYC Date of Birth Required",
+    description: "Sender KYC date of birth is required and must be in format YYYY-MM-DD.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.date_of_birth is required and must be in format YYYY-MM-DD"
+}`
+  },
+  errorSenderKycIdDocumentExpireDateRequired: {
+    label: "Error - Sender KYC ID Document Expire Date Required",
+    description: "Sender KYC ID document expire date is required and must be in format YYYY-MM-DD.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.id_document.expire_date is required and must be in format YYYY-MM-DD"
+}`
+  },
+  errorSenderKycIdDocumentNumberRequired: {
+    label: "Error - Sender KYC ID Document Number Required",
+    description: "Sender KYC ID document number is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.id_document.number is required"
+}`
+  },
+  errorSenderKycIdDocumentTypeRequired: {
+    label: "Error - Sender KYC ID Document Type Required",
+    description: "Sender KYC ID document type is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.id_document.type is required"
+}`
+  },
+  errorSenderKycNationalityRequired: {
+    label: "Error - Sender KYC Nationality Required",
+    description: "Sender KYC nationality is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.nationality is required"
+}`
+  },
+  errorSenderKycFirstNameRequired: {
+    label: "Error - Sender KYC First Name Required",
+    description: "Sender KYC first name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.subject_name.first_name is required"
+}`
+  },
+  errorSenderKycLastNameRequired: {
+    label: "Error - Sender KYC Last Name Required",
+    description: "Sender KYC last name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "sender_kyc.subject_name.last_name is required"
+}`
+  },
+  errorSessionTokenInvalid: {
+    label: "Error - Session Token Invalid",
+    description: "Session token could not be decrypted or is invalid.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "session_token could not be decrypted or is invalid"
+}`
+  },
+  errorSessionTokenRequired: {
+    label: "Error - Session Token Required",
+    description: "Session token is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "session_token is required"
+}`
+  },
+  errorTransactionDateRequired: {
+    label: "Error - Transaction Date Required",
+    description: "Transaction date is required and must be in format YYYY-MM-DD HH:mm:ss.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_date is required and must be in format YYYY-MM-DD HH:mm:ss"
+}`
+  },
+  errorTransactionIdRequired: {
+    label: "Error - Transaction ID Required",
+    description: "Transaction ID is required and must be 40–60 characters long.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_id is required and must be 40–60 characters long"
+}`
+  },
+  errorSameCurrencyIntTransfer: {
+    label: "Error - Same Currency International Transfer",
+    description: "Transaction type is inttransfer, but both sender and recipient are in the same currency.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_type is inttransfer, but both sender and recipient are in the same currency"
+}`
+  },
+  errorUnknownAccounts: {
+    label: "Error - Unknown Accounts",
+    description: "Neither sender nor recipient accounts are known or available.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Neither sender nor recipient accounts are known or available"
+}`
+  },
+  errorSameAccounts: {
+    label: "Error - Same Accounts",
+    description: "Sender and recipient accounts are the same.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Sender and recipient accounts are the same"
+}`
+  },
+  errorInvalidTransactionType: {
+    label: "Error - Invalid Transaction Type",
+    description: "Transaction type is invalid. Must be one of: p2p, inttransfer.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_type is invalid. Must be one of: p2p, inttransfer"
+}`
+  },
+  errorP2PDifferentCurrencies: {
+    label: "Error - P2P Different Currencies",
+    description: "Transaction type is p2p, but sender and recipient currencies are different.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_type is p2p, but sender and recipient currencies are different"
+}`
+  },
+  errorP2PDifferentNationalities: {
+    label: "Error - P2P Different Nationalities",
+    description: "Transaction type is p2p, but sender_kyc.nationality ≠ recipient_kyc.nationality.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_type is p2p, but sender_kyc.nationality ≠ recipient_kyc.nationality"
+}`
+  },
+  errorTransactionTypeRequired: {
+    label: "Error - Transaction Type Required",
+    description: "Transaction type is required and must be one of: inttransfer, p2p.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_type is required and must be one of: inttransfer, p2p"
+}`
+  },
+  errorUnknownSenderIdDocumentType: {
+    label: "Error - Unknown Sender ID Document Type",
+    description: "Unknown sender_kyc.id_document.type.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Unknown sender_kyc.id_document.type"
+}`
+  },
+  errorUnknownRecipientIdDocumentType: {
+    label: "Error - Unknown Recipient ID Document Type",
+    description: "Unknown recipient_kyc.id_document.type.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Unknown recipient_kyc.id_document.type"
+}`
+  },
+  errorP2PNonLocalReceivingCountry: {
+    label: "Error - P2P Non-Local Receiving Country",
+    description: "Transaction type is set to p2p, but receiving_country is not local.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transaction_type is set to p2p, but receiving_country is not local"
+}`
+  },
+  errorTransferInformationInstitutionNameRequired: {
+    label: "Error - Transfer Information Institution Name Required",
+    description: "Transfer information institution name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transfer_information.institution_name is required"
+}`
+  },
+  errorTransferInformationQuoteIdRequired: {
+    label: "Error - Transfer Information Quote ID Required",
+    description: "Transfer information quote ID is required when quote enforcement is enabled.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transfer_information.quote_id is required when quote enforcement is enabled"
+}`
+  },
+  errorTransferInformationReceivingCountryRequired: {
+    label: "Error - Transfer Information Receiving Country Required",
+    description: "Transfer information receiving country is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transfer_information.receiving_country is required"
+}`
+  },
+  errorTransferInformationRelationshipSenderRequired: {
+    label: "Error - Transfer Information Relationship Sender Required",
+    description: "Transfer information relationship sender is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transfer_information.relationship_sender is required"
+}`
+  },
+  errorTransferInformationRemittancePurposeRequired: {
+    label: "Error - Transfer Information Remittance Purpose Required",
+    description: "Transfer information remittance purpose is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transfer_information.remittance_purpose is required"
+}`
+  },
+  errorTransferInformationSourceOfFundsRequired: {
+    label: "Error - Transfer Information Source of Funds Required",
+    description: "Transfer information source of funds is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "transfer_information.source_of_funds is required"
+}`
+  },
+  errorVersionRequired: {
+    label: "Error - Version Required",
+    description: "Version is required and must be in format YYYY-MM-DD.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "version is required and must be in format YYYY-MM-DD"
+}`
+  },
+  errorInstitutionNotAllowedCurrency: {
+    label: "Error - Institution Not Allowed Currency",
+    description: "Institution is not allowed to transact in currency USD.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "Institution is not allowed to transact in currency USD"
+}`
+  },
+  errorInstitutionNotAuthorizedIntTransfer: {
+    label: "Error - Institution Not Authorized International Transfer",
+    description: "Institution is not authorized to perform inttransfer transactions.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "Institution is not authorized to perform inttransfer transactions"
+}`
+  },
+  errorKycIncomplete: {
+    label: "Error - KYC Incomplete",
+    description: "KYC information is incomplete or invalid.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "KYC information is incomplete or invalid"
+}`
+  },
+  errorSessionTokenInvalid403: {
+    label: "Error - Session Token Invalid (403)",
+    description: "Session token could not be decrypted or is invalid.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "session_token could not be decrypted or is invalid"
+}`
+  },
+  errorTransactionAmountExceedsLimit: {
+    label: "Error - Transaction Amount Exceeds Limit",
+    description: "Transaction amount exceeds institution limit.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "Transaction amount exceeds institution limit"
+}`
+  },
+  errorFxPairNotSupported: {
+    label: "Error - FX Pair Not Supported",
+    description: "FX pair or funding method not supported for this institution.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "FX pair or funding method not supported for this institution"
+}`
+  },
+  errorTransactionIdAlreadyProcessed: {
+    label: "Error - Transaction ID Already Processed",
+    description: "Transaction ID already processed.",
+    response: `{
+  "status": "error",
+  "code": 409,
+  "message": "transaction_id already processed",
+  "institution_receipt_id": "<existing_id>"
+}`
+  },
+  errorInternalServerError1: {
+    label: "Error - Internal Server Error (1)",
+    description: "Internal server error while processing transaction.",
+    response: `{
+  "status": "error",
+  "code": 500,
+  "message": "Internal server error while processing transaction"
+}`
+  },
+  errorInternalServerError2: {
+    label: "Error - Internal Server Error (2)",
+    description: "Internal server error while processing transaction.",
+    response: `{
+  "status": "error",
+  "code": 500,
+  "message": "Internal server error while processing transaction"
 }`
   }
 };
@@ -1211,7 +1763,7 @@ const Transaction_Institutions = () => {
           <ResponseExampleBox
             title="Response Example"
             examples={responseExamples}
-            defaultKey="success"
+            defaultKey="successAmountDebited"
           />
         </div>
       </div>

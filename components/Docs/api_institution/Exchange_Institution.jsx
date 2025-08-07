@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
+import { ResponseExampleBox } from "@/components/ResponseExampleBox";
 
 // Language data
 const languageData = {
@@ -102,21 +103,110 @@ print(response.json())
 };
 
 // Response example
-const responseExample = `{
-    "status": "success",
-    "code": 200,
-    "message": "2025-02-14: 6.7450",
-    "rate": "6.7450",
-    "request_date": "2025-02-14"
-}
-#if there is an error, the response may look like:
-{
-    "status": "error",
-    "code": 404,
-    "message": "Exchange rate not available for the requested date",
-    "rate": "0.0000",
-    "request_date": "2025-02-14"
-}`;
+const responseExamples = {
+  success: {
+    label: "Success",
+    description: "Exchange rate retrieved successfully.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "request_date: rate",
+  "rate": "6.7450",
+  "request_date": "2025-02-14"
+}`
+  },
+  errorCurrencyPairRequired: {
+    label: "Error - Currency Pair Required",
+    description: "Currency pair is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "currency_pair is required"
+}`
+  },
+  errorRateTypeRequired: {
+    label: "Error - Rate Type Required",
+    description: "Rate type is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "rate_type is required"
+}`
+  },
+  errorInvalidRateType: {
+    label: "Error - Invalid Rate Type",
+    description: "Invalid rate type. Must be 'buying' or 'selling'.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Invalid rate_type. Must be 'buying' or 'selling'"
+}`
+  },
+  errorInvalidCurrencyPairFormat: {
+    label: "Error - Invalid Currency Pair Format",
+    description: "Invalid currency pair format. Use ISO 4217 code.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Invalid currency_pair format. Use ISO 4217 code"
+}`
+  },
+  errorVersionRequired: {
+    label: "Error - Version Required",
+    description: "Version is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "version is required"
+}`
+  },
+  errorInvalidVersionFormat: {
+    label: "Error - Invalid Version Format",
+    description: "Invalid version format. Expected YYYY-MM-DD format.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Invalid version format. Expected \"YYYY-MM-DD\""
+}`
+  },
+  errorInvalidRequestDateFormat: {
+    label: "Error - Invalid Request Date Format",
+    description: "Invalid request date format. Expected YYYY-MM-DD format.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Invalid request_date format. Expected \"YYYY-MM-DD\""
+}`
+  },
+  errorExchangeRateNotAvailable: {
+    label: "Error - Exchange Rate Not Available",
+    description: "Exchange rate not available for the requested date.",
+    response: `{
+  "status": "error",
+  "code": 404,
+  "message": "Exchange rate not available for the requested date",
+  "request_date": "2025-02-14"
+}`
+  },
+  errorRateLimitExceeded: {
+    label: "Error - Rate Limit Exceeded",
+    description: "Rate limit exceeded. Please try again later.",
+    response: `{
+  "status": "error",
+  "code": 429,
+  "message": "Rate limit exceeded. Please try again later"
+}`
+  },
+  errorSystemError: {
+    label: "Error - System Error",
+    description: "System error while retrieving exchange rate.",
+    response: `{
+  "status": "error",
+  "code": 500,
+  "message": "System error while retrieving exchange rate"
+}`
+  }
+};
 
 // Parameters
 const exchangeInstitutionParameters = [
@@ -255,10 +345,10 @@ const Exchange_Institutions = () => {
       </div>
       <div className="lg:w-2/4 w-full sticky top-0">
         <CodeExampleBox title="Request example" languageData={languageData} />
-        <CodeExampleBox
-          title="Response example"
-          content={responseExample}
-          showLanguageSelector={false}
+        <ResponseExampleBox
+          title="Response Example"
+          examples={responseExamples}
+          defaultKey="success"
         />
       </div>
     </div>

@@ -10,7 +10,7 @@ const languageData = {
     description: `
 VERSION="2024-10-01"
 QUOTE_ID="2DTVD9WD11CQM2NAGCO9"
-INSTITUTION_NAME="Reaby"
+INSTITUTION_NAME="YourCompany"
 API_KEY="acdb459a0f384b7c8fc2205e13c09036"
 REQUEST_DATE=$(date +"%Y-%m-%d %H:%M:%S")
 ORIGIN_COUNTRY="TT"
@@ -35,7 +35,7 @@ require 'time'
 params = {
   version: "2024-10-01",
   quote_id: "2DTVD9WD11CQM2NAGCO9",
-  institution_name: "Reaby"
+  institution_name: "YourCompany"
 }
 
 uri = URI("https://devapi.paywise.co/institution/quote")
@@ -65,7 +65,7 @@ puts "Response:\n#{response.body}"
 $url = "https://devapi.paywise.co/institution/quote?" . http_build_query([
     "version" => "2024-10-01",
     "quote_id" => "2DTVD9WD11CQM2NAGCO9",
-    "institution_name" => "Reaby"
+    "institution_name" => "YourCompany"
 ]);
 
 $headers = [
@@ -93,7 +93,7 @@ const axios = require('axios');
 const params = {
   version: "2024-10-01",
   quote_id: "2DTVD9WD11CQM2NAGCO9",
-  institution_name: "Reaby"
+  institution_name: "YourCompany"
 };
 
 const headers = {
@@ -122,7 +122,7 @@ from datetime import datetime
 params = {
     "version": "2024-10-01",
     "quote_id": "2DTVD9WD11CQM2NAGCO9",
-    "institution_name": "Reaby"
+    "institution_name": "YourCompany"
 }
 
 headers = {

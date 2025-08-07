@@ -29,7 +29,7 @@ export const ResponseExampleBox = ({
         </div>
         <div className="w-2/6 flex justify-end items-center gap-2 md:mr-2">
           <select
-            className="bg-[#699EC7] rounded text-[#F2F2F2] p-1"
+            className="bg-[#699EC7] rounded text-[#F2F2F2] p-1 max-w-[300px]"
             value={selectedKey}
             onChange={e => setSelectedKey(e.target.value)}
           >

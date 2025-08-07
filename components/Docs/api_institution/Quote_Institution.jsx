@@ -204,139 +204,43 @@ print("Response:", response.text)
 
 const responseExamples = {
   success: {
-    label: "Transaction completed",
-    description: "Transaction completed successfully.",
+    label: "Posted successfully",
+    description: "Quote created successfully.",
     response: `{
   "status": "success",
   "code": 200,
-  "message": "Transaction completed successfully",
-  "transaction": {
-    "status": "completed"
-  }
+  "message": "Posted successfully",
 }`
   },
-  posted: {
-    label: "Transaction posted",
-    description: "Transaction posted.",
+  invalidVersion: {
+    label: "Missing version field",
+    description: "Invalid `version` format. Expected “YYYY-MM-DD”.",
     response: `{
-  "status": "success",
-  "code": 200,
-  "message": "Transaction posted",
-  "transaction": {
-    "status": "pending"
-  }
-}`
-  },
-  pendingApproval: {
-    label: "Transaction is pending approval",
-    description: "Transaction is pending approval.",
-    response: `{
-  "status": "success",
-  "code": 200,
-  "message": "Transaction is pending approval",
-  "transaction": {
-    "status": "pending"
-  }
-}`
-  },
-  cancelled: {
-    label: "Transaction is cancelled",
-    description: "Transaction is cancelled.",
-    response: `{
-  "status": "success",
-  "code": 200,
-  "message": "Transaction is cancelled",
-  "transaction": {
-    "status": "cancelled"
-  }
-}`
-  },
-  insufficientFunds: {
-    label: "Insufficient Funds",
-    description: "Transaction failed due to insufficient funds.",
-    response: `{
-  "status": "error",
+  "status": "Error",
   "code": 400,
-  "message": "Transaction failed due to insufficient funds",
-  "transaction": {
-    "status": "failed"
-  }
+  "message": "Invalid version format. Expected “YYYY-MM-DD”"
 }`
   },
-  serverError: {
-    label: "Server Error",
-    description: "Server Error.",
+  missingSessionToken: {
+    label: "Missing session token",
+    description: "session_token is required.",
     response: `{
-  "status": "error",
-  "code": 500,
-  "message": "Server Error"
-}`
-  },
-  missingHeader: {
-    label: "<header_parameter> request header is required",
-    description: "<header_parameter> request header is required.",
-    response: `{
-  "status": "error",
+  "status": "Error",
   "code": 400,
-  "message": "<header_parameter> request header is required"
+  "message": "session_token is required"
 }`
   },
-  invalidSubscriptionKey: {
-    label: "PW-subscription-key format invalid",
-    description: "PW-subscription-key format invalid. Expected 32 chars.",
+  invalidSessionToken: {
+    label: "Malformed or expired token",
+    description: "session_token is invalid or expired.",
     response: `{
-  "status": "error",
+  "status": "Error",
   "code": 400,
-  "message": "PW-subscription-key format invalid. Expected 32 chars"
-}`
-  },
-  invalidOriginCountry: {
-    label: "PW-origin-country format invalid",
-    description: "PW-origin-country format invalid. Expected 2 chars.",
-    response: `{
-  "status": "error",
-  "code": 400,
-  "message": "PW-origin-country format invalid. Expected 2 chars"
-}`
-  },
-  invalidRequestDate: {
-    label: "PW-request-date format invalid",
-    description: "PW-request-date format invalid. Expected “YYYY-MM-DD HH:mm:ss”.",
-    response: `{
-  "status": "error",
-  "code": 400,
-  "message": "PW-request-date format invalid. Expected \`YYYY-MM-DD HH:mm:ss\`"
-}`
-  },
-  unauthorized: {
-    label: "Unauthorized access",
-    description: "Unauthorized access to this transaction.",
-    response: `{
-  "status": "error",
-  "code": 403,
-  "message": "Unauthorized access to this transaction"
-}`
-  },
-  missingGetParam: {
-    label: "<mandatory_get_parameter> is required",
-    description: "<mandatory_get_parameter> is required.",
-    response: `{
-  "status": "error",
-  "code": 400,
-  "message": "<mandatory_get_parameter> is required"
-}`
-  },
-  missingTransactionId: {
-    label: "transaction_id is required",
-    description: "transaction_id is required.",
-    response: `{
-  "status": "error",
-  "code": 400,
-  "message": "transaction_id is required"
+  "message": "session_token is invalid or expired"
 }`
   },
   missingInstitutionName: {
-    label: "institution_name is required",
+    label: "Missing or empty field",
     description: "institution_name is required.",
     response: `{
   "status": "error",
@@ -344,79 +248,130 @@ const responseExamples = {
   "message": "institution_name is required"
 }`
   },
-  invalidVersion: {
-    label: "Invalid `version` format",
-    description: "Invalid `version` format. Expected “YYYY-MM-DD”.",
+  invalidRequestAmount: {
+    label: "Invalid format or precision (e.g., 100.999)",
+    description: "request_amount format invalid. Expected decimal (8,2).",
     response: `{
   "status": "error",
   "code": 400,
-  "message": "Invalid \`version\` format. Expected \`YYYY-MM-DD\`"
+  "message": "request_amount format invalid. Expected decimal (8,2)"
 }`
   },
-  invalidTransactionId: {
-    label: "transaction_id format invalid",
-    description: "transaction_id format invalid. Expected 1–200 chars.",
+  invalidRequestCurrency: {
+    label: "Invalid value like 'TTDD' or 'usd'",
+    description: "request_currency must be a 3-letter ISO 4217 code.",
     response: `{
   "status": "error",
   "code": 400,
-  "message": "transaction_id format invalid. Expected 1–200 chars"
+  "message": "request_currency must be a 3-letter ISO 4217 code"
 }`
   },
-  institutionNotRecognized: {
-    label: "institution_name not recognized",
-    description: "institution_name not recognized or not authorized.",
+  missingDebitPartyPhoneNumber: {
+    label: "Missing debit party phone number",
+    description: "debit_party.mobile_number is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "debit_party.mobile_number is required"
+}`
+  },
+  invalidDebitPartyCountry: {
+    label: "Invalid or misspelled country code (e.g., 'Trinidad')",
+    description: "debit_party.country must be a valid ISO Alpha-2 code.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "debit_party.country must be a valid ISO Alpha-2 code"
+}`
+  },
+  missingCreditPartyPhoneNumber: {
+    label: "Missing credit party phone number",
+    description: "credit_party.mobile_number is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "credit_party.mobile_number is required"
+}`
+  },
+  missingCreditPartyCurrency: {
+    label: "Missing required currency field",
+    description: "credit_party.currency is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "credit_party.currency is required"
+}`
+  },
+  invalidCreditPartyCountry: {
+    label: "Invalid country code like 'Trinidad' or 'TTT'",
+    description: "credit_party.country must be a valid ISO Alpha-2 code.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "credit_party.country must be a valid ISO Alpha-2 code"
+}`
+  },
+  missingDebitPartyCurrency: {
+    label: "Inconsistent currency data between request and credit party",
+    description: "credit_party.currency and request_currency must match",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "credit_party.currency and request_currency must match"
+}`
+  },
+  quoteRequestExceedsAllowableAmountLimits: {
+    label: "Business rule violation",
+    description: "Quote request exceeds allowable amount limits.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Quote request exceeds allowable amount limits"
+}`
+  },
+  institutionNotAuthorized: {
+    label: "Unauthorized client name or missing API key",
+    description: "institution_name not authorized to request quote.",
+    response: `{
+  "status": "error",
+  "code": 40,
+  "message": "institution_name not authorized to request quote"
+}`
+  },
+  invalidSubscriptionKey: {
+    label: "Unauthorized due to missing header",
+    description: "Invalid or missing PW-subscription-key header.",
     response: `{
   "status": "error",
   "code": 403,
-  "message": "institution_name not recognized or not authorized"
+  "message": "Invalid or missing PW-subscription-key header"
 }`
   },
-  transactionNotFound: {
-    label: "Transaction not found",
-    description: "Transaction not found.",
-    response: `{
-  "status": "error",
-  "code": 404,
-  "message": "Transaction not found"
-}`
-  },
-  missingHeader2: {
-    label: "header_parameter request header is missing",
-    description: "header_parameter request header is missing.",
+  invalidRequestDate: {
+    label: "Incorrect format (e.g., no time or wrong separators)",
+    description: "PW-request-date format invalid. Expected “YYYY-MM-DD HH:mm:ss”.",
     response: `{
   "status": "error",
   "code": 400,
-  "message": "header_parameter request header is missing"
+  "message": "PW-request-date format invalid. Expected “YYYY-MM-DD HH:mm:ss”"
 }`
   },
-  invalidHeader: {
-    label: "{header_parameter} format invalid",
-    description: "{header_parameter} format invalid.",
+  invalidOriginCountry: {
+    label: "Missing or invalid ISO Alpha-2 code",
+    description: "PW-origin-country is required and must be 2-letter code.",
     response: `{
   "status": "error",
   "code": 400,
-  "message": "{header_parameter} format invalid."
+  "message": "PW-origin-country is required and must be 2-letter code"
 }`
   },
-  cancelledByUser: {
-    label: "Transaction was cancelled by user",
-    description: "Transaction was cancelled by user.",
+  serverError: {
+    label: "Internal server or system error",
+    description: "Server Error.",
     response: `{
   "status": "error",
-  "code": 400,
-  "message": "Transaction was cancelled by user",
-  "transaction": {
-    "status": "cancelled"
-  }
-}`
-  },
-  duplicateRequest: {
-    label: "Duplicate transaction request",
-    description: "Duplicate transaction request.",
-    response: `{
-  "status": "error",
-  "code": 409,
-  "message": "Duplicate transaction request"
+  "code": 500,
+  "message": "Server Error"
 }`
   }
 };

@@ -9,11 +9,11 @@ const languageData = {
   Bash: {
     description: `
 FIRST_NAME="Dino"
-LAST_NAME="Lewis"
+LAST_NAME="Baggio"
 SENDER_FIRST_NAME="asd"
 SENDER_LAST_NAME="das"
 MOBILE_NUMBER="18685634000"
-INSTITUTION_NAME="Reaby"
+INSTITUTION_NAME="YourCompany"
 API_KEY="acdb459a0f384b7c8fc2205e13c09036"
 ORIGIN_COUNTRY="TT"
 
@@ -37,11 +37,11 @@ require 'uri'
 require 'time'
 
 first_name = "Dino"
-last_name = "Lewis"
+last_name = "Baggio"
 sender_first_name = "asd"
 sender_last_name = "das"
 mobile_number = "18685634000"
-institution_name = "Reaby"
+institution_name = "YourCompany"
 version = "2024-10-01"
 api_key = "acdb459a0f384b7c8fc2205e13c09036"
 
@@ -79,11 +79,11 @@ puts "Response: #{res.body}"
 <?php
 
 $first_name = "Dino";
-$last_name = "Lewis";
+$last_name = "Baggio";
 $sender_first_name = "asd";
 $sender_last_name = "das";
 $mobile_number = "18685634000";
-$institution_name = "Reaby";
+$institution_name = "YourCompany";
 $version = "2024-10-01";
 
 $request_date = date("Y-m-d H:i:s");
@@ -125,9 +125,9 @@ const axios = require('axios');
 const params = {
   version: "2024-10-01",
   mobile_number: "18685634000",
-  institution_name: "Reaby",
+  institution_name: "YourCompany",
   first_name: "Dino",
-  last_name: "Lewis",
+  last_name: "Baggio",
   sender_first_name: "asd",
   sender_last_name: "das"
 };
@@ -159,11 +159,11 @@ from datetime import datetime
 
 params = {
     "first_name": "Dino",
-    "last_name": "Lewis",
+    "last_name": "Baggio",
     "sender_first_name": "asd",
     "sender_last_name": "das",
     "mobile_number": "18685634000",
-    "institution_name": "Reaby",
+    "institution_name": "YourCompany",
     "version": "2024-10-01"
 }
 

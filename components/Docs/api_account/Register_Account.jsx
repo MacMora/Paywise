@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { CodeExampleBox } from "@/components/LenguageContext";
 import ParameterItem from "@/components/ParameterItem";
+import { ResponseExampleBox } from "@/components/ResponseExampleBox";
 
 // Language data
 const languageData = {
@@ -153,17 +154,251 @@ print(response.json())
 };
 
 // Response example
-const responseExample = `{
+const responseExamples = {
+  successInitialRequest: {
+    label: "Success - Initial Request",
+    description: "Registration request sent successfully.",
+    response: `{
   "status": "success",
   "code": 200,
   "message": "Registration request sent"
-}
-#if there is an error, the response may look like:
-{
+}`
+  },
+  successCallbackApproved: {
+    label: "Success - Callback Approved",
+    description: "Callback received: registration approved.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Callback received: registration approved"
+}`
+  },
+  successCallbackRejected: {
+    label: "Success - Callback Rejected",
+    description: "Callback received: registration rejected.",
+    response: `{
+  "status": "success",
+  "code": 200,
+  "message": "Callback received: registration rejected"
+}`
+  },
+  errorMobileTokenNotSet: {
+    label: "Error - Mobile Token Not Set",
+    description: "Mobile token not set, customer must have signed into PayWise.",
+    response: `{
   "status": "error",
   "code": 400,
-  "message": "Invalid mobile number format"
-}`;
+  "message": "mobile token not set, customer must have signed into PayWise"
+}`
+  },
+  errorMobileNumberRequired: {
+    label: "Error - Mobile Number Required",
+    description: "Mobile number is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "mobile_number is required"
+}`
+  },
+  errorInstitutionNameRequired: {
+    label: "Error - Institution Name Required",
+    description: "Institution name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "institution_name is required"
+}`
+  },
+  errorCallbackUrlRequired: {
+    label: "Error - Callback URL Required",
+    description: "Callback URL is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "callback_url is required"
+}`
+  },
+  errorFirstNameRequired: {
+    label: "Error - First Name Required",
+    description: "First name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "first_name is required"
+}`
+  },
+  errorLastNameRequired: {
+    label: "Error - Last Name Required",
+    description: "Last name is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "last_name is required"
+}`
+  },
+  errorSessionTokenRequired: {
+    label: "Error - Session Token Required",
+    description: "Session token is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "session_token is required"
+}`
+  },
+  errorAuthorisationTokenRequired: {
+    label: "Error - Authorisation Token Required",
+    description: "Authorisation token is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "authorisation_token is required"
+}`
+  },
+  errorVersionRequired: {
+    label: "Error - Version Required",
+    description: "Version is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "version is required"
+}`
+  },
+  errorInvalidVersionFormat: {
+    label: "Error - Invalid Version Format",
+    description: "Invalid version format. Expected YYYY-MM-DD format.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Invalid version format. Expected \"YYYY-MM-DD\""
+}`
+  },
+  errorInvalidCallbackUrl: {
+    label: "Error - Invalid Callback URL",
+    description: "Callback URL must be a valid HTTPS URL.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "callback_url must be a valid HTTPS URL"
+}`
+  },
+  errorInvalidSessionToken: {
+    label: "Error - Invalid Session Token",
+    description: "Invalid session token. Could not decrypt or validate.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "Invalid session_token. Could not decrypt or validate"
+}`
+  },
+  errorAuthorisationTokenMismatch: {
+    label: "Error - Authorisation Token Mismatch",
+    description: "Authorisation token mismatch or unauthorized institution.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "authorisation_token mismatch or unauthorized institution"
+}`
+  },
+  errorInvalidSubscriptionKey: {
+    label: "Error - Invalid Subscription Key",
+    description: "Invalid or unauthorized PW-subscription-key.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "Invalid or unauthorized PW-subscription-key"
+}`
+  },
+  errorOriginCountryHeaderRequired: {
+    label: "Error - Origin Country Header Required",
+    description: "PW-origin-country header is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "PW-origin-country header is required"
+}`
+  },
+  errorRequestDateHeaderRequired: {
+    label: "Error - Request Date Header Required",
+    description: "PW-request-date header is required.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "PW-request-date header is required"
+}`
+  },
+  errorInvalidRequestDateFormat: {
+    label: "Error - Invalid Request Date Format",
+    description: "PW-request-date must be in YYYY-MM-DD HH:mm:ss format.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "PW-request-date must be in \"YYYY-MM-DD HH:mm:ss\" format"
+}`
+  },
+  errorIpAddressMismatch: {
+    label: "Error - IP Address Mismatch",
+    description: "IP address mismatch. PW-ip-address does not match known institution IP.",
+    response: `{
+  "status": "error",
+  "code": 403,
+  "message": "IP address mismatch. PW-ip-address does not match known institution IP"
+}`
+  },
+  errorCallbackMissingAuthorisationToken: {
+    label: "Error - Callback Missing Authorisation Token",
+    description: "Callback missing authorisation_token header.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Callback missing authorisation_token header"
+}`
+  },
+  errorCallbackMissingSignature: {
+    label: "Error - Callback Missing Signature",
+    description: "Callback missing x-pw-signature header.",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Callback missing x-pw-signature header"
+}`
+  },
+  errorCallbackMissingRequiredFields: {
+    label: "Error - Callback Missing Required Fields",
+    description: "Callback missing required fields (mobile_number, status, etc.).",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Callback missing required fields (mobile_number, status, etc.)"
+}`
+  },
+  errorCallbackInvalidStatus: {
+    label: "Error - Callback Invalid Status",
+    description: "Callback invalid status. Must be \"approved\" or \"rejected\".",
+    response: `{
+  "status": "error",
+  "code": 400,
+  "message": "Callback invalid status. Must be \"approved\" or \"rejected\""
+}`
+  },
+  errorInternalServerError: {
+    label: "Error - Internal Server Error",
+    description: "Internal server error during registration request.",
+    response: `{
+  "status": "error",
+  "code": 500,
+  "message": "Internal server error during registration request"
+}`
+  },
+  errorCallbackProcessingFailed: {
+    label: "Error - Callback Processing Failed",
+    description: "Callback processing failed due to unexpected error.",
+    response: `{
+  "status": "error",
+  "code": 500,
+  "message": "Callback processing failed due to unexpected error"
+}`
+  }
+};
 
 // Parameters
 const registerAccountParameters = [
@@ -580,11 +815,11 @@ const Register_Account = () => {
         </div>
         <div className="lg:w-2/4 w-full sticky top-0">
           <CodeExampleBox title="Request example" languageData={languageData} />
-          <CodeExampleBox
-            title="Response example"
-            content={responseExample}
-            showLanguageSelector={false}
-          />
+          <ResponseExampleBox
+          title="Response Example"
+          examples={responseExamples}
+          defaultKey="successInitialRequest"
+        />
         </div>
       </div>
     </div>
